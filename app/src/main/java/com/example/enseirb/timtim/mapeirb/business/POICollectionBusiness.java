@@ -12,19 +12,12 @@ public class POICollectionBusiness implements IPOICollectionBusiness {
     private IPOICollectionConverter poiCollectionConverter;
 
     public POICollectionBusiness(){
-        try {
-            poiCollectionConverter = new POICollectionConverter();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
     }
+
 
     @Override
     public POICollection retrievePOICollection(POIType poiType, final IPOICollectionBusinessListener listener) {
+        setPoiCollectionConverter(poiType);
         poiCollectionConverter.retrievePOICollection(poiType, new IPOICollectionConverterListener() {
 
             @Override
@@ -40,5 +33,13 @@ public class POICollectionBusiness implements IPOICollectionBusiness {
         });
 
         return null;
+    }
+
+    private void setPoiCollectionConverter(POIType poiType) {
+        try {
+            poiCollectionConverter = new POICollectionConverter(poiType);
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
+        }
     }
 }
