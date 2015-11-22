@@ -10,6 +10,7 @@ import org.json.JSONObject;
 public class JSONToiletParser implements IPOICollectionParser {
     private static final String TOILET_OBJECT ="d";
     private static final String TOILET_TYPOLOGIE = "typologie";
+    private static final String TOILET_ADDRESS = "adresse";
     private static final String LONGITUDE = "x_long";
     private static final String LATITUDE = "y_lat";
     @Override
@@ -27,8 +28,9 @@ public class JSONToiletParser implements IPOICollectionParser {
                 Double longitude = toiletsAccessObject.getDouble(LONGITUDE);
                 Double latitude = toiletsAccessObject.getDouble(LATITUDE);
                 String typologie = toiletsAccessObject.getString(TOILET_TYPOLOGIE);
+                String address = toiletsAccessObject.getString(TOILET_ADDRESS);
 
-                poiToilet.addPOIDTO(new POIToiletsDTO(longitude, latitude, typologie));
+                poiToilet.addPOIDTO(new POIToiletsDTO(longitude, latitude, typologie, address));
             }
 
         } catch (JSONException e) {

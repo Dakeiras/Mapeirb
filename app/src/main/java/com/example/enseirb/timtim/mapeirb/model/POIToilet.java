@@ -1,15 +1,18 @@
-package com.example.enseirb.timtim.mapeirb.dto;
+package com.example.enseirb.timtim.mapeirb.model;
 
-
-public class POIToiletsDTO extends POIDTO {
+public class POIToilet extends POI  {
     private String type;
     private String address;
 
-    public POIToiletsDTO(Double longitude, Double latitude, String type, String address) {
-        this.setLongitude(longitude);
-        this.setLatitude(latitude);
+    public POIToilet(double longitude, double latitude, String type, String address) {
+        super(longitude, latitude);
         this.type = type;
         this.address = address;
+    }
+
+    @Override
+    public String getTitle() {
+        return type;
     }
 
     public String getType() {
