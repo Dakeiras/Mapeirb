@@ -14,16 +14,6 @@ public class POICollectionDTO {
         POICollection.add(pio);
     }
 
-    public int size() {
-        //TODO:
-        return 0;
-    }
-
-    public POIDTO get(int i) {
-        //TODO:
-        return null;
-    }
-
     public Collection<POIDTO> getPOICollection(){
         return POICollection;
     }

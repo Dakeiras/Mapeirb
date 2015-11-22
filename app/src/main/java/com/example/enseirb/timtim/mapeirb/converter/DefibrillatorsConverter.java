@@ -7,7 +7,7 @@ public class DefibrillatorsConverter implements IPOIsConverter {
 
     @Override
     public POI convertDTO(POIDTO collectionDTO) {
-        //TODO : DefibrillatorDTO => Defibrillator
+        //TODO : POIDefibrillatorDTO => Defibrillator
         return null;
     }
 }

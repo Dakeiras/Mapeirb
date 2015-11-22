@@ -7,7 +7,7 @@ public class ElectricsConverter implements IPOIsConverter {
 
     @Override
     public POI convertDTO(POIDTO collectionDTO) {
-        //TODO : ElectricDTO => Electric
+        //TODO : POIElectricDTO => Electric
         return null;
     }
 }
