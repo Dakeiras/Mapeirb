@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -28,7 +30,7 @@ public class InformationListActivity extends AppCompatActivity {
     protected static final String TOILET_NAME = "com.example.enseirb.timtim.mapeirb.presenter.TOILET";
     protected static final String INTERNET_NAME = "com.example.enseirb.timtim.mapeirb.presenter.INTERNET";
     private IPOICollectionBusiness poiCollectionBusiness;
-    private List<String> serviceList = new ArrayList<>();
+    private ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,21 +41,34 @@ public class InformationListActivity extends AppCompatActivity {
 
         initializeBusiness();
         String service = getIntent().getStringExtra(SERVICE_NAME);
-        ListView listView = (ListView) findViewById(R.id.information_layout_list);
+        listView = (ListView) findViewById(R.id.information_layout_list);
 
         retrieveServiceList(service);
 
-        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, serviceList));
-
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                centerOnItem();
+            }
+        });
 
     }
 
+    private void centerOnItem() {
+        
+    }
+
     private void retrieveServiceList(String service) {
-        IPOICollectionBusinessListener listener = new com.example.enseirb.timtim.mapeirb.business.listener.IPOICollectionBusinessListener() {
+        IPOICollectionBusinessListener listener = new IPOICollectionBusinessListener() {
             @Override
-            public void onSuccess(POICollection poiCollection) {
-                fillList(poiCollection);
+            public void onSuccess(final POICollection poiCollection) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        fillList(poiCollection);
+                    }
+                });
+
             }
 
             @Override
@@ -85,9 +100,12 @@ public class InformationListActivity extends AppCompatActivity {
     }
 
     private void fillList(POICollection poiCollection) {
+        List<String> serviceList = new ArrayList<>();
         for(POI poi: poiCollection.getPoiCollection()) {
+            System.out.println(poi.getTitle());
             serviceList.add(poi.getTitle());
         }
+        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, serviceList));
     }
 
     private void initializeBusiness() {
