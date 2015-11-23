@@ -9,4 +9,9 @@ public class POICollection {
     public void add(POI poi) {
         poiCollection.add(poi);
     }
+
+    public Collection<POI> getPoiCollection() {
+        return poiCollection;
+    }
+
 }
