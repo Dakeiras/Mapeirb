@@ -49,7 +49,6 @@ public class POICollectionConverter implements com.example.enseirb.timtim.mapeir
 
 
     public POICollectionConverter(POIType type) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        type = POIType.DEFIBRILLATOR;
         this.dao = getDaoCollectionFromName(type);
         this.converter  =getConvertercollectionFromName(type);
     }
@@ -70,7 +69,7 @@ public class POICollectionConverter implements com.example.enseirb.timtim.mapeir
 
     public POICollection convert(POICollectionDTO collectionDTO){
         POICollection poiCollection = new POICollection();
-        for (POIDTO poi : collectionDTO.getPOICollection()){
+        for (POIDTO poi : collectionDTO.getPoiCollection()){
             poiCollection.add(converter.convertDTO(poi));
         }
 
