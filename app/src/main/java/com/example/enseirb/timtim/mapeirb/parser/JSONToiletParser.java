@@ -25,10 +25,10 @@ public class JSONToiletParser implements IPOICollectionParser {
                 JSONObject toiletsAccessObject;
                 toiletsAccessObject = toiletsArray.getJSONObject(i);
 
-                Double longitude = toiletsAccessObject.getDouble(LONGITUDE);
-                Double latitude = toiletsAccessObject.getDouble(LATITUDE);
-                String typologie = toiletsAccessObject.getString(TOILET_TYPOLOGIE);
-                String address = toiletsAccessObject.getString(TOILET_ADDRESS);
+                Double longitude = toiletsAccessObject.optDouble(LONGITUDE, new Double(null));
+                Double latitude = toiletsAccessObject.optDouble(LATITUDE, new Double(null));
+                String typologie = toiletsAccessObject.optString(TOILET_TYPOLOGIE, null);
+                String address = toiletsAccessObject.optString(TOILET_ADDRESS, null);
 
                 poiToilet.addPOIDTO(new POIToiletsDTO(longitude, latitude, typologie, address));
             }

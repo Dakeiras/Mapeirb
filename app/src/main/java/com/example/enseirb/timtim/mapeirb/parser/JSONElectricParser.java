@@ -26,14 +26,21 @@ public class JSONElectricParser implements IPOICollectionParser {
                 JSONObject electricObject;
                 electricObject = electricArray.getJSONObject(i);
 
-                String coord = electricObject.getString(COORD);
-                Double latitude = Double.parseDouble(coord.split(",")[0]);
-                Double longitude = Double.parseDouble(coord.split(",")[1]);
+                String coord = electricObject.optString(COORD, null);
+                Double latitude;
+                Double longitude;
+                if (coord != null) {
+                    latitude = Double.parseDouble(coord.split(",")[0]);
+                    longitude = Double.parseDouble(coord.split(",")[1]);
+                }else{
+                    latitude = null;
+                    longitude = null;
+                }
 
-                String name = electricObject.getString(ELECTRIC_NAME);
-                String address = electricObject.getString(ELECTRIC_ADDRESS);
-                String status = electricObject.getString(ELECTRIC_STATUS);
-                int number = electricObject.getInt(ELECTRIC_NUMBER);
+                String name = electricObject.optString(ELECTRIC_NAME, null);
+                String address = electricObject.optString(ELECTRIC_ADDRESS, null);
+                String status = electricObject.optString(ELECTRIC_STATUS, null);
+                int number = electricObject.optInt(ELECTRIC_NUMBER, new Integer(null));
 
                 poiCollectionElectric.addPOIDTO(new POIElectricDTO(longitude, latitude, name, address, status, number));
             }

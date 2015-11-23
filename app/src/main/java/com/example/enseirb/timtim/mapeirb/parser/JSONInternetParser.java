@@ -27,11 +27,11 @@ public class JSONInternetParser implements IPOICollectionParser {
                 JSONObject internetAccessObject;
                 internetAccessObject = internetAccessArray.getJSONObject(i);
 
-                Double longitude = internetAccessObject.getDouble(LONGITUDE);
-                Double latitude = internetAccessObject.getDouble(LATITUDE);
-                String name = internetAccessObject.getString(INTERNET_NAME);
-                String nature = internetAccessObject.getString(INTERNET_NATURE);
-                String nbPlace = internetAccessObject.getString(INTERNET_GRATUITY);
+                Double longitude = internetAccessObject.optDouble(LONGITUDE, new Double(null));
+                Double latitude = internetAccessObject.optDouble(LATITUDE, new Double(null));
+                String name = internetAccessObject.optString(INTERNET_NAME, null);
+                String nature = internetAccessObject.optString(INTERNET_NATURE, null);
+                String nbPlace = internetAccessObject.optString(INTERNET_GRATUITY, null);
 
                 poiInternetAccess.addPOIDTO(new POIInternetAccessDTO(longitude, latitude, name, nature, nbPlace));
             }
