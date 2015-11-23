@@ -17,7 +17,7 @@ public class POIElectric extends POI {
 
     @Override
     public String getTitle() {
-        return null;
+        return name + address;
     }
 
     public int getNumber() {

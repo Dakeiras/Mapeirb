@@ -12,7 +12,7 @@ public class POIToilet extends POI  {
 
     @Override
     public String getTitle() {
-        return type;
+        return type + address;
     }
 
     public String getType() {

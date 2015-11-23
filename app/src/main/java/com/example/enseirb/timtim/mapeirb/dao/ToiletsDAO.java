@@ -7,17 +7,17 @@ import com.example.enseirb.timtim.mapeirb.client.POICollectionClient;
 import com.example.enseirb.timtim.mapeirb.dao.listener.IPOICollectionDAOListener;
 import com.example.enseirb.timtim.mapeirb.dto.POICollectionDTO;
 import com.example.enseirb.timtim.mapeirb.parser.IPOICollectionParser;
-import com.example.enseirb.timtim.mapeirb.parser.JSONElectricParser;
+import com.example.enseirb.timtim.mapeirb.parser.JSONToiletParser;
 
-public class ElectricCollectionDAO implements IPOICollectionDAO{
-    public static final String URL = "http://www.chargepulse.com/download/?type=json&client=MairieBx";
+public class ToiletsDAO implements IPOIsDAO {
+    public static final String URL = "http://odata.bordeaux.fr/v1/databordeaux/sigsanitaire/?format=json";
 
     private IPOICollectionClient poiCollectionClient;
     private IPOICollectionParser poiCollectionParser;
 
-    public ElectricCollectionDAO(){
+    public ToiletsDAO(){
         poiCollectionClient = new POICollectionClient();
-        poiCollectionParser = new JSONElectricParser();
+        poiCollectionParser = new JSONToiletParser();
     }
 
     @Override
@@ -25,11 +25,11 @@ public class ElectricCollectionDAO implements IPOICollectionDAO{
         new AsyncTask<String, Integer, POICollectionDTO>() {
             @Override
             protected POICollectionDTO doInBackground(String... params) {
-                POICollectionDTO electricCollectionDTO;
-                String jsonElectric = poiCollectionClient.retrievePOICollection(params[0]);
-                electricCollectionDTO = poiCollectionParser.parse(jsonElectric);
-                listener.onSuccess(electricCollectionDTO);
-                return electricCollectionDTO;
+                POICollectionDTO toiletCollectionDTO;
+                String jsonToilet = poiCollectionClient.retrievePOICollection(params[0]);
+                toiletCollectionDTO = poiCollectionParser.parse(jsonToilet);
+                listener.onSuccess(toiletCollectionDTO);
+                return toiletCollectionDTO;
             }
         }.execute(URL);
     }

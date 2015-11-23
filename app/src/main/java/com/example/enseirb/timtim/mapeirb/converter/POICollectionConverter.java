@@ -1,7 +1,7 @@
 package com.example.enseirb.timtim.mapeirb.converter;
 
 import com.example.enseirb.timtim.mapeirb.converter.listener.IPOICollectionConverterListener;
-import com.example.enseirb.timtim.mapeirb.dao.IPOICollectionDAO;
+import com.example.enseirb.timtim.mapeirb.dao.IPOIsDAO;
 import com.example.enseirb.timtim.mapeirb.dao.listener.IPOICollectionDAOListener;
 import com.example.enseirb.timtim.mapeirb.dto.POICollectionDTO;
 import com.example.enseirb.timtim.mapeirb.dto.POIDTO;
@@ -9,7 +9,7 @@ import com.example.enseirb.timtim.mapeirb.model.POICollection;
 import com.example.enseirb.timtim.mapeirb.model.POIType;
 
 public class POICollectionConverter implements com.example.enseirb.timtim.mapeirb.converter.IPOICollectionConverter {
-    private IPOICollectionDAO dao;
+    private IPOIsDAO dao;
     private IPOIsConverter converter;
 
         /**
@@ -28,21 +28,21 @@ public class POICollectionConverter implements com.example.enseirb.timtim.mapeir
             try {
                 retVal = Class.forName(classPath).newInstance();
             } catch (InstantiationException | ClassNotFoundException | IllegalAccessException e) {
-                System.err.println("Class " + classPath + "does not exist");
+                System.err.println("Class " + classPath + " does not exist");
                 e.printStackTrace();
                 System.exit(1);
             }
             return retVal;
         }
 
-        private IPOICollectionDAO getDaoCollectionFromName(POIType poiType){
-            return (IPOICollectionDAO) getInstanceFromClassName(
-                    "com.example.enseirb.timtim.mapeirb.dao", poiType, "CollectionDAO");
+        private IPOIsDAO getDaoCollectionFromName(POIType poiType){
+            return (IPOIsDAO) getInstanceFromClassName(
+                    "com.example.enseirb.timtim.mapeirb.dao", poiType, "sDAO");
         }
 
         private IPOIsConverter getConvertercollectionFromName(POIType poiType){
             return (IPOIsConverter) getInstanceFromClassName(
-                    "com.example.enseirb.timtim.mapeirb.converter", poiType, "CollectionConverter");
+                    "com.example.enseirb.timtim.mapeirb.converter", poiType, "sConverter");
 
         }
 
