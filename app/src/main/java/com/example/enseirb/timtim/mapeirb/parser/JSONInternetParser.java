@@ -27,8 +27,9 @@ public class JSONInternetParser implements IPOICollectionParser {
                 JSONObject internetAccessObject;
                 internetAccessObject = internetAccessArray.getJSONObject(i);
 
-                Double longitude = internetAccessObject.optDouble(LONGITUDE, new Double(null));
-                Double latitude = internetAccessObject.optDouble(LATITUDE, new Double(null));
+                Double l = internetAccessObject.getDouble(LONGITUDE);
+                Double longitude = internetAccessObject.optDouble(LONGITUDE, 0.0);
+                Double latitude = internetAccessObject.optDouble(LATITUDE, 0.0);
                 String name = internetAccessObject.optString(INTERNET_NAME, null);
                 String nature = internetAccessObject.optString(INTERNET_NATURE, null);
                 String nbPlace = internetAccessObject.optString(INTERNET_GRATUITY, null);

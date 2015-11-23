@@ -33,14 +33,14 @@ public class JSONElectricParser implements IPOICollectionParser {
                     latitude = Double.parseDouble(coord.split(",")[0]);
                     longitude = Double.parseDouble(coord.split(",")[1]);
                 }else{
-                    latitude = null;
-                    longitude = null;
+                    latitude = 0.0;
+                    longitude = 0.0;
                 }
 
                 String name = electricObject.optString(ELECTRIC_NAME, null);
                 String address = electricObject.optString(ELECTRIC_ADDRESS, null);
                 String status = electricObject.optString(ELECTRIC_STATUS, null);
-                int number = electricObject.optInt(ELECTRIC_NUMBER, new Integer(null));
+                int number = electricObject.optInt(ELECTRIC_NUMBER, -1);
 
                 poiCollectionElectric.addPOIDTO(new POIElectricDTO(longitude, latitude, name, address, status, number));
             }
