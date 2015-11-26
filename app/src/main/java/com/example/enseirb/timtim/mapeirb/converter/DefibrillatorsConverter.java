@@ -25,7 +25,10 @@ public class DefibrillatorsConverter implements IPOIsConverter {
     }
 
     private String convertPhone(String telephone) {
-        return telephone.replaceAll(" ", "-");
+        if (telephone != null) {
+            return telephone.replaceAll(" ", "-");
+        }
+        return null;
     }
 
 }

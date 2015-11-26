@@ -21,19 +21,20 @@ public class JSONDefibrillatorParser implements IPOICollectionParser {
         POICollectionDTO poiCollectionDefibrillator = new POICollectionDTO();
         try {
             JSONArray defibrillatorArray;
-            JSONObject reader = null;
+            JSONObject reader;
             reader = new JSONObject(jsonDefibrillator);
             defibrillatorArray = reader.getJSONArray(DEFIBRILLATOR_OBJECT);
             for (int i = 0; i < defibrillatorArray.length(); i++) {
                 JSONObject defibrillatorObject;
                 defibrillatorObject = defibrillatorArray.getJSONObject(i);
-                Double longitude = defibrillatorObject.getDouble(LONGITUDE);
-                Double latitude = defibrillatorObject.getDouble(LATITUDE);
-                String address = defibrillatorObject.getString(DEFIBRILLATOR_ADDRESS);
-                String phone = defibrillatorObject.getString(DEFIBRILLATOR_PHONE);
-                String name = defibrillatorObject.getString(DEFIBRILLATOR_NAME);
-                String typologie = defibrillatorObject.getString(DEFIBRILLATOR_TYPOLOGIE);
-                String installe = defibrillatorObject.getString(DEFIBRILLATOR_INSTALLE);
+
+                Double longitude = defibrillatorObject.optDouble(LONGITUDE, 0);
+                Double latitude = defibrillatorObject.optDouble(LATITUDE, 0);
+                String address = defibrillatorObject.optString(DEFIBRILLATOR_ADDRESS, null);
+                String phone = defibrillatorObject.optString(DEFIBRILLATOR_PHONE, null);
+                String name = defibrillatorObject.optString(DEFIBRILLATOR_NAME, null);
+                String typologie = defibrillatorObject.optString(DEFIBRILLATOR_TYPOLOGIE, null);
+                String installe = defibrillatorObject.optString(DEFIBRILLATOR_INSTALLE, null);
 
                 poiCollectionDefibrillator.addPOIDTO(new POIDefibrillatorDTO(longitude, latitude, typologie, address, name, phone, installe));
             }
