@@ -7,18 +7,17 @@ import com.example.enseirb.timtim.mapeirb.client.POICollectionClient;
 import com.example.enseirb.timtim.mapeirb.dao.listener.IPOICollectionDAOListener;
 import com.example.enseirb.timtim.mapeirb.dto.POICollectionDTO;
 import com.example.enseirb.timtim.mapeirb.parser.IPOICollectionParser;
-import com.example.enseirb.timtim.mapeirb.parser.JSONDefibrillatorParser;
+import com.example.enseirb.timtim.mapeirb.parser.JSONElectricParser;
 
-public class DefibrillatorCollectionDAO implements IPOICollectionDAO{
-
-    public static final String URL = "http://odata.bordeaux.fr/v1/databordeaux/defibrillateurs/?format=json";
+public class ElectricsDAO implements IPOIsDAO {
+    public static final String URL = "http://www.chargepulse.com/download/?type=json&client=MairieBx";
 
     private IPOICollectionClient poiCollectionClient;
     private IPOICollectionParser poiCollectionParser;
 
-    public DefibrillatorCollectionDAO(){
+    public ElectricsDAO(){
         poiCollectionClient = new POICollectionClient();
-        poiCollectionParser = new JSONDefibrillatorParser();
+        poiCollectionParser = new JSONElectricParser();
     }
 
     @Override
@@ -26,12 +25,13 @@ public class DefibrillatorCollectionDAO implements IPOICollectionDAO{
         new AsyncTask<String, Integer, POICollectionDTO>() {
             @Override
             protected POICollectionDTO doInBackground(String... params) {
-                POICollectionDTO defibrillatorCollectionDTO;
-                String jsonDefibrillator = poiCollectionClient.retrievePOICollection(params[0]);
-                defibrillatorCollectionDTO = poiCollectionParser.parse(jsonDefibrillator);
-                listener.onSuccess(defibrillatorCollectionDTO);
-                return defibrillatorCollectionDTO;
+                POICollectionDTO electricCollectionDTO;
+                String jsonElectric = poiCollectionClient.retrievePOICollection(params[0]);
+                electricCollectionDTO = poiCollectionParser.parse(jsonElectric);
+                listener.onSuccess(electricCollectionDTO);
+                return electricCollectionDTO;
             }
         }.execute(URL);
     }
+
 }

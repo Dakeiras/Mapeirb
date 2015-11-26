@@ -7,17 +7,17 @@ import com.example.enseirb.timtim.mapeirb.client.POICollectionClient;
 import com.example.enseirb.timtim.mapeirb.dao.listener.IPOICollectionDAOListener;
 import com.example.enseirb.timtim.mapeirb.dto.POICollectionDTO;
 import com.example.enseirb.timtim.mapeirb.parser.IPOICollectionParser;
-import com.example.enseirb.timtim.mapeirb.parser.JSONToiletParser;
+import com.example.enseirb.timtim.mapeirb.parser.JSONInternetParser;
 
-public class ToiletCollectionDAO implements IPOICollectionDAO{
-    public static final String URL = "http://odata.bordeaux.fr/v1/databordeaux/sigsanitaire/?format=json";
+public class InternetsDAO implements IPOIsDAO {
+    public static final String URL = "http://odata.bordeaux.fr/v1/databordeaux/sigaccesinternet/?format=json";
 
     private IPOICollectionClient poiCollectionClient;
     private IPOICollectionParser poiCollectionParser;
 
-    public ToiletCollectionDAO(){
+    public InternetsDAO(){
         poiCollectionClient = new POICollectionClient();
-        poiCollectionParser = new JSONToiletParser();
+        poiCollectionParser = new JSONInternetParser();
     }
 
     @Override
@@ -25,11 +25,11 @@ public class ToiletCollectionDAO implements IPOICollectionDAO{
         new AsyncTask<String, Integer, POICollectionDTO>() {
             @Override
             protected POICollectionDTO doInBackground(String... params) {
-                POICollectionDTO toiletCollectionDTO;
-                String jsonToilet = poiCollectionClient.retrievePOICollection(params[0]);
-                toiletCollectionDTO = poiCollectionParser.parse(jsonToilet);
-                listener.onSuccess(toiletCollectionDTO);
-                return toiletCollectionDTO;
+                POICollectionDTO internetCollectionDTO;
+                String jsonInternet = poiCollectionClient.retrievePOICollection(params[0]);
+                internetCollectionDTO = poiCollectionParser.parse(jsonInternet);
+                listener.onSuccess(internetCollectionDTO);
+                return internetCollectionDTO;
             }
         }.execute(URL);
     }
