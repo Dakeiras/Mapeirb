@@ -1,13 +1,13 @@
 package com.example.enseirb.timtim.mapeirb.dto;
 
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class POIToiletsDTO extends POIDTO {
     private String type;
     private String address;
 
-    public POIToiletsDTO(Double longitude, Double latitude, String type, String address) {
-        this.setLongitude(longitude);
-        this.setLatitude(latitude);
+    public POIToiletsDTO(LatLng position, String type, String address) {
         this.type = type;
         this.address = address;
     }

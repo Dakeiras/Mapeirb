@@ -1,5 +1,7 @@
 package com.example.enseirb.timtim.mapeirb.model;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class POIDefibrillator extends POI  {
 
     private String typologie;
@@ -9,10 +11,8 @@ public class POIDefibrillator extends POI  {
     private Boolean installe;
 
 
-    public POIDefibrillator(Double longitude, Double latitude, String typologie, String address, String name, String telephone, Boolean installe) {
-        super(longitude, latitude);
-        this.longitude = longitude;
-        this.latitude = latitude;
+    public POIDefibrillator(LatLng position, String typologie, String address, String name, String telephone, Boolean installe) {
+        super(position);
         this.typologie = typologie;
         this.address = address;
         this.name = name;

@@ -1,11 +1,13 @@
 package com.example.enseirb.timtim.mapeirb.model;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class POIToilet extends POI  {
     private String type;
     private String address;
 
-    public POIToilet(double longitude, double latitude, String type, String address) {
-        super(longitude, latitude);
+    public POIToilet(LatLng position, String type, String address) {
+        super(position);
         this.type = type;
         this.address = address;
     }

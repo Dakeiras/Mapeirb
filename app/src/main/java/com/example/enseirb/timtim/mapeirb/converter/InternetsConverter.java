@@ -10,8 +10,7 @@ public class InternetsConverter implements IPOIsConverter {
     @Override
     public POI convertDTO(POIDTO collectionDTO) {
         POIInternetAccessDTO internetCollectionDTO = (POIInternetAccessDTO) collectionDTO;
-        return new POIInternet(internetCollectionDTO.getLongitude(),
-                internetCollectionDTO.getLatitude(),
+        return new POIInternet(internetCollectionDTO.getPosition(),
                 internetCollectionDTO .getName(),
                 internetCollectionDTO.getAccessType(),
                 convertPaid(internetCollectionDTO.getPaid()));

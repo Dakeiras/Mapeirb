@@ -1,5 +1,7 @@
 package com.example.enseirb.timtim.mapeirb.model;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class POIElectric extends POI {
 
     private int number;
@@ -7,8 +9,8 @@ public class POIElectric extends POI {
     private String address;
     private Boolean status;
 
-    public POIElectric(Double longitude, Double latitude, String name, String address, Boolean status, int number) {
-        super(longitude, latitude);
+    public POIElectric(LatLng position, String name, String address, Boolean status, int number) {
+        super(position);
         this.address = address;
         this.name = name;
         this.status = status;

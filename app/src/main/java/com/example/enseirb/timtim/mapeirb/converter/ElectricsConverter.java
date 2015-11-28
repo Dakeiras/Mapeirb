@@ -10,8 +10,7 @@ public class ElectricsConverter implements IPOIsConverter {
     @Override
     public POI convertDTO(POIDTO collectionDTO) {
         POIElectricDTO electricCollectionDTO = (POIElectricDTO) collectionDTO;
-        return new POIElectric(electricCollectionDTO.getLongitude(),
-                electricCollectionDTO.getLatitude(),
+        return new POIElectric(electricCollectionDTO.getPosition(),
                 electricCollectionDTO .getName(),
                 electricCollectionDTO.getAddress(),
                 convertStatus(electricCollectionDTO.getStatus()),

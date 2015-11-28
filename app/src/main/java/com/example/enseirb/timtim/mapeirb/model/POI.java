@@ -1,13 +1,17 @@
 package com.example.enseirb.timtim.mapeirb.model;
 
-public abstract class POI {
-    public double longitude;
-    public double latitude;
+import com.google.android.gms.maps.model.LatLng;
 
-    public POI(double longitude, double latitude) {
-        this.longitude = longitude;
-        this.latitude = latitude;
+public abstract class POI {
+
+    private LatLng position;
+
+    public POI(LatLng position) {
+        this.position = position;
     }
 
     public abstract String getTitle();
+    public LatLng getPosition(){
+        return position;
+    }
 }

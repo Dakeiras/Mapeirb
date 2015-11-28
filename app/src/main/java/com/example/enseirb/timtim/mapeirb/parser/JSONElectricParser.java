@@ -2,6 +2,7 @@ package com.example.enseirb.timtim.mapeirb.parser;
 
 import com.example.enseirb.timtim.mapeirb.dto.POICollectionDTO;
 import com.example.enseirb.timtim.mapeirb.dto.POIElectricDTO;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,13 +37,13 @@ public class JSONElectricParser implements IPOICollectionParser {
                     latitude = 0.0;
                     longitude = 0.0;
                 }
-
+                LatLng position = new LatLng(latitude, longitude);
                 String name = electricObject.optString(ELECTRIC_NAME, null);
                 String address = electricObject.optString(ELECTRIC_ADDRESS, null);
                 String status = electricObject.optString(ELECTRIC_STATUS, null);
                 int number = electricObject.optInt(ELECTRIC_NUMBER, -1);
 
-                poiCollectionElectric.addPOIDTO(new POIElectricDTO(longitude, latitude, name, address, status, number));
+                poiCollectionElectric.addPOIDTO(new POIElectricDTO(position, name, address, status, number));
             }
         } catch (JSONException e) {
             e.printStackTrace();

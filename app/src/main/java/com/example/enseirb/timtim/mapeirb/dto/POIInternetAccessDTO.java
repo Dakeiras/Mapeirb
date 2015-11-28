@@ -1,14 +1,15 @@
 package com.example.enseirb.timtim.mapeirb.dto;
 
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class POIInternetAccessDTO extends POIDTO {
     private String name;
     private String accessType;
     private String paid;
 
-    public POIInternetAccessDTO(Double longitude, Double latitude, String name, String accessType, String paid) {
-        this.setLongitude(longitude);
-        this.setLatitude(latitude);
+    public POIInternetAccessDTO(LatLng position, String name, String accessType, String paid) {
+        this.setPosition(position);
         this.name = name;
         this.accessType = accessType;
         this.paid = paid;

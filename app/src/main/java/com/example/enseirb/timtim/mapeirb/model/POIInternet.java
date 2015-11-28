@@ -1,12 +1,14 @@
 package com.example.enseirb.timtim.mapeirb.model;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class POIInternet extends POI  {
     private String name;
     private String typeAccess;
     private Boolean paid;
 
-    public POIInternet(double longitude, double latitude, String name, String typeAccess, Boolean paid) {
-        super(longitude, latitude);
+    public POIInternet(LatLng position, String name, String typeAccess, Boolean paid) {
+        super(position);
         this.name = name;
         this.typeAccess = typeAccess;
         this.paid = paid;

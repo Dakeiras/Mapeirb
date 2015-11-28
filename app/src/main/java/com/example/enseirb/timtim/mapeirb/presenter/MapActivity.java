@@ -37,8 +37,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     private POICollection poiCollectionTest() {
         POICollection poiCollection = new POICollection();
-        poiCollection.add(new POIDefibrillator(-0.578, 44.80, "hjkl", "hjlk", "uiop", "fghj", true));
-        poiCollection.add(new POIDefibrillator(-0.572, 44.88, "hjiiikl", "ihiijiilk", "uiiioipi", "figihij", true));
+        poiCollection.add(new POIDefibrillator(new LatLng(44.80, -0.578), "hjkl", "hjlk", "uiop", "fghj", true));
+        poiCollection.add(new POIDefibrillator(new LatLng(44.88, -0.572), "hjiiikl", "ihiijiilk", "uiiioipi", "figihij", true));
         return poiCollection;
     }
 
@@ -47,7 +47,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         for (POI poi : poiCollection.getPoiCollection()) {
             String title = poi.getTitle();
             String snippet = poi.getTitle();
-            LatLng latLng = new LatLng(poi.latitude, poi.longitude);
+            LatLng latLng = poi.getPosition();
             map.addMarker(new MarkerOptions()
                     .title(title)
                     .snippet(snippet)

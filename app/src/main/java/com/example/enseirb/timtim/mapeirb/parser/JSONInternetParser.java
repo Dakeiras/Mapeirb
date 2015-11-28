@@ -1,7 +1,8 @@
 package com.example.enseirb.timtim.mapeirb.parser;
 
-import com.example.enseirb.timtim.mapeirb.dto.POIInternetAccessDTO;
 import com.example.enseirb.timtim.mapeirb.dto.POICollectionDTO;
+import com.example.enseirb.timtim.mapeirb.dto.POIInternetAccessDTO;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,13 +29,15 @@ public class JSONInternetParser implements IPOICollectionParser {
                 internetAccessObject = internetAccessArray.getJSONObject(i);
 
                 Double l = internetAccessObject.getDouble(LONGITUDE);
-                Double longitude = internetAccessObject.optDouble(LONGITUDE, 0.0);
-                Double latitude = internetAccessObject.optDouble(LATITUDE, 0.0);
+                LatLng position = new LatLng(
+                        internetAccessObject.optDouble(LONGITUDE, 0),
+                        internetAccessObject.optDouble(LATITUDE, 0)
+                );
                 String name = internetAccessObject.optString(INTERNET_NAME, null);
                 String nature = internetAccessObject.optString(INTERNET_NATURE, null);
                 String nbPlace = internetAccessObject.optString(INTERNET_GRATUITY, null);
 
-                poiInternetAccess.addPOIDTO(new POIInternetAccessDTO(longitude, latitude, name, nature, nbPlace));
+                poiInternetAccess.addPOIDTO(new POIInternetAccessDTO(position, name, nature, nbPlace));
             }
         } catch (JSONException e) {
             e.printStackTrace();

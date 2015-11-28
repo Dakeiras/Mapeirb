@@ -10,8 +10,7 @@ public class DefibrillatorsConverter implements IPOIsConverter {
     @Override
     public POI convertDTO(POIDTO collectionDTO) {
         POIDefibrillatorDTO defibrillatorCollectionDTO = (POIDefibrillatorDTO) collectionDTO;
-        return new POIDefibrillator(defibrillatorCollectionDTO.getLongitude(),
-                defibrillatorCollectionDTO.getLatitude(),
+        return new POIDefibrillator(defibrillatorCollectionDTO.getPosition(),
                 defibrillatorCollectionDTO .getTypologie(),
                 defibrillatorCollectionDTO.getAddress(),
                 defibrillatorCollectionDTO.getName(),
