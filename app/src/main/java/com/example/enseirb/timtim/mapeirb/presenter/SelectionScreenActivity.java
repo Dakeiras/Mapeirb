@@ -34,28 +34,28 @@ public class SelectionScreenActivity extends AppCompatActivity {
         defibrilatorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowList(InformationListActivity.DEFIBRILATOR_NAME);
+                ShowList(InformationListFragment.DEFIBRILATOR_NAME);
             }
         });
 
         electricCarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowList(InformationListActivity.ELECTRIC_CAR_NAME);
+                ShowList(InformationListFragment.ELECTRIC_CAR_NAME);
             }
         });
 
         internetAccessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowList(InformationListActivity.INTERNET_NAME);
+                ShowList(InformationListFragment.INTERNET_NAME);
             }
         });
 
         toiletsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowList(InformationListActivity.TOILET_NAME);
+                ShowList(InformationListFragment.TOILET_NAME);
             }
         });
 
