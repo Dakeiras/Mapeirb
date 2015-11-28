@@ -12,7 +12,7 @@
         android:layout_height="match_parent"/>
     <!-- map activity -->
     <fragment
-        class="com.example.enseirb.timtim.mapeirb.presenter.MapActivity"
+        class="com.google.android.gms.maps.SupportMapFragment"
         android:id="@+id/map_layout"
         android:layout_width="0dp"
         android:layout_weight="70"
