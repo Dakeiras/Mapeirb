@@ -1,15 +1,14 @@
 package com.example.enseirb.timtim.mapeirb.dto;
 
-import com.google.android.gms.maps.model.LatLng;
-
 public class POIElectricDTO extends POIDTO{
     private int number;
     private String name;
     private String address;
     private String status;
 
-public POIElectricDTO(LatLng position, String name, String address, String status, int number) {
-    this.setPosition(position);
+public POIElectricDTO(Double longitude, Double latitude, String name, String address, String status, int number) {
+    this.setLongitude(longitude);
+    this.setLatitude(latitude);
     this.address = address;
     this.name = name;
     this.status = status;

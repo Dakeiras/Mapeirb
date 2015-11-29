@@ -1,17 +1,23 @@
 package com.example.enseirb.timtim.mapeirb.dto;
 
-import com.google.android.gms.maps.model.LatLng;
-
 public abstract class POIDTO {
 
-    LatLng position;
+    private Double longitude;
+    private Double latitude;
 
-
-    public LatLng getPosition() {
-        return position;
+    public Double getLongitude() {
+        return longitude;
     }
 
-    public void setPosition(LatLng position) {
-        this.position = position;
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 }

@@ -75,4 +75,6 @@ public class POICollectionConverter implements com.example.enseirb.timtim.mapeir
 
         return poiCollection;
     }
+
+
 }
