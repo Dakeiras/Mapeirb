@@ -2,7 +2,6 @@ package com.example.enseirb.timtim.mapeirb.parser;
 
 import com.example.enseirb.timtim.mapeirb.dto.POICollectionDTO;
 import com.example.enseirb.timtim.mapeirb.dto.POIToiletsDTO;
-import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,17 +22,15 @@ public class JSONToiletParser implements IPOICollectionParser {
             toiletsArray = reader.getJSONArray(TOILET_OBJECT);
 
             for (int i = 0; i < toiletsArray.length(); i++) {
-                JSONObject toiletsAccessObject;
-                toiletsAccessObject = toiletsArray.getJSONObject(i);
+                JSONObject toiletsObject;
+                toiletsObject = toiletsArray.getJSONObject(i);
 
-                LatLng position = new LatLng(
-                        toiletsAccessObject.optDouble(LONGITUDE, 0),
-                        toiletsAccessObject.optDouble(LATITUDE, 0)
-                );
-                String typologie = toiletsAccessObject.optString(TOILET_TYPOLOGIE, null);
-                String address = toiletsAccessObject.optString(TOILET_ADDRESS, null);
+                Double longitude = toiletsObject.optDouble(LONGITUDE, 0);
+                Double latitude = toiletsObject.optDouble(LATITUDE, 0);
+                String typologie = toiletsObject.optString(TOILET_TYPOLOGIE, null);
+                String address = toiletsObject.optString(TOILET_ADDRESS, null);
 
-                poiToilet.addPOIDTO(new POIToiletsDTO(position, typologie, address));
+                poiToilet.addPOIDTO(new POIToiletsDTO(longitude, latitude, typologie, address));
             }
 
         } catch (JSONException e) {

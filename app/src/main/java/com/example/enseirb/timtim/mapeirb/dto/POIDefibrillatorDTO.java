@@ -1,7 +1,5 @@
 package com.example.enseirb.timtim.mapeirb.dto;
 
-import com.google.android.gms.maps.model.LatLng;
-
 public class POIDefibrillatorDTO extends POIDTO{
 
     private String typologie;
@@ -10,8 +8,9 @@ public class POIDefibrillatorDTO extends POIDTO{
     private String telephone;
     private String installe;
 
-    public POIDefibrillatorDTO(LatLng position, String typologie, String address, String name, String telephone, String installe) {
-        this.setPosition(position);
+    public POIDefibrillatorDTO(Double longitude, Double latitude, String typologie, String address, String name, String telephone, String installe) {
+        this.setLongitude(longitude);
+        this.setLatitude(latitude);
         this.typologie = typologie;
         this.address = address;
         this.name = name;
