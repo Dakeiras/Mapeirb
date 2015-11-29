@@ -2,7 +2,7 @@ package com.example.enseirb.timtim.mapeirb.model;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public abstract class POI {
+public abstract class POI implements IPOI{
 
     private LatLng position;
 
@@ -10,7 +10,9 @@ public abstract class POI {
         this.position = position;
     }
 
+    @Override
     public abstract String getTitle();
+    @Override
     public LatLng getPosition(){
         return position;
     }

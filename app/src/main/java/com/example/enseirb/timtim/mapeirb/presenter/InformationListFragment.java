@@ -2,7 +2,6 @@ package com.example.enseirb.timtim.mapeirb.presenter;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,7 @@ import com.example.enseirb.timtim.mapeirb.R;
 import com.example.enseirb.timtim.mapeirb.business.IPOICollectionBusiness;
 import com.example.enseirb.timtim.mapeirb.business.POICollectionBusiness;
 import com.example.enseirb.timtim.mapeirb.business.listener.IPOICollectionBusinessListener;
-import com.example.enseirb.timtim.mapeirb.model.POI;
+import com.example.enseirb.timtim.mapeirb.model.IPOI;
 import com.example.enseirb.timtim.mapeirb.model.POICollection;
 import com.example.enseirb.timtim.mapeirb.model.POIType;
 
@@ -96,7 +95,7 @@ public class InformationListFragment extends Fragment {
 
     private void fillList(POICollection poiCollection) {
         List<String> serviceList = new ArrayList<>();
-        for(POI poi: poiCollection.getPoiCollection()) {
+        for(IPOI poi: poiCollection.getPoiCollection()) {
             System.out.println(poi.getTitle());
             serviceList.add(poi.getTitle());
         }

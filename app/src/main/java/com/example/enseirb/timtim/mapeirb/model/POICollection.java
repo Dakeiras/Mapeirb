@@ -5,17 +5,17 @@ import java.util.Collection;
 
 public class POICollection {
 
-    private Collection<POI> poiCollection;
+    private Collection<IPOI> poiCollection;
 
     public POICollection(){
-        poiCollection = new ArrayList<POI>();
+        poiCollection = new ArrayList<IPOI>();
     }
 
-    public void add(POI poi) {
+    public void add(IPOI poi) {
         poiCollection.add(poi);
     }
 
-    public Collection<POI> getPoiCollection() {
+    public Collection<IPOI> getPoiCollection() {
         return poiCollection;
     }
 
