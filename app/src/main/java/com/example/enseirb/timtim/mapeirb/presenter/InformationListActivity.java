@@ -78,7 +78,7 @@ public class InformationListActivity extends FragmentActivity implements OnMapRe
                 String title = poi.getTitle();
                 String snippet = poi.getTitle();
                 LatLng latLng = poi.getPosition();
-
+                System.out.println("DEBUG: " + latLng );
                 clusterManager.addItem(new ClusterablePOI(poi));
 
             }
