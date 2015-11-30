@@ -11,7 +11,7 @@ public class ToiletsConverter implements IPOIsConverter {
     @Override
     public POI convertDTO(POIDTO collectionDTO) {
         POIToiletsDTO toiletCollectionDTO = (POIToiletsDTO) collectionDTO;
-        return new POIToilet(convertPosition(toiletCollectionDTO.getLatitude(), toiletCollectionDTO.getLatitude()),
+        return new POIToilet(convertPosition(toiletCollectionDTO.getLatitude(), toiletCollectionDTO.getLongitude()),
                 convertType(toiletCollectionDTO.getType()),
                 convertAddress(toiletCollectionDTO.getAddress()));
     }
