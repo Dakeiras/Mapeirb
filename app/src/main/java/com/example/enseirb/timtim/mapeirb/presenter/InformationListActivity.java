@@ -1,5 +1,6 @@
 package com.example.enseirb.timtim.mapeirb.presenter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -35,6 +36,7 @@ public class InformationListActivity extends FragmentActivity implements OnMapRe
     private IPOICollectionBusiness poiCollectionBusiness;
     private POICollection mPOICollection;
     private List<LatLng> poiList = new ArrayList<>();
+    private OnMapReadyCallback activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +56,12 @@ public class InformationListActivity extends FragmentActivity implements OnMapRe
         if((mapFragment= (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map)) != null) {
             mapFragment.getMapAsync(this);
+            createList(getIntent().getStringExtra(SERVICE_NAME));
         }
     }
 
     private void centerOnItem() {
-        
+
     }
 
 
@@ -69,21 +72,16 @@ public class InformationListActivity extends FragmentActivity implements OnMapRe
         return intent;
     }
 
-    private void addMarker(String title, String snippet, LatLng position){
-        map.addMarker(new MarkerOptions()
-                .title(title)
-                .snippet(snippet)
-                .position(position));
-    }
-
     private void setMarkers(ClusterManager<ClusterablePOI> clusterManager, POICollection poiCollection){
-        for (IPOI poi : poiCollection.getPoiCollection()) {
-            String title = poi.getTitle();
-            String snippet = poi.getTitle();
-            LatLng latLng = poi.getPosition();
+        if(poiCollection!=null) {
+            for (IPOI poi : poiCollection.getPoiCollection()) {
+                String title = poi.getTitle();
+                String snippet = poi.getTitle();
+                LatLng latLng = poi.getPosition();
 
-            clusterManager.addItem(new ClusterablePOI(poi));
+                clusterManager.addItem(new ClusterablePOI(poi));
 
+            }
         }
     }
 
@@ -117,8 +115,15 @@ public class InformationListActivity extends FragmentActivity implements OnMapRe
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        System.out.println("DEBUG: test1");
                         mPOICollection = poiCollection;
-                        onMapReady(map);
+                        SupportMapFragment mapFragment;
+                        if((mapFragment= (SupportMapFragment) getSupportFragmentManager()
+                                .findFragmentById(R.id.map)) != null) {
+                            System.out.println("DEBUG: test2");
+                            mapFragment.getMapAsync(activity);
+                        }
+                        System.out.println("DEBUG: test3");
                     }
                 });
 
