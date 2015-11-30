@@ -10,8 +10,8 @@
     tools:context="com.example.enseirb.timtim.mapeirb.presenter.InformationListActivity">
 
     <fragment
-        class="com.example.enseirb.timtim.mapeirb.presenter.InformationListFragment"
-        android:id="@+id/list_layout_fragment"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/map_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

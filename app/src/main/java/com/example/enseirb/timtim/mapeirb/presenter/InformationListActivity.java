@@ -5,10 +5,18 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.example.enseirb.timtim.mapeirb.R;
+import com.example.enseirb.timtim.mapeirb.business.IPOICollectionBusiness;
+import com.example.enseirb.timtim.mapeirb.business.POICollectionBusiness;
+import com.example.enseirb.timtim.mapeirb.business.listener.IPOICollectionBusinessListener;
 import com.example.enseirb.timtim.mapeirb.model.IPOI;
 import com.example.enseirb.timtim.mapeirb.model.POICollection;
+import com.example.enseirb.timtim.mapeirb.model.POIType;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -24,6 +32,8 @@ public class InformationListActivity extends FragmentActivity implements OnMapRe
 
     private static final String SERVICE_NAME = "com.example.enseirb.timtim.mapeirb.presenter.SERVICE";
     private GoogleMap map;
+    private IPOICollectionBusiness poiCollectionBusiness;
+    private POICollection mPOICollection;
     private List<LatLng> poiList = new ArrayList<>();
 
     @Override
@@ -34,8 +44,11 @@ public class InformationListActivity extends FragmentActivity implements OnMapRe
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
-        InformationListFragment fragment = (InformationListFragment) getFragmentManager().findFragmentById(R.id.list_layout_fragment);
-        fragment.createList(getIntent().getStringExtra(SERVICE_NAME));
+
+        InformationListFragment fragment;
+        if((fragment = (InformationListFragment) getFragmentManager().findFragmentById(R.id.list_layout_fragment))!=null) {
+            fragment.createList(getIntent().getStringExtra(SERVICE_NAME));
+        }
 
         SupportMapFragment mapFragment;
         if((mapFragment= (SupportMapFragment) getSupportFragmentManager()
@@ -87,7 +100,61 @@ public class InformationListActivity extends FragmentActivity implements OnMapRe
         map.setOnMarkerClickListener(clusterManager);
 
 //        setMarkers(map, poiCollectionTest());
-        InformationListFragment fragment = (InformationListFragment) getFragmentManager().findFragmentById(R.id.list_layout_fragment);
-        setMarkers(clusterManager, fragment.getPOICollection());
+        setMarkers(clusterManager, mPOICollection);
     }
+
+    public void createList(String service) {
+        initializeBusiness();
+
+        retrieveServiceList(service);
+
+    }
+
+    private void retrieveServiceList(String service) {
+        IPOICollectionBusinessListener listener = new IPOICollectionBusinessListener() {
+            @Override
+            public void onSuccess(final POICollection poiCollection) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPOICollection = poiCollection;
+                        onMapReady(map);
+                    }
+                });
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        };
+
+        switch (service) {
+
+            case InformationListFragment.DEFIBRILATOR_NAME:
+                poiCollectionBusiness.retrievePOICollection(POIType.DEFIBRILLATOR,listener);
+                break;
+            case InformationListFragment.INTERNET_NAME:
+                poiCollectionBusiness.retrievePOICollection(POIType.INTERNET,listener);
+                break;
+            case InformationListFragment.ELECTRIC_CAR_NAME:
+                poiCollectionBusiness.retrievePOICollection(POIType.ELECTRIC,listener);
+                break;
+            case InformationListFragment.TOILET_NAME:
+                poiCollectionBusiness.retrievePOICollection(POIType.TOILET,listener);
+                break;
+            default:
+                break;
+        }
+
+
+
+    }
+
+    private void initializeBusiness() {
+        poiCollectionBusiness = new POICollectionBusiness();
+    }
+
 }
+
