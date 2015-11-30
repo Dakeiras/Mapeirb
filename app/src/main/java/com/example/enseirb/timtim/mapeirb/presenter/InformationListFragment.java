@@ -32,6 +32,8 @@ public class InformationListFragment extends Fragment {
     protected static final String TOILET_NAME = "com.example.enseirb.timtim.mapeirb.presenter.TOILET";
     protected static final String INTERNET_NAME = "com.example.enseirb.timtim.mapeirb.presenter.INTERNET";
 
+    private POICollection mPOICollection;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.information_list_display, container, false);
@@ -59,6 +61,7 @@ public class InformationListFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        mPOICollection = poiCollection;
                         fillList(poiCollection);
                     }
                 });
@@ -104,5 +107,9 @@ public class InformationListFragment extends Fragment {
 
     private void initializeBusiness() {
         poiCollectionBusiness = new POICollectionBusiness();
+    }
+
+    public POICollection getPOICollection() {
+        return mPOICollection;
     }
 }

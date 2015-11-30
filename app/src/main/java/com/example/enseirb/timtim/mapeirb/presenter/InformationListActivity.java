@@ -7,12 +7,15 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.example.enseirb.timtim.mapeirb.R;
+import com.example.enseirb.timtim.mapeirb.model.IPOI;
+import com.example.enseirb.timtim.mapeirb.model.POICollection;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,24 +52,8 @@ public class InformationListActivity extends FragmentActivity implements OnMapRe
 
     public static Intent getIntent(Context context, String service) {
         Intent intent = new Intent(context, InformationListActivity.class);
-        intent.putExtra(SERVICE_NAME,service);
+        intent.putExtra(SERVICE_NAME, service);
         return intent;
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        map = googleMap;
-        LatLng bdx = new LatLng(44.840950, -0.574813);
-        map.setMyLocationEnabled(true);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(bdx, 12));
-
-        poiList.add(new LatLng(44.80, -0.574));
-        poiList.add(new LatLng(44.84, -0.57));
-        poiList.add(new LatLng(44.82, -0.594));
-        poiList.add(new LatLng(44.79, -0.525));
-
-        for (LatLng elm: poiList)
-            addMarker("cul", "coucou", elm);
     }
 
     private void addMarker(String title, String snippet, LatLng position){
@@ -74,5 +61,33 @@ public class InformationListActivity extends FragmentActivity implements OnMapRe
                 .title(title)
                 .snippet(snippet)
                 .position(position));
+    }
+
+    private void setMarkers(ClusterManager<ClusterablePOI> clusterManager, POICollection poiCollection){
+        for (IPOI poi : poiCollection.getPoiCollection()) {
+            String title = poi.getTitle();
+            String snippet = poi.getTitle();
+            LatLng latLng = poi.getPosition();
+
+            clusterManager.addItem(new ClusterablePOI(poi));
+
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        System.out.println("DEBUG: coucou");
+        map = googleMap;
+        LatLng bdx = new LatLng(44.840950, -0.574813);
+        map.setMyLocationEnabled(true);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(bdx, 12));
+
+        ClusterManager<ClusterablePOI> clusterManager = new ClusterManager<ClusterablePOI>(this, map);
+        map.setOnCameraChangeListener(clusterManager);
+        map.setOnMarkerClickListener(clusterManager);
+
+//        setMarkers(map, poiCollectionTest());
+        InformationListFragment fragment = (InformationListFragment) getFragmentManager().findFragmentById(R.id.list_layout_fragment);
+        setMarkers(clusterManager, fragment.getPOICollection());
     }
 }
