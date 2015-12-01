@@ -26,4 +26,9 @@ public class ClusterablePOI implements IPOI,ClusterItem {
     public LatLng getPosition() {
         return poi.getPosition();
     }
+
+    @Override
+    public String getName() {
+        return poi.getName();
+    }
 }

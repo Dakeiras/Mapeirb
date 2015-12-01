@@ -5,16 +5,20 @@ import com.google.android.gms.maps.model.LatLng;
 public class POIToilet extends POI  {
     private String type;
     private String address;
+    private String neighbourhood;
+    private String option;
 
-    public POIToilet(LatLng position, String type, String address) {
-        super(position);
+    public POIToilet(String name, LatLng position, String type, String address, String neighbourhood, String option) {
+        super(position, name);
         this.type = type;
         this.address = address;
+        this.neighbourhood = neighbourhood;
+        this.option = option;
     }
 
     @Override
     public String getTitle() {
-        return type + address;
+        return getName() + address;
     }
 
     @Override
@@ -36,5 +40,21 @@ public class POIToilet extends POI  {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getNeighbourhood() {
+        return neighbourhood;
+    }
+
+    public void setNeighbourhood(String neighbourhood) {
+        this.neighbourhood = neighbourhood;
+    }
+
+    public String getOption() {
+        return option;
+    }
+
+    public void setOption(String option) {
+        this.option = option;
     }
 }

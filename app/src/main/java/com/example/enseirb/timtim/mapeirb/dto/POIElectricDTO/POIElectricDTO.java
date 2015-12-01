@@ -9,10 +9,10 @@ public class POIElectricDTO extends POIDTO {
     private String address;
     private String status;
     private String access;
-    private List<CarPlace> carPlaces;
+    private List<CarPlaceDTO> carPlaces;
 
 
-    public POIElectricDTO(Double longitude, Double latitude, String name, int number, String address, String status, String access, List<CarPlace> carPlaces) {
+    public POIElectricDTO(Double longitude, Double latitude, String name, int number, String address, String status, String access, List<CarPlaceDTO> carPlaces) {
         super(longitude, latitude, name);
         this.number = number;
         this.address = address;
@@ -53,11 +53,11 @@ public class POIElectricDTO extends POIDTO {
         this.access = access;
     }
 
-    public List<CarPlace> getCarPlaces() {
+    public List<CarPlaceDTO> getCarPlaces() {
         return carPlaces;
     }
 
-    public void setCarPlaces(List<CarPlace> carPlaces) {
+    public void setCarPlaces(List<CarPlaceDTO> carPlaces) {
         this.carPlaces = carPlaces;
     }
 }

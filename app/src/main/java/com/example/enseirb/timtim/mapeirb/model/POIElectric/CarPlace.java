@@ -1,6 +1,7 @@
-package com.example.enseirb.timtim.mapeirb.dto.POIElectricDTO;
+package com.example.enseirb.timtim.mapeirb.model.POIElectric;
 
-public class CarPlace{
+public class CarPlace {
+
     private int number;
     private String status;
 

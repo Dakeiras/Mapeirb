@@ -1,10 +1,15 @@
 package com.example.enseirb.timtim.mapeirb.converter;
 
 import com.example.enseirb.timtim.mapeirb.dto.POIDTO;
+import com.example.enseirb.timtim.mapeirb.dto.POIElectricDTO.CarPlaceDTO;
 import com.example.enseirb.timtim.mapeirb.dto.POIElectricDTO.POIElectricDTO;
-import com.example.enseirb.timtim.mapeirb.model.POIElectric;
+import com.example.enseirb.timtim.mapeirb.model.POIElectric.CarPlace;
+import com.example.enseirb.timtim.mapeirb.model.POIElectric.POIElectric;
 import com.example.enseirb.timtim.mapeirb.model.POI;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ElectricsConverter implements IPOIsConverter {
 
@@ -15,7 +20,9 @@ public class ElectricsConverter implements IPOIsConverter {
                 convertName(electricCollectionDTO.getName()),
                 convertAddress(electricCollectionDTO.getAddress()),
                 convertStatus(electricCollectionDTO.getStatus()),
-                convertNumber(electricCollectionDTO.getNumber()));
+                convertNumber(electricCollectionDTO.getNumber()),
+                convertAccess(electricCollectionDTO.getAccess()),
+                convertCarPlaces(electricCollectionDTO.getCarPlaces()));
     }
 
     private LatLng convertPosition(Double latitude, Double longitude) {
@@ -37,4 +44,17 @@ public class ElectricsConverter implements IPOIsConverter {
     private int convertNumber(int number) {
         return number;
     }
+
+    private String convertAccess(String access) {
+        return access;
+    }
+
+    private List<CarPlace> convertCarPlaces(List<CarPlaceDTO> carPlacesDTO) {
+        List<CarPlace> carPlaces = new ArrayList<>();
+        for (CarPlaceDTO carPlaceDTO : carPlacesDTO){
+            carPlaces.add(new CarPlace(carPlaceDTO.getNumber(), carPlaceDTO.getStatus()));
+        }
+        return carPlaces;
+    }
+
 }

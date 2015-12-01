@@ -1,25 +1,30 @@
-package com.example.enseirb.timtim.mapeirb.model;
+package com.example.enseirb.timtim.mapeirb.model.POIElectric;
 
+import com.example.enseirb.timtim.mapeirb.model.POI;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.List;
 
 public class POIElectric extends POI {
 
     private int number;
-    private String name;
     private String address;
     private Boolean status;
+    private String access;
+    private List<CarPlace> carPlaces;
 
-    public POIElectric(LatLng position, String name, String address, Boolean status, int number) {
-        super(position);
+    public POIElectric(LatLng position, String name, String address, Boolean status, int number, String access, List<CarPlace> carPlaces) {
+        super(position, name);
         this.address = address;
-        this.name = name;
         this.status = status;
         this.number = number;
+        this.access = access;
+        this.carPlaces = carPlaces;
     }
 
     @Override
     public String getTitle() {
-        return name + address;
+        return getName() + address;
     }
 
     @Override
@@ -33,14 +38,6 @@ public class POIElectric extends POI {
 
     public void setNumber(int number) {
         this.number = number;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getAddress() {
@@ -57,5 +54,21 @@ public class POIElectric extends POI {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public String getAccess() {
+        return access;
+    }
+
+    public void setAccess(String access) {
+        this.access = access;
+    }
+
+    public List<CarPlace> getCarPlaces() {
+        return carPlaces;
+    }
+
+    public void setCarPlaces(List<CarPlace> carPlaces) {
+        this.carPlaces = carPlaces;
     }
 }

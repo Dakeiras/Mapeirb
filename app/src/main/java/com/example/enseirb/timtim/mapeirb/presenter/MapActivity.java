@@ -38,22 +38,22 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     private POICollection poiCollectionTest() {
         POICollection poiCollection = new POICollection();
-        poiCollection.add(new POIDefibrillator(new LatLng(45.440950, -0.574813), "1", "1", "1", "1", true));
-        poiCollection.add(new POIDefibrillator(new LatLng(45.40, -0.572), "2", "2", "2", "2", true));
-        poiCollection.add(new POIDefibrillator(new LatLng(45.450, -0.570), "3", "3", "1", "3", true));
-        poiCollection.add(new POIDefibrillator(new LatLng(45.790, -0.571), "4", "4", "4", "4", true));
-        poiCollection.add(new POIDefibrillator(new LatLng(45.82, -0.5765), "5", "5", "5", "5", true));
-        poiCollection.add(new POIDefibrillator(new LatLng(45.83, -0.5765), "5", "5", "5", "5", true));
-        poiCollection.add(new POIDefibrillator(new LatLng(45.84, -0.5765), "5", "5", "5", "5", true));
-        poiCollection.add(new POIDefibrillator(new LatLng(45.82, -0.577), "6", "6", "6", "6", true));
-        poiCollection.add(new POIDefibrillator(new LatLng(45.815, -0.5289), "7", "7", "7", "7", true));
-        poiCollection.add(new POIDefibrillator(new LatLng(44.840950, -0.574813), "1", "1", "1", "1", true));
-        poiCollection.add(new POIDefibrillator(new LatLng(44.80, -0.572), "2", "2", "2", "2", true));
-        poiCollection.add(new POIDefibrillator(new LatLng(44.850, -0.570), "3", "3", "1", "3", true));
-        poiCollection.add(new POIDefibrillator(new LatLng(44.790, -0.571), "4", "4", "4", "4", true));
-        poiCollection.add(new POIDefibrillator(new LatLng(44.82, -0.5765), "5", "5", "5", "5", true));
-        poiCollection.add(new POIDefibrillator(new LatLng(44.82, -0.577), "6", "6", "6", "6", true));
-        poiCollection.add(new POIDefibrillator(new LatLng(44.815, -0.5289), "7", "7", "7", "7", true));
+        poiCollection.add(new POIDefibrillator(new LatLng(45.440950, -0.574813), "1", "1", "1", "1", true, "Bordeaux", 33000) );
+        poiCollection.add(new POIDefibrillator(new LatLng(45.40, -0.572), "2", "2", "2", "2", true, "Bordeaux", 33000));
+        poiCollection.add(new POIDefibrillator(new LatLng(45.450, -0.570), "3", "3", "1", "3", true, "Bordeaux", 33000));
+        poiCollection.add(new POIDefibrillator(new LatLng(45.790, -0.571), "4", "4", "4", "4", true, "Bordeaux", 33000));
+        poiCollection.add(new POIDefibrillator(new LatLng(45.82, -0.5765), "5", "5", "5", "5", true, "Bordeaux", 33000));
+        poiCollection.add(new POIDefibrillator(new LatLng(45.83, -0.5765), "5", "5", "5", "5", true, "Bordeaux", 33000));
+        poiCollection.add(new POIDefibrillator(new LatLng(45.84, -0.5765), "5", "5", "5", "5", true, "Bordeaux", 33000));
+        poiCollection.add(new POIDefibrillator(new LatLng(45.82, -0.577), "6", "6", "6", "6", true, "Bordeaux", 33000));
+        poiCollection.add(new POIDefibrillator(new LatLng(45.815, -0.5289), "7", "7", "7", "7", true, "Bordeaux", 33000));
+        poiCollection.add(new POIDefibrillator(new LatLng(44.840950, -0.574813), "1", "1", "1", "1", true, "Bordeaux", 33000));
+        poiCollection.add(new POIDefibrillator(new LatLng(44.80, -0.572), "2", "2", "2", "2", true, "Bordeaux", 33000));
+        poiCollection.add(new POIDefibrillator(new LatLng(44.850, -0.570), "3", "3", "1", "3", true, "Bordeaux", 33000));
+        poiCollection.add(new POIDefibrillator(new LatLng(44.790, -0.571), "4", "4", "4", "4", true, "Bordeaux", 33000));
+        poiCollection.add(new POIDefibrillator(new LatLng(44.82, -0.5765), "5", "5", "5", "5", true, "Bordeaux", 33000));
+        poiCollection.add(new POIDefibrillator(new LatLng(44.82, -0.577), "6", "6", "6", "6", true, "Bordeaux", 33000));
+        poiCollection.add(new POIDefibrillator(new LatLng(44.815, -0.5289), "7", "7", "7", "7", true, "Bordeaux", 33000));
         return poiCollection;
     }
 

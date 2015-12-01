@@ -5,9 +5,11 @@ import com.google.android.gms.maps.model.LatLng;
 public abstract class POI implements IPOI{
 
     private LatLng position;
+    private String name;
 
-    public POI(LatLng position) {
+    public POI(LatLng position, String name) {
         this.position = position;
+        this.name = name;
     }
 
     @Override
@@ -20,4 +22,10 @@ public abstract class POI implements IPOI{
     public LatLng getPosition(){
         return position;
     }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
 }

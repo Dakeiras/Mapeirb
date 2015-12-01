@@ -14,7 +14,11 @@ public class InternetsConverter implements IPOIsConverter {
         return new POIInternet(convertPosition(internetCollectionDTO.getLatitude(), internetCollectionDTO.getLongitude()),
                 convertName(internetCollectionDTO .getName()),
                 convertAccessType(internetCollectionDTO.getAccessType()),
-                convertPaid(internetCollectionDTO.getPaid()));
+                convertPaid(internetCollectionDTO.getPaid()),
+                convertSituation(internetCollectionDTO.getSituation()),
+                convertTypePublic(internetCollectionDTO.getTypePublic()),
+                convertFormation(internetCollectionDTO.getFormation()),
+                convertPostNumber(internetCollectionDTO.getPostNumber()));
     }
 
     private LatLng convertPosition(Double latitude, Double longitude) {
@@ -32,4 +36,20 @@ public class InternetsConverter implements IPOIsConverter {
     private Boolean convertPaid(String paid) {
         return paid.equals("OUI");
     }
+    private String convertSituation(String situation) {
+        return situation;
+    }
+
+    private String convertTypePublic(String typePublic) {
+        return typePublic;
+    }
+
+    private String convertFormation(String formation) {
+        return formation;
+    }
+
+    private int convertPostNumber(int postNumber) {
+        return postNumber;
+    }
+
 }

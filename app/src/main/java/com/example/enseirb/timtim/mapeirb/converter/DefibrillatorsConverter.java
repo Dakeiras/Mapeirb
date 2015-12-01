@@ -16,8 +16,11 @@ public class DefibrillatorsConverter implements IPOIsConverter {
                 convertAddress(defibrillatorCollectionDTO.getAddress()),
                 convertName(defibrillatorCollectionDTO.getName()),
                 convertPhone(defibrillatorCollectionDTO.getTelephone()),
-                convertInstalle(defibrillatorCollectionDTO.getInstalle()));
+                convertInstalle(defibrillatorCollectionDTO.getInstalle()),
+                convertCity(defibrillatorCollectionDTO.getCity()),
+                convertPostalCode(defibrillatorCollectionDTO.getPostalCode()));
     }
+
 
     private LatLng convertPosition(Double latitude, Double longitude) {
         return new LatLng(latitude, longitude);
@@ -44,6 +47,14 @@ public class DefibrillatorsConverter implements IPOIsConverter {
 
     private Boolean convertInstalle(String installe) {
         return (installe.equals("OUI"));
+    }
+
+    private String convertCity(String city) {
+        return city;
+    }
+
+    private int convertPostalCode(int postalCode) {
+        return postalCode;
     }
 
 }

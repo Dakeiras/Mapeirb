@@ -1,7 +1,7 @@
 package com.example.enseirb.timtim.mapeirb.parser;
 
 import com.example.enseirb.timtim.mapeirb.dto.POICollectionDTO;
-import com.example.enseirb.timtim.mapeirb.dto.POIElectricDTO.CarPlace;
+import com.example.enseirb.timtim.mapeirb.dto.POIElectricDTO.CarPlaceDTO;
 import com.example.enseirb.timtim.mapeirb.dto.POIElectricDTO.POIElectricDTO;
 
 import org.json.JSONArray;
@@ -50,7 +50,7 @@ public class JSONElectricParser implements IPOICollectionParser {
                 int number = electricObject.optInt(ELECTRIC_NUMBER, -1);
                 String access = electricObject.optString(ELECTRIC_ACCESS, null);
                 JSONArray carPlacesArray = electricObject.getJSONArray(ELECTRIC_CAR_PLACES);
-                List<CarPlace> carPlaces = new ArrayList<>();
+                List<CarPlaceDTO> carPlaces = new ArrayList<>();
                 for (int carPlace = 0 ; i < carPlacesArray.length() ; i++){
                      carPlaces.add(parseCarPlace(carPlacesArray.getJSONObject(carPlace)));
                 }
@@ -64,8 +64,8 @@ public class JSONElectricParser implements IPOICollectionParser {
         return poiCollectionElectric;
     }
 
-    private CarPlace parseCarPlace(JSONObject jsonObject) {
-        CarPlace carPlace = new CarPlace();
+    private CarPlaceDTO parseCarPlace(JSONObject jsonObject) {
+        CarPlaceDTO carPlace = new CarPlaceDTO();
         carPlace.setNumber(jsonObject.optInt(CAR_PLACE_NUMBER, -1));
         carPlace.setStatus(jsonObject.optString(CAR_PLACE_STATE, null));
         return carPlace;

@@ -6,21 +6,21 @@ public class POIDefibrillator extends POI  {
 
     private String typologie;
     private String address;
-    private String name;
     private String telephone;
     private Boolean installe;
+    private String city;
+    private int postalCode;
 
 
-    public POIDefibrillator(LatLng position, String typologie, String address, String name, String telephone, Boolean installe) {
-        super(position);
+    public POIDefibrillator(LatLng position, String typologie, String address, String name, String telephone, Boolean installe, String city, int postalCode) {
+        super(position, name);
         this.typologie = typologie;
         this.address = address;
-        this.name = name;
         this.telephone=telephone;
         this.installe = installe;
+        this.city = city;
+        this.postalCode = postalCode;
     }
-
-
 
     public Boolean getInstalle() {
         return installe;
@@ -36,14 +36,6 @@ public class POIDefibrillator extends POI  {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getAddress() {
@@ -62,12 +54,25 @@ public class POIDefibrillator extends POI  {
         this.typologie = typologie;
     }
 
+    public String getCity() {
+        return city;
+    }
 
+    public void setCity(String city) {
+        this.city = city;
+    }
 
+    public int getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(int postalCode) {
+        this.postalCode = postalCode;
+    }
 
     @Override
     public String getTitle() {
-        return name + address;
+        return getName() + address;
     }
 
     @Override

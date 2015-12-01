@@ -6,5 +6,5 @@ public interface IPOI {
     String getTitle();
     String getDescription();
     LatLng getPosition();
-
+    String getName();
 }
