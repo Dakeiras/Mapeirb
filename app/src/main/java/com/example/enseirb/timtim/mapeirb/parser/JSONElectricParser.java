@@ -41,7 +41,7 @@ public class JSONElectricParser implements IPOICollectionParser {
                 String status = electricObject.optString(ELECTRIC_STATUS, null);
                 int number = electricObject.optInt(ELECTRIC_NUMBER, -1);
 
-                poiCollectionElectric.addPOIDTO(new POIElectricDTO(longitude, latitude, name, address, status, number));
+                poiCollectionElectric.addPOIDTO(new POIElectricDTO(longitude, latitude, name, number, address, status));
             }
         } catch (JSONException e) {
             e.printStackTrace();

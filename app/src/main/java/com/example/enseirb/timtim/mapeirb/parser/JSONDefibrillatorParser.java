@@ -14,6 +14,8 @@ public class JSONDefibrillatorParser implements IPOICollectionParser {
     private static final String DEFIBRILLATOR_PHONE = "telephone";
     private static final String DEFIBRILLATOR_TYPOLOGIE = "typologie";
     private static final String DEFIBRILLATOR_INSTALLE = "installe";
+    private static final String DEFIBRILLATOR_CITY = "commune";
+    private static final String DEFIBRILLATOR_POSTAL_CODE = "code_postal";
     private static final String LONGITUDE = "x_long";
     private static final String LATITUDE = "y_lat";
     @Override
@@ -36,8 +38,10 @@ public class JSONDefibrillatorParser implements IPOICollectionParser {
                 String name = defibrillatorObject.optString(DEFIBRILLATOR_NAME, null);
                 String typologie = defibrillatorObject.optString(DEFIBRILLATOR_TYPOLOGIE, null);
                 String installe = defibrillatorObject.optString(DEFIBRILLATOR_INSTALLE, null);
+                String city = defibrillatorObject.optString(DEFIBRILLATOR_CITY, null);
+                int postalCode = defibrillatorObject.optInt(DEFIBRILLATOR_POSTAL_CODE, 33000);
 
-                poiCollectionDefibrillator.addPOIDTO(new POIDefibrillatorDTO(longitude, latitude, typologie, address, name, phone, installe));
+                poiCollectionDefibrillator.addPOIDTO(new POIDefibrillatorDTO(longitude, latitude, typologie, address, name, phone, installe, city, postalCode));
             }
         } catch (JSONException e) {
             e.printStackTrace();

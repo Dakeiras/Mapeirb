@@ -4,18 +4,19 @@ public class POIDefibrillatorDTO extends POIDTO{
 
     private String typologie;
     private String address;
-    private String name;
     private String telephone;
     private String installe;
+    private String city;
+    private int postalCode;
 
-    public POIDefibrillatorDTO(Double longitude, Double latitude, String typologie, String address, String name, String telephone, String installe) {
-        this.setLongitude(longitude);
-        this.setLatitude(latitude);
+    public POIDefibrillatorDTO(Double longitude, Double latitude, String name, String typologie, String address, String telephone, String installe, String city, int postalCode) {
+        super(longitude, latitude, name);
         this.typologie = typologie;
         this.address = address;
-        this.name = name;
         this.telephone = telephone;
         this.installe = installe;
+        this.city = city;
+        this.postalCode = postalCode;
     }
 
     public String getTypologie() {
@@ -34,14 +35,6 @@ public class POIDefibrillatorDTO extends POIDTO{
         this.address = address;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getTelephone() {
         return telephone;
     }
@@ -58,4 +51,19 @@ public class POIDefibrillatorDTO extends POIDTO{
         this.installe = installe;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public int getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(int postalCode) {
+        this.postalCode = postalCode;
+    }
 }

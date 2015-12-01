@@ -69,4 +69,9 @@ public class POIDefibrillator extends POI  {
     public String getTitle() {
         return name + address;
     }
+
+    @Override
+    public String getDescription() {
+        return getTitle();
+    }
 }

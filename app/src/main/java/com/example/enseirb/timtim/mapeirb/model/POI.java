@@ -12,6 +12,10 @@ public abstract class POI implements IPOI{
 
     @Override
     public abstract String getTitle();
+
+    @Override
+    public abstract String getDescription();
+
     @Override
     public LatLng getPosition(){
         return position;

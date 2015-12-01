@@ -17,6 +17,11 @@ public class POIToilet extends POI  {
         return type + address;
     }
 
+    @Override
+    public String getDescription() {
+        return getTitle();
+    }
+
     public String getType() {
         return type;
     }

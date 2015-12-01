@@ -22,6 +22,11 @@ public class POIElectric extends POI {
         return name + address;
     }
 
+    @Override
+    public String getDescription() {
+        return getTitle();
+    }
+
     public int getNumber() {
         return number;
     }

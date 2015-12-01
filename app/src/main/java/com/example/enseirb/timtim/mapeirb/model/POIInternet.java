@@ -19,6 +19,11 @@ public class POIInternet extends POI  {
         return name;
     }
 
+    @Override
+    public String getDescription() {
+        return getTitle();
+    }
+
     public String getName() {
         return name;
     }
