@@ -20,9 +20,8 @@ public class JSONToiletParser implements IPOICollectionParser {
     public POICollectionDTO parse(String jsonToilet) {
         POICollectionDTO poiToilet = new POICollectionDTO();
         try{
-            JSONArray toiletsArray;
             JSONObject reader =new JSONObject(jsonToilet);
-            toiletsArray = reader.getJSONArray(TOILET_OBJECT);
+            JSONArray toiletsArray = reader.getJSONArray(TOILET_OBJECT);
 
             for (int i = 0; i < toiletsArray.length(); i++) {
                 JSONObject toiletsObject;

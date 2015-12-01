@@ -22,10 +22,8 @@ public class JSONDefibrillatorParser implements IPOICollectionParser {
     public POICollectionDTO parse(String jsonDefibrillator)  {
         POICollectionDTO poiCollectionDefibrillator = new POICollectionDTO();
         try {
-            JSONArray defibrillatorArray;
-            JSONObject reader;
-            reader = new JSONObject(jsonDefibrillator);
-            defibrillatorArray = reader.getJSONArray(DEFIBRILLATOR_OBJECT);
+            JSONObject reader = new JSONObject(jsonDefibrillator);
+            JSONArray defibrillatorArray = reader.getJSONArray(DEFIBRILLATOR_OBJECT);
             for (int i = 0; i < defibrillatorArray.length(); i++) {
                 JSONObject defibrillatorObject;
                 defibrillatorObject = defibrillatorArray.getJSONObject(i);

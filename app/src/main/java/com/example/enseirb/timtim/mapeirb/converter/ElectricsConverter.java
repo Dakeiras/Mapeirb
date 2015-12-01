@@ -1,7 +1,7 @@
 package com.example.enseirb.timtim.mapeirb.converter;
 
 import com.example.enseirb.timtim.mapeirb.dto.POIDTO;
-import com.example.enseirb.timtim.mapeirb.dto.POIElectricDTO;
+import com.example.enseirb.timtim.mapeirb.dto.POIElectricDTO.POIElectricDTO;
 import com.example.enseirb.timtim.mapeirb.model.POIElectric;
 import com.example.enseirb.timtim.mapeirb.model.POI;
 import com.google.android.gms.maps.model.LatLng;
