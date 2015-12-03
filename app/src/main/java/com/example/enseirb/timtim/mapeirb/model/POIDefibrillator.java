@@ -22,6 +22,34 @@ public class POIDefibrillator extends POI  {
         this.postalCode = postalCode;
     }
 
+    @Override
+    public String getTitle() {
+        return getName() + address;
+    }
+
+    @Override
+    public String getDescription() {
+        String description = "";
+        if (address != null) {
+            description += "Adresse : " + address;
+        }
+        if (typologie != null) {
+            description += "Type : " + typologie;
+        }
+        if (city != null) {
+            description += "Ville : " + city;
+        }
+        if (postalCode > 0) {
+            description += "Code postal : " + postalCode;
+        }
+        description += "Installé : " + installe;
+        if (telephone != null) {
+            description += "Téléphone : " + telephone;
+        }
+
+        return description;
+    }
+
     public Boolean getInstalle() {
         return installe;
     }
@@ -70,13 +98,5 @@ public class POIDefibrillator extends POI  {
         this.postalCode = postalCode;
     }
 
-    @Override
-    public String getTitle() {
-        return getName() + address;
-    }
 
-    @Override
-    public String getDescription() {
-        return getTitle();
-    }
 }

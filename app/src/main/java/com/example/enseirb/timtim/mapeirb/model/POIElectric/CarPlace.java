@@ -29,4 +29,8 @@ public class CarPlace {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public boolean isFree(){
+        return status.equals("libre");
+    }
 }

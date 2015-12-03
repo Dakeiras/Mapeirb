@@ -23,7 +23,21 @@ public class POIToilet extends POI  {
 
     @Override
     public String getDescription() {
-        return getTitle();
+        String description = "";
+        if (address != null) {
+            description += "Adresse : " + address;
+        }
+        if (type != null) {
+            description += "Type : " + type;
+        }
+        if (neighbourhood != null) {
+            description += "Quartier : " + neighbourhood;
+        }
+        if (option != null) {
+            description += "Option : " + option;
+        }
+        return description;
+
     }
 
     public String getType() {

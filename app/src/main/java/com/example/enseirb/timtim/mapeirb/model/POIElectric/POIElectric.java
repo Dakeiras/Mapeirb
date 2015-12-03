@@ -29,7 +29,28 @@ public class POIElectric extends POI {
 
     @Override
     public String getDescription() {
-        return getTitle();
+        String description = "";
+        if (address != null) {
+            description += "Adresse : " + address;
+        }
+        if (status != null) {
+            description += "Statut : " + status;
+        }
+        if (access != null) {
+            description += "Accessibilité : " + access;
+        }
+        if (carPlaces != null) {
+            description += "Places : " + carPlaces.size() + "(" + carPlacesFree() + " libres)";
+        }
+        return description;
+    }
+
+    private int carPlacesFree() {
+        int cpt = 0;
+        for (CarPlace cp : carPlaces){
+            cpt += cp.isFree()?1:0;
+        }
+        return cpt;
     }
 
     public int getNumber() {

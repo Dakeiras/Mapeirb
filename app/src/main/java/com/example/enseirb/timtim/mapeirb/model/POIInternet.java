@@ -22,7 +22,24 @@ public class POIInternet extends POI  {
 
     @Override
     public String getTitle() {
-        return getName();
+        String description = "";
+        if (typeAccess != null) {
+            description += "Type d'accès : " + typeAccess;
+        }
+        description += "Payant : " + paid;
+        if (situation != null) {
+            description += "Situation : " + situation;
+        }
+        if (typePublic != null) {
+            description += "Public : " + typePublic;
+        }
+        if (formation != null) {
+            description += "Formation : " + formation;
+        }
+        if (postNumber > 0) {
+            description += "Code postal : " + postNumber;
+        }
+        return description;
     }
 
     @Override
