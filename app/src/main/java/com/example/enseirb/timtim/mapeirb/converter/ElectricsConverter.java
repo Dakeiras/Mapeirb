@@ -13,6 +13,8 @@ import java.util.List;
 
 public class ElectricsConverter implements IPOIsConverter {
 
+    private static final String OK_STRING = "OK";
+
     @Override
     public POI convertDTO(POIDTO collectionDTO) {
         POIElectricDTO electricCollectionDTO = (POIElectricDTO) collectionDTO;
@@ -38,7 +40,7 @@ public class ElectricsConverter implements IPOIsConverter {
     }
 
     private Boolean convertStatus(String status) {
-        return status.equals("OK");
+        return status.equals(OK_STRING);
     }
 
     private int convertNumber(int number) {

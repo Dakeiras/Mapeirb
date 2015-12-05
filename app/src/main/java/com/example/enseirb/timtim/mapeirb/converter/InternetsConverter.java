@@ -8,6 +8,8 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class InternetsConverter implements IPOIsConverter {
 
+    private static final String YES_STRING = "OUI";
+
     @Override
     public POI convertDTO(POIDTO collectionDTO) {
         POIInternetAccessDTO internetCollectionDTO = (POIInternetAccessDTO) collectionDTO;
@@ -34,7 +36,7 @@ public class InternetsConverter implements IPOIsConverter {
     }
 
     private Boolean convertPaid(String paid) {
-        return paid.equals("OUI");
+        return paid.equals(YES_STRING);
     }
     private String convertSituation(String situation) {
         return situation;

@@ -2,8 +2,8 @@ package com.example.enseirb.timtim.mapeirb.business;
 
 import com.example.enseirb.timtim.mapeirb.business.listener.IPOICollectionBusinessListener;
 import com.example.enseirb.timtim.mapeirb.converter.IPOICollectionConverter;
-import com.example.enseirb.timtim.mapeirb.converter.listener.IPOICollectionConverterListener;
 import com.example.enseirb.timtim.mapeirb.converter.POICollectionConverter;
+import com.example.enseirb.timtim.mapeirb.converter.listener.IPOICollectionConverterListener;
 import com.example.enseirb.timtim.mapeirb.model.POICollection;
 import com.example.enseirb.timtim.mapeirb.model.POIType;
 

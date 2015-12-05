@@ -8,7 +8,7 @@ public class POICollection {
     private Collection<IPOI> poiCollection;
 
     public POICollection(){
-        poiCollection = new ArrayList<IPOI>();
+        poiCollection = new ArrayList<>();
     }
 
     public void add(IPOI poi) {

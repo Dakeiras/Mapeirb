@@ -9,26 +9,26 @@ import com.example.enseirb.timtim.mapeirb.model.POICollection;
 import com.example.enseirb.timtim.mapeirb.model.POIType;
 
 public class POICollectionConverter implements com.example.enseirb.timtim.mapeirb.converter.IPOICollectionConverter {
+    private static String CLASS_NOT_FOUND = "Class {0} does not exist";
+    private static final String DAO_CLASS_PATH = "com.example.enseirb.timtim.mapeirb.dao";
+    private static final String DAO_CLASS_SUFFIX = "sDAO";
+    private static final String CONVERTER_CLASS_PATH = "com.example.enseirb.timtim.mapeirb.converter";
+    private static final String CONVERTER_CLASS_SUFFIX = "sConverter";
+    private static final String DOT_STRING = ".";
+
     private IPOIsDAO dao;
     private IPOIsConverter converter;
 
-        /**
-         * Return a new innstance of the wanted class given its type.
-         * @param packagePath The path of the package in which the class is
-         * @param poiType The type of the POI
-         * @param suffix The suffix of the className. Can whether be "CollectionConverter" or "CollectionDAO"
-         * @return an instance of the wanted class
-         */
         private Object getInstanceFromClassName(String packagePath, POIType poiType, String suffix){
             String className = poiType.toString().toLowerCase();
             className = className.substring(0, 1).toUpperCase() + className.substring(1);
-            String classPath = packagePath + "." + className;
+            String classPath = packagePath + DOT_STRING + className;
             classPath += suffix;
             Object retVal = null;
             try {
                 retVal = Class.forName(classPath).newInstance();
             } catch (InstantiationException | ClassNotFoundException | IllegalAccessException e) {
-                System.err.println("Class " + classPath + " does not exist");
+                System.err.println(String.format(CLASS_NOT_FOUND, classPath));
                 e.printStackTrace();
                 System.exit(1);
             }
@@ -37,12 +37,12 @@ public class POICollectionConverter implements com.example.enseirb.timtim.mapeir
 
         private IPOIsDAO getDaoCollectionFromName(POIType poiType){
             return (IPOIsDAO) getInstanceFromClassName(
-                    "com.example.enseirb.timtim.mapeirb.dao", poiType, "sDAO");
+                    DAO_CLASS_PATH, poiType, DAO_CLASS_SUFFIX);
         }
 
-        private IPOIsConverter getConvertercollectionFromName(POIType poiType){
+        private IPOIsConverter getConverterCollectionFromName(POIType poiType){
             return (IPOIsConverter) getInstanceFromClassName(
-                    "com.example.enseirb.timtim.mapeirb.converter", poiType, "sConverter");
+                    CONVERTER_CLASS_PATH, poiType, CONVERTER_CLASS_SUFFIX);
 
         }
 
@@ -50,7 +50,7 @@ public class POICollectionConverter implements com.example.enseirb.timtim.mapeir
 
     public POICollectionConverter(POIType type) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         this.dao = getDaoCollectionFromName(type);
-        this.converter  =getConvertercollectionFromName(type);
+        this.converter  = getConverterCollectionFromName(type);
     }
     public void retrievePOICollection(final POIType type, final IPOICollectionConverterListener listener){
         dao.retrievePOICollection(new IPOICollectionDAOListener() {

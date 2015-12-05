@@ -2,29 +2,29 @@ package com.example.enseirb.timtim.mapeirb.dto;
 
 public class POIDefibrillatorDTO extends POIDTO{
 
-    private String typologie;
+    private String typology;
     private String address;
     private String telephone;
-    private String installe;
+    private String installed;
     private String city;
     private int postalCode;
 
-    public POIDefibrillatorDTO(Double longitude, Double latitude, String name, String typologie, String address, String telephone, String installe, String city, int postalCode) {
+    public POIDefibrillatorDTO(Double longitude, Double latitude, String name, String typology, String address, String telephone, String installed, String city, int postalCode) {
         super(longitude, latitude, name);
-        this.typologie = typologie;
+        this.typology = typology;
         this.address = address;
         this.telephone = telephone;
-        this.installe = installe;
+        this.installed = installed;
         this.city = city;
         this.postalCode = postalCode;
     }
 
-    public String getTypologie() {
-        return typologie;
+    public String getTypology() {
+        return typology;
     }
 
-    public void setTypologie(String typologie) {
-        this.typologie = typologie;
+    public void setTypology(String typology) {
+        this.typology = typology;
     }
 
     public String getAddress() {
@@ -43,12 +43,12 @@ public class POIDefibrillatorDTO extends POIDTO{
         this.telephone = telephone;
     }
 
-    public String getInstalle() {
-        return installe;
+    public String getInstalled() {
+        return installed;
     }
 
-    public void setInstalle(String installe) {
-        this.installe = installe;
+    public void setInstalled(String installed) {
+        this.installed = installed;
     }
 
     public String getCity() {

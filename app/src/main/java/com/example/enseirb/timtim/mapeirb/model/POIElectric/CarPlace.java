@@ -2,6 +2,8 @@ package com.example.enseirb.timtim.mapeirb.model.POIElectric;
 
 public class CarPlace {
 
+    private static final String FREE_STRING = "Libre";
+
     private int number;
     private String status;
 
@@ -31,6 +33,6 @@ public class CarPlace {
     }
 
     public boolean isFree(){
-        return status.equals("libre");
+        return status.equals(FREE_STRING);
     }
 }

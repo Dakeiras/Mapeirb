@@ -16,8 +16,8 @@ public class POICollectionDTO {
         this.poiCollection = POICollection;
     }
 
-    public void addPOIDTO(POIDTO pio){
-        poiCollection.add(pio);
+    public void addPOIDTO(POIDTO poi){
+        poiCollection.add(poi);
     }
 
     public Collection<POIDTO> getPoiCollection(){

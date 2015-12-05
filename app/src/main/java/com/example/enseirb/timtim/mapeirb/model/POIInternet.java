@@ -3,56 +3,64 @@ package com.example.enseirb.timtim.mapeirb.model;
 import com.google.android.gms.maps.model.LatLng;
 
 public class POIInternet extends POI  {
-    private String typeAccess;
+
+    private static final String ACCESS_TYPE = "Type d'accès : ";
+    private static final String PAID = "Type d'accès : ";
+    private static final String SITUATION = "Situation : ";
+    private static final String PUBLIC_TYPE = "Public : ";
+    private static final String FORMATION = "Formation : ";
+    private static final String POSTAL_CODE = "Code postal : ";
+
+    private String accessType;
     private Boolean paid;
     private String situation;
-    private String typePublic;
+    private String publicType;
     private String formation;
-    private int postNumber;
+    private int postalCode;
 
-    public POIInternet(LatLng position, String name, String typeAccess, Boolean paid, String situation, String typePublic, String formation, int postNumber) {
+    public POIInternet(LatLng position, String name, String accessType, Boolean paid, String situation, String publicType, String formation, int postalCode) {
         super(position, name);
-        this.typeAccess = typeAccess;
+        this.accessType = accessType;
         this.paid = paid;
         this.situation = situation;
-        this.typePublic = typePublic;
+        this.publicType = publicType;
         this.formation = formation;
-        this.postNumber = postNumber;
+        this.postalCode = postalCode;
     }
 
     @Override
     public String getTitle() {
-        String description = "";
-        if (typeAccess != null) {
-            description += "Type d'accès : " + typeAccess;
-        }
-        description += "Payant : " + paid;
-        if (situation != null) {
-            description += "Situation : " + situation;
-        }
-        if (typePublic != null) {
-            description += "Public : " + typePublic;
-        }
-        if (formation != null) {
-            description += "Formation : " + formation;
-        }
-        if (postNumber > 0) {
-            description += "Code postal : " + postNumber;
-        }
-        return description;
+        return getName();
     }
 
     @Override
     public String getDescription() {
-        return getTitle();
+        String description = "";
+        if (accessType != null) {
+            description += ACCESS_TYPE + getAccessType();
+        }
+        description += PAID + getPaid();
+        if (situation != null) {
+            description += SITUATION + getSituation();
+        }
+        if (publicType != null) {
+            description += PUBLIC_TYPE + getPublicType();
+        }
+        if (formation != null) {
+            description += FORMATION + getFormation();
+        }
+        if (postalCode > 0) {
+            description += POSTAL_CODE + getPostalCode();
+        }
+        return description;
     }
 
-    public String getTypeAccess() {
-        return typeAccess;
+    public String getAccessType() {
+        return accessType;
     }
 
-    public void setTypeAccess(String typeAccess) {
-        this.typeAccess = typeAccess;
+    public void setAccessType(String accessType) {
+        this.accessType = accessType;
     }
 
     public Boolean getPaid() {
@@ -71,12 +79,12 @@ public class POIInternet extends POI  {
         this.situation = situation;
     }
 
-    public String getTypePublic() {
-        return typePublic;
+    public String getPublicType() {
+        return publicType;
     }
 
-    public void setTypePublic(String typePublic) {
-        this.typePublic = typePublic;
+    public void setPublicType(String publicType) {
+        this.publicType = publicType;
     }
 
     public String getFormation() {
@@ -87,11 +95,11 @@ public class POIInternet extends POI  {
         this.formation = formation;
     }
 
-    public int getPostNumber() {
-        return postNumber;
+    public int getPostalCode() {
+        return postalCode;
     }
 
-    public void setPostNumber(int postNumber) {
-        this.postNumber = postNumber;
+    public void setPostalCode(int postalCode) {
+        this.postalCode = postalCode;
     }
 }

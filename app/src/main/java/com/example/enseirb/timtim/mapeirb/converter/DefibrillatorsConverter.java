@@ -8,15 +8,19 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class DefibrillatorsConverter implements IPOIsConverter {
 
+    private static final String YES_STRING = "OUI";
+    private static final String BLANK_STRING = " ";
+    private static final String HYPHEN_STRING = "-";
+
     @Override
     public POI convertDTO(POIDTO collectionDTO) {
         POIDefibrillatorDTO defibrillatorCollectionDTO = (POIDefibrillatorDTO) collectionDTO;
         return new POIDefibrillator(convertPosition(defibrillatorCollectionDTO.getLatitude(), defibrillatorCollectionDTO.getLongitude()),
-                convertTypologie(defibrillatorCollectionDTO.getTypologie()),
+                convertTypology(defibrillatorCollectionDTO.getTypology()),
                 convertAddress(defibrillatorCollectionDTO.getAddress()),
                 convertName(defibrillatorCollectionDTO.getName()),
                 convertPhone(defibrillatorCollectionDTO.getTelephone()),
-                convertInstalle(defibrillatorCollectionDTO.getInstalle()),
+                convertInstalled(defibrillatorCollectionDTO.getInstalled()),
                 convertCity(defibrillatorCollectionDTO.getCity()),
                 convertPostalCode(defibrillatorCollectionDTO.getPostalCode()));
     }
@@ -26,8 +30,8 @@ public class DefibrillatorsConverter implements IPOIsConverter {
         return new LatLng(latitude, longitude);
     }
 
-    private String convertTypologie(String typologie) {
-        return typologie;
+    private String convertTypology(String typology) {
+        return typology;
     }
 
     private String convertAddress(String address) {
@@ -40,13 +44,13 @@ public class DefibrillatorsConverter implements IPOIsConverter {
 
     private String convertPhone(String telephone) {
         if (telephone != null) {
-            return telephone.replaceAll(" ", "-");
+            return telephone.replaceAll(BLANK_STRING, HYPHEN_STRING);
         }
         return null;
     }
 
-    private Boolean convertInstalle(String installe) {
-        return (installe.equals("OUI"));
+    private Boolean convertInstalled(String installed) {
+        return (installed.equals(YES_STRING));
     }
 
     private String convertCity(String city) {

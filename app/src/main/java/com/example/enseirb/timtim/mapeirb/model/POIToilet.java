@@ -3,6 +3,12 @@ package com.example.enseirb.timtim.mapeirb.model;
 import com.google.android.gms.maps.model.LatLng;
 
 public class POIToilet extends POI  {
+
+    private static final String TYPE = "Type : ";
+    private static final String ADDRESS = "Adresse : ";
+    private static final String NEIGHBOURHOOD = "Quartier : ";
+    private static final String OPTION = "Option : ";
+
     private String type;
     private String address;
     private String neighbourhood;
@@ -18,23 +24,23 @@ public class POIToilet extends POI  {
 
     @Override
     public String getTitle() {
-        return getName() + address;
+        return getName() + getAddress();
     }
 
     @Override
     public String getDescription() {
         String description = "";
         if (address != null) {
-            description += "Adresse : " + address;
+            description += ADDRESS + getAddress();
         }
         if (type != null) {
-            description += "Type : " + type;
+            description += TYPE + getType();
         }
         if (neighbourhood != null) {
-            description += "Quartier : " + neighbourhood;
+            description += NEIGHBOURHOOD + getNeighbourhood();
         }
         if (option != null) {
-            description += "Option : " + option;
+            description += OPTION + getOption();
         }
         return description;
 

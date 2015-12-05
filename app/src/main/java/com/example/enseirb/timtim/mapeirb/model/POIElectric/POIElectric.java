@@ -7,6 +7,11 @@ import java.util.List;
 
 public class POIElectric extends POI {
 
+    private static final String ADDRESS = "Adresse : ";
+    private static final String STATUS = "Statut : ";
+    private static final String ACCESS = "Accessibilité : ";
+    private static String PLACES_FREE = "Places : {0} (dont {1} libres)";
+
     private int number;
     private String address;
     private Boolean status;
@@ -31,23 +36,23 @@ public class POIElectric extends POI {
     public String getDescription() {
         String description = "";
         if (address != null) {
-            description += "Adresse : " + address;
+            description += ADDRESS + getAddress();
         }
         if (status != null) {
-            description += "Statut : " + status;
+            description += STATUS + getStatus();
         }
         if (access != null) {
-            description += "Accessibilité : " + access;
+            description += ACCESS + getAccess();
         }
         if (carPlaces != null) {
-            description += "Places : " + carPlaces.size() + "(" + carPlacesFree() + " libres)";
+            description += String.format(PLACES_FREE, getCarPlaces().size(), carPlacesFree());
         }
         return description;
     }
 
     private int carPlacesFree() {
         int cpt = 0;
-        for (CarPlace cp : carPlaces){
+        for (CarPlace cp : getCarPlaces()){
             cpt += cp.isFree()?1:0;
         }
         return cpt;

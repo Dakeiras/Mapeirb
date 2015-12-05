@@ -4,14 +4,14 @@ package com.example.enseirb.timtim.mapeirb.dto;
 public class POIToiletsDTO extends POIDTO {
     private String type;
     private String address;
-    private String quartier;
+    private String neighbourhood;
     private String option;
 
-    public POIToiletsDTO(Double longitude, Double latitude, String name, String type, String address, String quartier, String option) {
+    public POIToiletsDTO(Double longitude, Double latitude, String name, String type, String address, String neighbourhood, String option) {
         super(longitude, latitude, name);
         this.type = type;
         this.address = address;
-        this.quartier = quartier;
+        this.neighbourhood = neighbourhood;
         this.option = option;
     }
 
@@ -31,12 +31,12 @@ public class POIToiletsDTO extends POIDTO {
         this.address = address;
     }
 
-    public String getQuartier() {
-        return quartier;
+    public String getNeighbourhood() {
+        return neighbourhood;
     }
 
-    public void setQuartier(String quartier) {
-        this.quartier = quartier;
+    public void setNeighbourhood(String neighbourhood) {
+        this.neighbourhood = neighbourhood;
     }
 
     public String getOption() {

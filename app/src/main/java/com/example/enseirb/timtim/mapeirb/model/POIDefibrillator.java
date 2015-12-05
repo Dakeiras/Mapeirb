@@ -4,20 +4,27 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class POIDefibrillator extends POI  {
 
-    private String typologie;
+    private static final String TYPOLOGY = "Type : ";
+    private static final String ADDRESS= "Adresse : ";
+    private static final String TELEPHONE= "Telephone : ";
+    private static final String INSTALLED= "Installé : ";
+    private static final String CITY = "Ville : ";
+    private static final String POSTAL_CODE = "Code postal : ";
+
+    private String typology;
     private String address;
     private String telephone;
-    private Boolean installe;
+    private Boolean installed;
     private String city;
     private int postalCode;
 
 
-    public POIDefibrillator(LatLng position, String typologie, String address, String name, String telephone, Boolean installe, String city, int postalCode) {
+    public POIDefibrillator(LatLng position, String typology, String address, String name, String telephone, Boolean installed, String city, int postalCode) {
         super(position, name);
-        this.typologie = typologie;
+        this.typology = typology;
         this.address = address;
         this.telephone=telephone;
-        this.installe = installe;
+        this.installed = installed;
         this.city = city;
         this.postalCode = postalCode;
     }
@@ -31,31 +38,31 @@ public class POIDefibrillator extends POI  {
     public String getDescription() {
         String description = "";
         if (address != null) {
-            description += "Adresse : " + address;
+            description += ADDRESS + getAddress();
         }
-        if (typologie != null) {
-            description += "Type : " + typologie;
+        if (typology != null) {
+            description += TYPOLOGY + getTypology();
         }
         if (city != null) {
-            description += "Ville : " + city;
+            description += CITY + getCity();
         }
         if (postalCode > 0) {
-            description += "Code postal : " + postalCode;
+            description += POSTAL_CODE + getPostalCode();
         }
-        description += "Installé : " + installe;
+        description += INSTALLED + getInstalled();
         if (telephone != null) {
-            description += "Téléphone : " + telephone;
+            description += TELEPHONE + getTelephone();
         }
 
         return description;
     }
 
-    public Boolean getInstalle() {
-        return installe;
+    public Boolean getInstalled() {
+        return installed;
     }
 
-    public void setInstalle(Boolean installe) {
-        this.installe = installe;
+    public void setInstalled(Boolean installed) {
+        this.installed = installed;
     }
 
     public String getTelephone() {
@@ -74,12 +81,12 @@ public class POIDefibrillator extends POI  {
         this.address = address;
     }
 
-    public String getTypologie() {
-        return typologie;
+    public String getTypology() {
+        return typology;
     }
 
-    public void setTypologie(String typologie) {
-        this.typologie = typologie;
+    public void setTypology(String typology) {
+        this.typology = typology;
     }
 
     public String getCity() {

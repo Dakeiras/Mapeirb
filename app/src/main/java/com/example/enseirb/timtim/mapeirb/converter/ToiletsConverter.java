@@ -15,7 +15,7 @@ public class ToiletsConverter implements IPOIsConverter {
                 convertPosition(toiletCollectionDTO.getLatitude(), toiletCollectionDTO.getLongitude()),
                 convertType(toiletCollectionDTO.getType()),
                 convertAddress(toiletCollectionDTO.getAddress()),
-                convertNeighbourhood(toiletCollectionDTO.getQuartier()),
+                convertNeighbourhood(toiletCollectionDTO.getNeighbourhood()),
                 convertOption(toiletCollectionDTO.getOption()));
     }
 
@@ -35,8 +35,8 @@ public class ToiletsConverter implements IPOIsConverter {
         return address;
     }
 
-    private String convertNeighbourhood(String quartier) {
-        return quartier;
+    private String convertNeighbourhood(String neighbourhood) {
+        return neighbourhood;
     }
 
     private String convertOption(String option) {

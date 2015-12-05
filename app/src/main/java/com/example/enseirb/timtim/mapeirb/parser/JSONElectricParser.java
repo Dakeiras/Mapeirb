@@ -23,7 +23,9 @@ public class JSONElectricParser implements IPOICollectionParser {
     private static final String CAR_PLACE_NUMBER = "NoPC";
     private static final String CAR_PLACE_STATE = "Etat";
 
-    private static final String COORD = "CoordGPS";
+    private static final String COMMA_SPACE = ",";
+
+    private static final String COORDINATES = "CoordGPS";
     @Override
     public POICollectionDTO parse(String jsonElectric)  {
         POICollectionDTO poiCollectionElectric = new POICollectionDTO();
@@ -34,12 +36,12 @@ public class JSONElectricParser implements IPOICollectionParser {
                 JSONObject electricObject;
                 electricObject = electricArray.getJSONObject(i);
 
-                String coord = electricObject.optString(COORD, null);
+                String coordinates = electricObject.optString(COORDINATES, null);
                 Double latitude;
                 Double longitude;
-                if (coord != null) {
-                    latitude = Double.parseDouble(coord.split(",")[0]);
-                    longitude = Double.parseDouble(coord.split(",")[1]);
+                if (coordinates != null) {
+                    latitude = Double.parseDouble(coordinates.split(COMMA_SPACE)[0]);
+                    longitude = Double.parseDouble(coordinates.split(COMMA_SPACE)[1]);
                 }else{
                     latitude = 0.0;
                     longitude = 0.0;
@@ -51,10 +53,9 @@ public class JSONElectricParser implements IPOICollectionParser {
                 String access = electricObject.optString(ELECTRIC_ACCESS, null);
                 JSONArray carPlacesArray = electricObject.getJSONArray(ELECTRIC_CAR_PLACES);
                 List<CarPlaceDTO> carPlaces = new ArrayList<>();
-                for (int carPlace = 0 ; i < carPlacesArray.length() ; i++){
+                for (int carPlace = 0 ; carPlace < carPlacesArray.length() ; carPlace++){
                      carPlaces.add(parseCarPlace(carPlacesArray.getJSONObject(carPlace)));
                 }
-
                 poiCollectionElectric.addPOIDTO(new POIElectricDTO(longitude, latitude, name, number, address, status, access, carPlaces));
             }
         } catch (JSONException e) {
