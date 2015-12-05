@@ -5,7 +5,7 @@
     android:weightSum="100">
     <!-- list activity -->
     <fragment
-        class="com.example.enseirb.timtim.mapeirb.presenter.InformationListFragment"
+        class="com.example.enseirb.timtim.mapeirb.presenter.activities.InformationListFragment"
         android:id="@+id/list_layout_fragment"
         android:layout_width="0dp"
         android:layout_weight="30"
@@ -19,5 +19,5 @@
         android:layout_width="0dp"
         android:layout_weight="70"
         android:layout_height="match_parent"
-        tools:context="com.example.enseirb.timtim.mapeirb.presenter.InformationListActivity" />
+        tools:context="com.example.enseirb.timtim.mapeirb.presenter.activities.InformationListActivity" />
 </LinearLayout>

@@ -1,29 +1,29 @@
-package com.example.enseirb.timtim.mapeirb.presenter;
+package com.example.enseirb.timtim.mapeirb.presenter.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Button;
 
 import com.example.enseirb.timtim.mapeirb.R;
 import com.example.enseirb.timtim.mapeirb.business.IPOICollectionBusiness;
 import com.example.enseirb.timtim.mapeirb.business.POICollectionBusiness;
 import com.example.enseirb.timtim.mapeirb.business.listener.IPOICollectionBusinessListener;
+import com.example.enseirb.timtim.mapeirb.exceptions.BadPOICollectionException;
 import com.example.enseirb.timtim.mapeirb.model.IPOI;
 import com.example.enseirb.timtim.mapeirb.model.POICollection;
 import com.example.enseirb.timtim.mapeirb.model.POIType;
+import com.example.enseirb.timtim.mapeirb.presenter.ClusterablePOI;
+import com.example.enseirb.timtim.mapeirb.presenter.POIClusterRenderer;
+import com.example.enseirb.timtim.mapeirb.presenter.PopupFactory;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.ArrayList;
@@ -58,10 +58,17 @@ public class InformationListActivity extends FragmentActivity implements OnMapRe
             mapFragment.getMapAsync(this);
             createList(getIntent().getStringExtra(SERVICE_NAME));
         }
-    }
 
-    private void centerOnItem() {
 
+        //TODO: mapper ce bouton à un changement d'activité
+        Button listButton = (Button) findViewById(R.id.content_information_list_list_button);
+        final Context popupContext = this;
+        listButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupFactory.create("Prout", "A terme, il faudra renvoyer vers la liste des POI quand on appuie sur ce bouton", popupContext);
+            }
+        });
     }
 
 
@@ -72,33 +79,52 @@ public class InformationListActivity extends FragmentActivity implements OnMapRe
         return intent;
     }
 
-    private void setMarkers(ClusterManager<ClusterablePOI> clusterManager, POICollection poiCollection){
-        if(poiCollection!=null) {
-            for (IPOI poi : poiCollection.getPoiCollection()) {
-                String title = poi.getTitle();
-                String snippet = poi.getTitle();
-                LatLng latLng = poi.getPosition();
-                System.out.println("DEBUG: " + latLng );
+    private void setMarkers(ClusterManager<ClusterablePOI> clusterManager, POICollection poiCollection) throws BadPOICollectionException {
+        if(poiCollection == null)
+            throw new BadPOICollectionException("The POICollection is not initialized");
+        else if (poiCollection.getPoiCollection().size() <= 0)
+            throw new BadPOICollectionException("The POICollection is empty");
+        else
+            for (IPOI poi : poiCollection.getPoiCollection())
                 clusterManager.addItem(new ClusterablePOI(poi));
+    }
 
-            }
-        }
+    public void centerOnItem(IPOI poi){
+       LatLng poiPos = poi.getPosition();
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(poiPos, 17));
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        System.out.println("DEBUG: coucou");
         map = googleMap;
         LatLng bdx = new LatLng(44.840950, -0.574813);
         map.setMyLocationEnabled(true);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(bdx, 12));
 
-        ClusterManager<ClusterablePOI> clusterManager = new ClusterManager<ClusterablePOI>(this, map);
+        ClusterManager<ClusterablePOI> clusterManager = new ClusterManager<>(this, map);
         map.setOnCameraChangeListener(clusterManager);
         map.setOnMarkerClickListener(clusterManager);
 
-//        setMarkers(map, poiCollectionTest());
-        setMarkers(clusterManager, mPOICollection);
+        try {
+            setMarkers(clusterManager, mPOICollection);
+        } catch (BadPOICollectionException e) {
+            PopupFactory.create("Empty POI list", "No Points Of Interest was found " +
+                    "right now in this category, try later :)", this);
+            e.printStackTrace();
+        }
+
+
+        clusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<ClusterablePOI>() {
+            @Override
+            public boolean onClusterItemClick(ClusterablePOI item) {
+                System.out.println(item.getTitle());
+                return false;
+            }
+        });
+        clusterManager.setRenderer(new POIClusterRenderer(this, map, clusterManager));
+
+
+
     }
 
     public void createList(String service) {
@@ -115,15 +141,12 @@ public class InformationListActivity extends FragmentActivity implements OnMapRe
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        System.out.println("DEBUG: test1");
                         mPOICollection = poiCollection;
                         SupportMapFragment mapFragment;
                         if((mapFragment= (SupportMapFragment) getSupportFragmentManager()
                                 .findFragmentById(R.id.map)) != null) {
-                            System.out.println("DEBUG: test2");
                             mapFragment.getMapAsync(activity);
                         }
-                        System.out.println("DEBUG: test3");
                     }
                 });
 

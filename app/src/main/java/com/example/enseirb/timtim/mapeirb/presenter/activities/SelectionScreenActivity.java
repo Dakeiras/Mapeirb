@@ -1,4 +1,4 @@
-package com.example.enseirb.timtim.mapeirb.presenter;
+package com.example.enseirb.timtim.mapeirb.presenter.activities;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;

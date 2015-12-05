@@ -1,4 +1,4 @@
-package com.example.enseirb.timtim.mapeirb.presenter;
+package com.example.enseirb.timtim.mapeirb.presenter.activities;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -20,9 +20,6 @@ import com.example.enseirb.timtim.mapeirb.model.POIType;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Home on 28/11/2015.
- */
 public class InformationListFragment extends Fragment {
 
     private IPOICollectionBusiness poiCollectionBusiness;
@@ -36,16 +33,13 @@ public class InformationListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.information_list_display, container, false);
-        return view;
+        return inflater.inflate(R.layout.information_list_display, container, false);
     }
 
     public void createList(String service) {
         initializeBusiness();
         listView = (ListView) getView().findViewById(R.id.information_layout_list);
-
         retrieveServiceList(service);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
