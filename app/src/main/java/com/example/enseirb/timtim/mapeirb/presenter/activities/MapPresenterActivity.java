@@ -70,14 +70,12 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
             };
             fragment.createList(getIntent().getStringExtra(SERVICE_NAME), listener);
         } else {
-            //TODO: mapper ce bouton à un changement d'activité
             Button listButton = (Button) findViewById(R.id.content_information_list_list_button);
             final Context popupContext = this;
             serviceName = getIntent().getStringExtra(SERVICE_NAME);
             listButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PopupFactory.create("Prout", "A terme, il faudra renvoyer vers la liste des POI quand on appuie sur ce bouton", popupContext);
                     Intent intent = ListPresenterActivity.getIntent(activity, serviceName);
                     startActivityForResult(intent,SERVICE_CLICK);
                 }
