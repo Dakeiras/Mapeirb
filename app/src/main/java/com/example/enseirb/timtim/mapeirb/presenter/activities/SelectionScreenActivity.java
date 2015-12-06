@@ -62,7 +62,7 @@ public class SelectionScreenActivity extends AppCompatActivity {
     }
 
     private void ShowList(String name) {
-        Intent intent = InformationListActivity.getIntent(this,name);
+        Intent intent = MapPresenterActivity.getIntent(this, name);
         startActivity(intent);
     }
 

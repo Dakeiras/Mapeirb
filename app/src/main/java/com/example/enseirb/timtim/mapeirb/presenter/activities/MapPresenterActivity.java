@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 
 import com.example.enseirb.timtim.mapeirb.R;
@@ -27,60 +28,102 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class InformationListActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapPresenterActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private static final String SERVICE_NAME = "com.example.enseirb.timtim.mapeirb.presenter.SERVICE";
+    private static final String RESULT = "com.example.enseirb.timtim.mapeirb.presenter.RESULT";
+    private static final int SERVICE_CLICK = 1;
     private GoogleMap map;
     private IPOICollectionBusiness poiCollectionBusiness;
     private POICollection mPOICollection;
     private List<LatLng> poiList = new ArrayList<>();
-    private OnMapReadyCallback activity = this;
+    private MapPresenterActivity activity = this;
+    private String serviceName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_information_list);
-        if(getResources().getBoolean(R.bool.portrait_only)){
+        if (getResources().getBoolean(R.bool.portrait_only)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
 
         InformationListFragment fragment;
-        if((fragment = (InformationListFragment) getFragmentManager().findFragmentById(R.id.list_layout_fragment))!=null) {
-            fragment.createList(getIntent().getStringExtra(SERVICE_NAME));
+        if ((fragment = (InformationListFragment) getFragmentManager().findFragmentById(R.id.list_layout_fragment)) != null) {
+            AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Iterator<IPOI> it = mPOICollection.getPoiCollection().iterator();
+                    while (it.hasNext()) {
+                        IPOI ipoi = it.next();
+                        if (ipoi.getTitle().equals(parent.getItemAtPosition(position))) {
+                            centerOnItem(ipoi);
+                            break;
+                        }
+                    }
+
+                }
+            };
+            fragment.createList(getIntent().getStringExtra(SERVICE_NAME), listener);
+        } else {
+            //TODO: mapper ce bouton à un changement d'activité
+            Button listButton = (Button) findViewById(R.id.content_information_list_list_button);
+            final Context popupContext = this;
+            serviceName = getIntent().getStringExtra(SERVICE_NAME);
+            listButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupFactory.create("Prout", "A terme, il faudra renvoyer vers la liste des POI quand on appuie sur ce bouton", popupContext);
+                    Intent intent = ListPresenterActivity.getIntent(activity, serviceName);
+                    startActivityForResult(intent,SERVICE_CLICK);
+                }
+            });
         }
 
         SupportMapFragment mapFragment;
-        if((mapFragment= (SupportMapFragment) getSupportFragmentManager()
+        if ((mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map)) != null) {
             mapFragment.getMapAsync(this);
             createList(getIntent().getStringExtra(SERVICE_NAME));
         }
 
 
-        //TODO: mapper ce bouton à un changement d'activité
-        Button listButton = (Button) findViewById(R.id.content_information_list_list_button);
-        final Context popupContext = this;
-        listButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupFactory.create("Prout", "A terme, il faudra renvoyer vers la liste des POI quand on appuie sur ce bouton", popupContext);
-            }
-        });
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        {
+            switch (requestCode) {
+                case SERVICE_CLICK:
+                    Iterator<IPOI> it = mPOICollection.getPoiCollection().iterator();
+                    IPOI ipoi;
+                    while(it.hasNext()) {
+                        ipoi = it.next();
+                        if(ipoi.getTitle().equalsIgnoreCase(data.getStringExtra(RESULT))) {
+                            centerOnItem(ipoi);
+                            break;
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     public static Intent getIntent(Context context, String service) {
-        Intent intent = new Intent(context, InformationListActivity.class);
+        Intent intent = new Intent(context, MapPresenterActivity.class);
         intent.putExtra(SERVICE_NAME, service);
         return intent;
     }
 
     private void setMarkers(ClusterManager<ClusterablePOI> clusterManager, POICollection poiCollection) throws BadPOICollectionException {
-        if(poiCollection == null)
+        if (poiCollection == null)
             throw new BadPOICollectionException("The POICollection is not initialized");
         else if (poiCollection.getPoiCollection().size() <= 0)
             throw new BadPOICollectionException("The POICollection is empty");
@@ -89,8 +132,8 @@ public class InformationListActivity extends FragmentActivity implements OnMapRe
                 clusterManager.addItem(new ClusterablePOI(poi));
     }
 
-    public void centerOnItem(IPOI poi){
-       LatLng poiPos = poi.getPosition();
+    public void centerOnItem(IPOI poi) {
+        LatLng poiPos = poi.getPosition();
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(poiPos, 17));
     }
 
@@ -124,7 +167,6 @@ public class InformationListActivity extends FragmentActivity implements OnMapRe
         clusterManager.setRenderer(new POIClusterRenderer(this, map, clusterManager));
 
 
-
     }
 
     public void createList(String service) {
@@ -143,7 +185,7 @@ public class InformationListActivity extends FragmentActivity implements OnMapRe
                     public void run() {
                         mPOICollection = poiCollection;
                         SupportMapFragment mapFragment;
-                        if((mapFragment= (SupportMapFragment) getSupportFragmentManager()
+                        if ((mapFragment = (SupportMapFragment) getSupportFragmentManager()
                                 .findFragmentById(R.id.map)) != null) {
                             mapFragment.getMapAsync(activity);
                         }
@@ -161,21 +203,20 @@ public class InformationListActivity extends FragmentActivity implements OnMapRe
         switch (service) {
 
             case InformationListFragment.DEFIBRILATOR_NAME:
-                poiCollectionBusiness.retrievePOICollection(POIType.DEFIBRILLATOR,listener);
+                poiCollectionBusiness.retrievePOICollection(POIType.DEFIBRILLATOR, listener);
                 break;
             case InformationListFragment.INTERNET_NAME:
-                poiCollectionBusiness.retrievePOICollection(POIType.INTERNET,listener);
+                poiCollectionBusiness.retrievePOICollection(POIType.INTERNET, listener);
                 break;
             case InformationListFragment.ELECTRIC_CAR_NAME:
-                poiCollectionBusiness.retrievePOICollection(POIType.ELECTRIC,listener);
+                poiCollectionBusiness.retrievePOICollection(POIType.ELECTRIC, listener);
                 break;
             case InformationListFragment.TOILET_NAME:
-                poiCollectionBusiness.retrievePOICollection(POIType.TOILET,listener);
+                poiCollectionBusiness.retrievePOICollection(POIType.TOILET, listener);
                 break;
             default:
                 break;
         }
-
 
 
     }
@@ -184,5 +225,10 @@ public class InformationListActivity extends FragmentActivity implements OnMapRe
         poiCollectionBusiness = new POICollectionBusiness();
     }
 
+    public static Intent getResultIntent(String title) {
+        Intent intent = new Intent();
+        intent.putExtra(RESULT, title);
+        return intent;
+    }
 }
 
