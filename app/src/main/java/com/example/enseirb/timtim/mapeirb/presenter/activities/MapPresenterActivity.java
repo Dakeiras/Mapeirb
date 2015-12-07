@@ -74,18 +74,21 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == SERVICE_CLICK){
-            Iterator<IPOI> it = poiCollection.getPoiCollection().iterator();
-            IPOI ipoi;
-            while(it.hasNext()) {
-                ipoi = it.next();
-                if(ipoi.getTitle().equalsIgnoreCase(data.getStringExtra(RESULT))) {
-                    centerOnPoi(ipoi);
-                    break;
+        if(resultCode == RESULT_OK) {
+            if (requestCode == SERVICE_CLICK) {
+                Iterator<IPOI> it = poiCollection.getPoiCollection().iterator();
+                IPOI ipoi;
+                while (it.hasNext()) {
+                    ipoi = it.next();
+                    if (ipoi.getTitle().equalsIgnoreCase(data.getStringExtra(RESULT))) {
+                        centerOnPoi(ipoi);
+                        break;
+                    }
                 }
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
