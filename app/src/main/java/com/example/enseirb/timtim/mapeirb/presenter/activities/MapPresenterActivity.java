@@ -93,7 +93,6 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mapManager.prepareMap(googleMap);
-        mapManager.setPOIMarkers(poiCollection);
     }
     public static Intent getIntent(Context context, String service) {
         Intent intent = new Intent(context, MapPresenterActivity.class);
@@ -116,10 +115,7 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                     @Override
                     public void run() {
                         MapPresenterActivity.this.poiCollection = poiCollection;
-                        SupportMapFragment mapFragment;
-                        if ((mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                                .findFragmentById(R.id.map)) != null)
-                            mapFragment.getMapAsync(activity);
+                        mapManager.setPOIMarkers(poiCollection);
                     }
                 });
             }
