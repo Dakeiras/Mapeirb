@@ -16,25 +16,21 @@ import com.example.enseirb.timtim.mapeirb.business.listener.IPOICollectionBusine
 import com.example.enseirb.timtim.mapeirb.model.IPOI;
 import com.example.enseirb.timtim.mapeirb.model.POICollection;
 import com.example.enseirb.timtim.mapeirb.model.POIType;
-import com.example.enseirb.timtim.mapeirb.presenter.MapInitializer;
+import com.example.enseirb.timtim.mapeirb.presenter.MapManager;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class MapPresenterActivity extends FragmentActivity implements OnMapReadyCallback {
     private static final String SERVICE_NAME = "com.example.enseirb.timtim.mapeirb.presenter.SERVICE";
     private static final String RESULT = "com.example.enseirb.timtim.mapeirb.presenter.RESULT";
     private static final int SERVICE_CLICK = 1;
-    private GoogleMap map;
-    private IPOICollectionBusiness poiCollectionBusiness;
-    private POICollection mPOICollection;
-    private List<LatLng> poiList = new ArrayList<>();
+    private MapManager mapManager = new MapManager(this);
+    private POICollection poiCollection;
     private MapPresenterActivity activity = this;
     private String serviceName;
     @Override
@@ -48,7 +44,7 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
             AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    for (IPOI ipoi : mPOICollection.getPoiCollection()) {
+                    for (IPOI ipoi : poiCollection.getPoiCollection()) {
                         if (ipoi.getTitle().equals(parent.getItemAtPosition(position))) {
                             centerOnPoi(ipoi);
                             break;
@@ -79,7 +75,7 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == SERVICE_CLICK){
-            Iterator<IPOI> it = mPOICollection.getPoiCollection().iterator();
+            Iterator<IPOI> it = poiCollection.getPoiCollection().iterator();
             IPOI ipoi;
             while(it.hasNext()) {
                 ipoi = it.next();
@@ -93,7 +89,8 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        map = new MapInitializer().prepareMap(googleMap, mPOICollection, this);
+        mapManager.prepareMap(googleMap);
+        mapManager.setPOIMarkers(poiCollection);
     }
     public static Intent getIntent(Context context, String service) {
         Intent intent = new Intent(context, MapPresenterActivity.class);
@@ -102,28 +99,26 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     }
     public void centerOnPoi(IPOI poi) {
         LatLng poiPos = poi.getPosition();
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(poiPos, 17));
+        mapManager.moveCamera(CameraUpdateFactory.newLatLngZoom(poiPos, 17));
     }
     public void createList(String service) {
-        initializeBusiness();
         retrieveServiceList(service);
     }
     private void retrieveServiceList(String service) {
+        IPOICollectionBusiness poiCollectionBusiness = new POICollectionBusiness();
         IPOICollectionBusinessListener listener = new IPOICollectionBusinessListener() {
             @Override
             public void onSuccess(final POICollection poiCollection) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mPOICollection = poiCollection;
+                        MapPresenterActivity.this.poiCollection = poiCollection;
                         SupportMapFragment mapFragment;
                         if ((mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                                .findFragmentById(R.id.map)) != null) {
+                                .findFragmentById(R.id.map)) != null)
                             mapFragment.getMapAsync(activity);
-                        }
                     }
                 });
-
             }
             @Override
             public void onError(String message) {
@@ -146,9 +141,6 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
             default:
                 break;
         }
-    }
-    private void initializeBusiness() {
-        poiCollectionBusiness = new POICollectionBusiness();
     }
     public static Intent getResultIntent(String title) {
         Intent intent = new Intent();
