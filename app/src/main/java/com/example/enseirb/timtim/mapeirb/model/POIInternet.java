@@ -4,12 +4,14 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class POIInternet extends POI  {
 
-    private static final String ACCESS_TYPE = "Type d'accès : ";
-    private static final String PAID = "Type d'accès : ";
-    private static final String SITUATION = "Situation : ";
-    private static final String PUBLIC_TYPE = "Public : ";
-    private static final String FORMATION = "Formation : ";
-    private static final String POSTAL_CODE = "Code postal : ";
+    private static final String ACCESS_TYPE = "- Type d'accès : ";
+    private static final String PAID = "- Type d'accès : ";
+    private static final String SITUATION = "- Situation : ";
+    private static final String PUBLIC_TYPE = "- Public : ";
+    private static final String FORMATION = "- Formation : ";
+    private static final String POSTAL_CODE = "- Code postal : ";
+
+    private static final String NO_NAME_INTERNET = "Point d'accès anonyme";
 
     private String accessType;
     private Boolean paid;
@@ -30,7 +32,7 @@ public class POIInternet extends POI  {
 
     @Override
     public String getTitle() {
-        return getName();
+        return (getName() != null)?getName():NO_NAME_INTERNET;
     }
 
     @Override

@@ -7,10 +7,13 @@ import java.util.List;
 
 public class POIElectric extends POI {
 
-    private static final String ADDRESS = "Adresse : ";
-    private static final String STATUS = "Statut : ";
-    private static final String ACCESS = "Accessibilité : ";
-    private static String PLACES_FREE = "Places : {0} (dont {1} libres)";
+    private static final String ADDRESS = "- Adresse : ";
+    private static final String STATUS = "- Statut : ";
+    private static final String ACCESS = "- Accessibilité : ";
+    private static String PLACES_FREE = "- Places : {0} (dont {1} libres)";
+
+    private static final String NO_NAME_ELECTRIC = "Point d'accès anonyme";
+
 
     private int number;
     private String address;
@@ -29,8 +32,9 @@ public class POIElectric extends POI {
 
     @Override
     public String getTitle() {
-        return getName() + address;
+        return (getName() != null)?getName():NO_NAME_ELECTRIC;
     }
+
 
     @Override
     public String getDescription() {

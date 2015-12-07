@@ -4,10 +4,12 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class POIToilet extends POI  {
 
-    private static final String TYPE = "Type : ";
-    private static final String ADDRESS = "Adresse : ";
-    private static final String NEIGHBOURHOOD = "Quartier : ";
-    private static final String OPTION = "Option : ";
+    private static final String TYPE = "- Type : ";
+    private static final String ADDRESS = "- Adresse : ";
+    private static final String NEIGHBOURHOOD = "- Quartier : ";
+    private static final String OPTION = "- Option : ";
+
+    private static final String NO_NAME_TOILET = "Toilette anonyme";
 
     private String type;
     private String address;
@@ -24,7 +26,7 @@ public class POIToilet extends POI  {
 
     @Override
     public String getTitle() {
-        return getName() + getAddress();
+        return (getName() != null)?getName():NO_NAME_TOILET;
     }
 
     @Override

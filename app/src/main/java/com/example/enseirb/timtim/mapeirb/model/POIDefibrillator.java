@@ -4,12 +4,13 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class POIDefibrillator extends POI  {
 
-    private static final String TYPOLOGY = "Type : ";
-    private static final String ADDRESS= "Adresse : ";
-    private static final String TELEPHONE= "Telephone : ";
-    private static final String INSTALLED= "Installé : ";
-    private static final String CITY = "Ville : ";
-    private static final String POSTAL_CODE = "Code postal : ";
+    private static final String TYPOLOGY = "- Type : ";
+    private static final String ADDRESS= "- Adresse : ";
+    private static final String TELEPHONE= "- Telephone : ";
+    private static final String INSTALLED= "- Installé : ";
+    private static final String CITY = "- Ville : ";
+    private static final String POSTAL_CODE = "- Code postal : ";
+    private static final String NO_NAME_DEFIBRILLATOR = "Défibrillator anonyme";
 
     private String typology;
     private String address;
@@ -19,7 +20,7 @@ public class POIDefibrillator extends POI  {
     private int postalCode;
 
 
-    public POIDefibrillator(LatLng position, String typology, String address, String name, String telephone, Boolean installed, String city, int postalCode) {
+    public POIDefibrillator(LatLng position, String name, String address, String typology, String telephone, Boolean installed, String city, int postalCode) {
         super(position, name);
         this.typology = typology;
         this.address = address;
@@ -31,7 +32,7 @@ public class POIDefibrillator extends POI  {
 
     @Override
     public String getTitle() {
-        return getName() + address;
+        return (getName() != null)?getName():NO_NAME_DEFIBRILLATOR;
     }
 
     @Override
