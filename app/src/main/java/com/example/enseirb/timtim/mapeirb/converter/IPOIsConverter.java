@@ -6,6 +6,6 @@ import com.example.enseirb.timtim.mapeirb.model.POI;
 public interface IPOIsConverter {
 
 
-    POI convertDTO(POIDTO collectionDTO);
+    POI convertDTO(POIDTO poiDTO);
 
 }
