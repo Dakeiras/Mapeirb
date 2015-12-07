@@ -1,12 +1,12 @@
-package com.example.enseirb.timtim.mapeirb.presenter;
+package com.example.enseirb.timtim.mapeirb.presenter.popupFactories;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
-public class PopupFactory {
+public class MsgPopupFactory {
 
-    public static void create(String title, String msg, Context context){
+    public static void show(String title, String msg, Context context){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder

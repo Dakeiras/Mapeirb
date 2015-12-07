@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.enseirb.timtim.mapeirb.exceptions.BadPOICollectionException;
 import com.example.enseirb.timtim.mapeirb.model.IPOI;
 import com.example.enseirb.timtim.mapeirb.model.POICollection;
+import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.MsgPopupFactory;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -51,7 +52,7 @@ public class MapManager {
         try {
             setMarkers(clusterManager, poiCollection);
         } catch (BadPOICollectionException e) {
-            PopupFactory.create("Empty POI list", "No Points Of Interest was found " +
+            MsgPopupFactory.show("Empty POI list", "No Points Of Interest was found " +
                     "right now in this category, try later :)", context);
             e.printStackTrace();
         }

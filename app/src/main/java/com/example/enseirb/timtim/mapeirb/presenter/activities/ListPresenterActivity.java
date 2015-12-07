@@ -22,30 +22,24 @@ import com.example.enseirb.timtim.mapeirb.business.listener.IPOICollectionBusine
 import com.example.enseirb.timtim.mapeirb.model.IPOI;
 import com.example.enseirb.timtim.mapeirb.model.POICollection;
 import com.example.enseirb.timtim.mapeirb.model.POIType;
-
-import org.w3c.dom.Text;
+import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.ProgressPopupFactory;
 
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-/**
- * Created by Home on 06/12/2015.
- */
 public class ListPresenterActivity extends Activity {
 
     private static final String SERVICE_NAME = "com.example.enseirb.timtim.mapeirb.presenter.SERVICE";
     private ListView listView;
     private IPOICollectionBusiness poiCollectionBusiness;
     TextView title;
+    ProgressPopupFactory progressPopupFactory = new ProgressPopupFactory(this);
     private POICollection mPOICollection;
-    private Button nameSortButton;
-    private Button distanceSortButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,17 +51,16 @@ public class ListPresenterActivity extends Activity {
         }
 
         title = (TextView) findViewById(R.id.information_list_service_name);
-
         listView = (ListView) findViewById(R.id.information_layout_list);
 
-        nameSortButton = (Button) findViewById(R.id.button_sort_name);
+        Button nameSortButton = (Button) findViewById(R.id.button_sort_name);
         nameSortButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fillListByName(mPOICollection);
             }
         });
-        distanceSortButton = (Button) findViewById(R.id.button_sort_distance);
+        Button distanceSortButton = (Button) findViewById(R.id.button_sort_distance);
         distanceSortButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +77,7 @@ public class ListPresenterActivity extends Activity {
             }
         };
 
-        createList(serviceName,listener);
+        createList(serviceName, listener);
     }
 
     public static Intent getIntent(Context context, String service) {
@@ -93,7 +86,7 @@ public class ListPresenterActivity extends Activity {
         return intent;
     }
 
-    public void createList(String service,AdapterView.OnItemClickListener listener) {
+    public void createList(String service, AdapterView.OnItemClickListener listener) {
         initializeBusiness();
         TextView title = (TextView) findViewById(R.id.information_list_service_name);
         title.setText(service);
@@ -123,7 +116,6 @@ public class ListPresenterActivity extends Activity {
         };
 
         switch (service) {
-
             case InformationListFragment.DEFIBRILATOR_NAME:
                 title.setText("Défibrillateur");
                 poiCollectionBusiness.retrievePOICollection(POIType.DEFIBRILLATOR,listener);
@@ -149,25 +141,24 @@ public class ListPresenterActivity extends Activity {
     }
 
     private void fillListByName(POICollection poiCollection) {
+        progressPopupFactory.show();
         List<String> serviceList = new ArrayList<>();
         for(IPOI poi: poiCollection.getPoiCollection()) {
-            //System.out.println(poi.getTitle());
             serviceList.add(poi.getTitle());
         }
         Collections.sort(serviceList, Collator.getInstance());
-        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, serviceList));
+        listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, serviceList));
+        progressPopupFactory.dismiss();
     }
 
     private void fillListByDistance(final POICollection poiCollection) {
+        progressPopupFactory.show();
         final LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         final Activity activity = this;
         final String locationProvider = LocationManager.NETWORK_PROVIDER;
         final LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-                if(lastKnownLocation == null) {
-
-                }
                 Map<Float,String> serviceList = new TreeMap<>();
                 for(IPOI poi: poiCollection.getPoiCollection()) {
                     //System.out.println(poi.getTitle());
@@ -176,8 +167,8 @@ public class ListPresenterActivity extends Activity {
                     poiLocation.setLongitude(poi.getPosition().longitude);
                     serviceList.put(lastKnownLocation.distanceTo(poiLocation), poi.getTitle());
                 }
-                listView.setAdapter(new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, android.R.id.text1,
-                        new LinkedList<String>(serviceList.values())));
+                listView.setAdapter(new ArrayAdapter<>(activity, android.R.layout.simple_list_item_1, android.R.id.text1,
+                        new LinkedList<>(serviceList.values())));
                 removeLocationListener(this,locationManager);
             }
 
@@ -189,7 +180,7 @@ public class ListPresenterActivity extends Activity {
         };
 
         locationManager.requestLocationUpdates(locationProvider, 0, 0, locationListener);
-
+        progressPopupFactory.dismiss();
     }
 
     private void removeLocationListener(LocationListener locationListener, LocationManager locationManager) {
