@@ -5,12 +5,20 @@ import android.content.Context;
 import com.example.enseirb.timtim.mapeirb.exceptions.BadPOICollectionException;
 import com.example.enseirb.timtim.mapeirb.model.IPOI;
 import com.example.enseirb.timtim.mapeirb.model.POICollection;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterManager;
 
-public class MapInitializer {
+public class MapManager {
+
+    private final Context context;
+    private GoogleMap map;
+
+    public MapManager(Context context) {
+        this.context = context;
+    }
 
     private void setMarkers(ClusterManager<ClusterablePOI> clusterManager, POICollection poiCollection) throws BadPOICollectionException {
         if (poiCollection == null)
@@ -23,12 +31,19 @@ public class MapInitializer {
     }
 
 
-    public GoogleMap prepareMap(GoogleMap googleMap, POICollection poiCollection, Context context){
-        GoogleMap map = googleMap;
+    public GoogleMap prepareMap(GoogleMap googleMap){
+        map = googleMap;
         LatLng bdx = new LatLng(44.840950, -0.574813);
         map.setMyLocationEnabled(true);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(bdx, 12));
 
+        return map;
+    }
+
+    public void moveCamera(CameraUpdate cameraUpdate){
+        map.moveCamera(cameraUpdate);
+    }
+    public void setPOIMarkers(POICollection poiCollection){
         ClusterManager<ClusterablePOI> clusterManager = new ClusterManager<>(context, map);
         map.setOnCameraChangeListener(clusterManager);
         map.setOnMarkerClickListener(clusterManager);
@@ -48,6 +63,5 @@ public class MapInitializer {
             }
         });
         clusterManager.setRenderer(new POIClusterRenderer(context, map, clusterManager));
-        return googleMap;
     }
 }

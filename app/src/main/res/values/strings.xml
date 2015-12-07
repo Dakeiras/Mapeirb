@@ -12,4 +12,6 @@
     <string name="icon_internet_access">&#xf1eb;</string>
     <string name="icon_defibrilator">&#xf21e;</string>
     <string name="icon_electric_car">&#xf1e6;</string>
+    <string name="sort_name">Trier par nom</string>
+    <string name="sort_distance">Trier par distance</string>
 </resources>

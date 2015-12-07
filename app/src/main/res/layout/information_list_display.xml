@@ -18,8 +18,31 @@
         android:id="@+id/information_layout_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="90">
+        android:layout_weight="80">
 
     </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+        <Button
+            android:id="@+id/button_sort_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:text="@string/sort_name"/>
+
+        <Button
+            android:id="@+id/button_sort_distance"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:text="@string/sort_distance"/>
+
+    </LinearLayout>
 
 </LinearLayout>
