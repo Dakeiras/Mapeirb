@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.enseirb.timtim.mapeirb.R;
+import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.MsgPopupFactoryFinishApp;
+import com.example.enseirb.timtim.mapeirb.utils.ConnectivityChecker;
 
 public class SelectionScreenActivity extends AppCompatActivity {
 
@@ -58,12 +60,18 @@ public class SelectionScreenActivity extends AppCompatActivity {
                 ShowList(InformationListFragment.TOILET_NAME);
             }
         });
-
+        displayPopupIfNotConnectedToInternet();
     }
+
 
     private void ShowList(String name) {
         Intent intent = MapPresenterActivity.getIntent(this, name);
         startActivity(intent);
+    }
+
+    private void displayPopupIfNotConnectedToInternet(){
+        if(!ConnectivityChecker.isDeviceConnected(this))
+            new MsgPopupFactoryFinishApp().show("Device not connected", "Please connect to the internet and try again.", this);
     }
 
 }

@@ -5,18 +5,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 public class MsgPopupFactory {
-
-    public static void show(String title, String msg, Context context){
+    protected void show(String title, String msg, Context context, DialogInterface.OnClickListener onClickListener){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder
                 .setMessage(msg)
                 .setCancelable(false)
-                .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        dialog.cancel();
-                    }
-                });
+                .setPositiveButton("Ok", onClickListener);
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
