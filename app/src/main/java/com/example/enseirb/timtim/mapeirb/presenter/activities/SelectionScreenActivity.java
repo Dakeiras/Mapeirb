@@ -1,5 +1,6 @@
 package com.example.enseirb.timtim.mapeirb.presenter.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
@@ -63,15 +64,17 @@ public class SelectionScreenActivity extends AppCompatActivity {
         displayPopupIfNotConnectedToInternet();
     }
 
+    private void displayPopupIfNotConnectedToInternet(){
+        Context context = this;
+        if(!ConnectivityChecker.isDeviceConnected(context))
+            new MsgPopupFactoryFinishApp().show("Device not connected", "Please connect to the internet and try again.", context);
+    }
+
 
     private void ShowList(String name) {
         Intent intent = MapPresenterActivity.getIntent(this, name);
         startActivity(intent);
     }
 
-    private void displayPopupIfNotConnectedToInternet(){
-        if(!ConnectivityChecker.isDeviceConnected(this))
-            new MsgPopupFactoryFinishApp().show("Device not connected", "Please connect to the internet and try again.", this);
-    }
 
 }
