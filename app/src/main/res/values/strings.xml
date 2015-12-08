@@ -14,4 +14,5 @@
     <string name="icon_electric_car">&#xf1e6;</string>
     <string name="sort_name">Trier par nom</string>
     <string name="sort_distance">Trier par distance</string>
+    <string name="display_choice">Points à afficher</string>
 </resources>

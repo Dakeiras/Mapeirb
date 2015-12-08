@@ -37,6 +37,9 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_information_list);
+
+
+
         if (getResources().getBoolean(R.bool.portrait_only))
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         InformationListFragment fragment;
@@ -71,6 +74,18 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
             mapFragment.getMapAsync(this);
             createList(getIntent().getStringExtra(SERVICE_NAME));
         }
+
+
+        Button displayChoiceButton = null;
+        if((displayChoiceButton = (Button) findViewById(R.id.content_information_list_choice_button)) != null) {
+            //TODO pour la fenêtre téléphone
+        } else if ((displayChoiceButton = (Button) findViewById(R.id.content_information_list_choice_button_large)) != null) {
+            //TODO pour tablette
+        } else {
+            //TODO c'est pas normal
+        }
+
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

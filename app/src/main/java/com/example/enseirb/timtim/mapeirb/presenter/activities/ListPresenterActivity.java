@@ -37,7 +37,7 @@ public class ListPresenterActivity extends Activity {
     private static final String SERVICE_NAME = "com.example.enseirb.timtim.mapeirb.presenter.SERVICE";
     private ListView listView;
     private IPOICollectionBusiness poiCollectionBusiness;
-    TextView title;
+    private TextView title;
     ProgressPopupFactory progressPopupFactory = new ProgressPopupFactory(this);
     private POICollection mPOICollection;
 
@@ -88,8 +88,6 @@ public class ListPresenterActivity extends Activity {
 
     public void createList(String service, AdapterView.OnItemClickListener listener) {
         initializeBusiness();
-        TextView title = (TextView) findViewById(R.id.information_list_service_name);
-        title.setText(service);
         listView = (ListView) findViewById(R.id.information_layout_list);
         retrieveServiceList(service);
         listView.setOnItemClickListener(listener);

@@ -33,14 +33,14 @@
             android:id="@+id/button_sort_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="50"
+            android:layout_weight="42"
             android:text="@string/sort_name"/>
 
         <Button
             android:id="@+id/button_sort_distance"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="50"
+            android:layout_weight="58"
             android:text="@string/sort_distance"/>
 
     </LinearLayout>

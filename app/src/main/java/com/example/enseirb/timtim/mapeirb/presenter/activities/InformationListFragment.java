@@ -41,6 +41,7 @@ public class InformationListFragment extends Fragment {
     private ListView listView;
     private Button nameSortButton;
     private Button distanceSortButton;
+    private TextView title;
     protected static final String DEFIBRILATOR_NAME = "com.example.enseirb.timtim.mapeirb.presenter.DEFIBRILATOR";
     protected static final String ELECTRIC_CAR_NAME = "com.example.enseirb.timtim.mapeirb.presenter.ELECTRICCAR";
     protected static final String TOILET_NAME = "com.example.enseirb.timtim.mapeirb.presenter.TOILET";
@@ -55,7 +56,7 @@ public class InformationListFragment extends Fragment {
 
     public void createList(String service,AdapterView.OnItemClickListener listener) {
         initializeBusiness();
-        TextView title = (TextView) getView().findViewById(R.id.information_list_service_name);
+        title = (TextView) getView().findViewById(R.id.information_list_service_name);
         nameSortButton = (Button) getView().findViewById(R.id.button_sort_name);
         nameSortButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +71,6 @@ public class InformationListFragment extends Fragment {
                 fillListByDistance(mPOICollection);
             }
         });
-        title.setText(service);
         listView = (ListView) getView().findViewById(R.id.information_layout_list);
         retrieveServiceList(service);
         listView.setOnItemClickListener(listener);
@@ -97,28 +97,29 @@ public class InformationListFragment extends Fragment {
         };
 
         switch (service) {
-
-            case DEFIBRILATOR_NAME:
-                poiCollectionBusiness.retrievePOICollection(POIType.DEFIBRILLATOR,listener);
+            case InformationListFragment.DEFIBRILATOR_NAME:
+                title.setText("Défibrillateur");
+                poiCollectionBusiness.retrievePOICollection(POIType.DEFIBRILLATOR, listener);
                 break;
-            case INTERNET_NAME:
-                poiCollectionBusiness.retrievePOICollection(POIType.INTERNET,listener);
+            case InformationListFragment.INTERNET_NAME:
+                title.setText("Points WIFI");
+                poiCollectionBusiness.retrievePOICollection(POIType.INTERNET, listener);
                 break;
-            case ELECTRIC_CAR_NAME:
-                poiCollectionBusiness.retrievePOICollection(POIType.ELECTRIC,listener);
+            case InformationListFragment.ELECTRIC_CAR_NAME:
+                title.setText("Bornes électriques");
+                poiCollectionBusiness.retrievePOICollection(POIType.ELECTRIC, listener);
                 break;
-            case TOILET_NAME:
-                poiCollectionBusiness.retrievePOICollection(POIType.TOILET,listener);
+            case InformationListFragment.TOILET_NAME:
+                title.setText("Toilettes");
+                poiCollectionBusiness.retrievePOICollection(POIType.TOILET, listener);
                 break;
             default:
                 break;
         }
 
-
-
     }
 
-    private void fillListByName(POICollection poiCollection) {
+    protected void fillListByName(POICollection poiCollection) {
         List<String> serviceList = new ArrayList<>();
         for(IPOI poi: poiCollection.getPoiCollection()) {
             //System.out.println(poi.getTitle());
@@ -128,7 +129,7 @@ public class InformationListFragment extends Fragment {
         listView.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, serviceList));
     }
 
-    private void fillListByDistance(final POICollection poiCollection) {
+    protected void fillListByDistance(final POICollection poiCollection) {
         final LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         final String locationProvider = LocationManager.NETWORK_PROVIDER;
         final LocationListener locationListener = new LocationListener() {
