@@ -16,7 +16,7 @@ public class POICollectionBusiness implements IPOICollectionBusiness {
 
 
     @Override
-    public POICollection retrievePOICollection(POIType poiType, final IPOICollectionBusinessListener listener) {
+    public void retrievePOICollection(POIType poiType, final IPOICollectionBusinessListener listener) {
         setPoiCollectionConverter(poiType);
         poiCollectionConverter.retrievePOICollection(poiType, new IPOICollectionConverterListener() {
 
@@ -31,8 +31,6 @@ public class POICollectionBusiness implements IPOICollectionBusiness {
             }
 
         });
-
-        return null;
     }
 
     private void setPoiCollectionConverter(POIType poiType) {
