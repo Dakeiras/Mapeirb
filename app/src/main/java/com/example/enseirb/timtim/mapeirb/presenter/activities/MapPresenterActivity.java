@@ -2,9 +2,11 @@ package com.example.enseirb.timtim.mapeirb.presenter.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +19,7 @@ import com.example.enseirb.timtim.mapeirb.business.listener.IPOICollectionBusine
 import com.example.enseirb.timtim.mapeirb.model.IPOI;
 import com.example.enseirb.timtim.mapeirb.model.POICollection;
 import com.example.enseirb.timtim.mapeirb.model.POIType;
+import com.example.enseirb.timtim.mapeirb.presenter.MapConfig;
 import com.example.enseirb.timtim.mapeirb.presenter.MapManager;
 import com.example.enseirb.timtim.mapeirb.utils.SingletonPOICollection;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -67,6 +70,7 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                 @Override
                 public void onClick(View v) {
                     Intent intent = ListPresenterActivity.getIntent(activity, serviceName);
+                    savedMapConfig();
                     startActivityForResult(intent, SERVICE_CLICK);
                 }
             });
@@ -97,13 +101,29 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
         }
         mapManager.clear();
         mapManager.setPOIMarkers(poiCollection);
+        savedMapConfig();
         super.onActivityResult(requestCode, resultCode, data);
 
     }
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mapManager.prepareMap(googleMap);
+        mapManager.prepareMap(googleMap, loadMapConfig());
     }
+
+    private MapConfig loadMapConfig() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return new MapConfig(preferences);
+    }
+
+    private void savedMapConfig() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        MapConfig mapConfig = mapManager.getMapConfig();
+        mapConfig.updateMapPreferences(preferences);
+    }
+
+
     public static Intent getIntent(Context context, String service) {
         Intent intent = new Intent(context, MapPresenterActivity.class);
         intent.putExtra(SERVICE_NAME, service);
@@ -190,9 +210,9 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
+    protected void onStop() {
+        super.onStop();
+        savedMapConfig();
     }
 
     public static Intent getResultIntent(IPOI poi) {

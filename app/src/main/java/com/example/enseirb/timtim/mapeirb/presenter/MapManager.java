@@ -38,11 +38,13 @@ public class MapManager {
     }
 
 
-    public GoogleMap prepareMap(GoogleMap googleMap){
+    public GoogleMap prepareMap(GoogleMap googleMap, MapConfig mapConfig){
         map = googleMap;
-        LatLng bdx = new LatLng(44.840950, -0.574813);
+        //LatLng latLong = new LatLng(44.840950, -0.574813);
+        LatLng latLong = new LatLng(mapConfig.getLatitude(), mapConfig.getLongitude());
         map.setMyLocationEnabled(true);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(bdx, 12));
+//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLong, 12));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLong, mapConfig.getZoom()));
         return map;
     }
 
@@ -74,5 +76,12 @@ public class MapManager {
 
     public void clear(){
         map.clear();
+    }
+
+    public MapConfig getMapConfig() {
+        float latitude = (float) map.getCameraPosition().target.latitude;
+        float longitude = (float) map.getCameraPosition().target.longitude;
+        float zoom = map.getCameraPosition().zoom;
+        return new MapConfig(zoom, latitude, longitude);
     }
 }
