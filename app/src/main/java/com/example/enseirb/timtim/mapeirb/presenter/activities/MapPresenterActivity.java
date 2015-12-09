@@ -18,6 +18,7 @@ import com.example.enseirb.timtim.mapeirb.model.IPOI;
 import com.example.enseirb.timtim.mapeirb.model.POICollection;
 import com.example.enseirb.timtim.mapeirb.model.POIType;
 import com.example.enseirb.timtim.mapeirb.presenter.MapManager;
+import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.MsgPopupFactoryCancel;
 import com.example.enseirb.timtim.mapeirb.utils.SingletonPOICollection;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,6 +36,12 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     private POICollection poiCollection;
     private MapPresenterActivity activity = this;
     private String serviceName;
+    final boolean[] hasRetrievedJSON = {true};
+
+    final private String errorPopupTitle = "Erreur";
+    final private String errorPopupMsg = "Impossible de récupérer les " +
+            "informations à propos des points d'intéret. Peut-etre vous n'etes pas " +
+            "connectés à internet.";
 
 
     @Override
@@ -168,7 +175,7 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
             }
             @Override
             public void onError(String message) {
-
+                hasRetrievedJSON[0] = false;
             }
         };
         switch (service) {
@@ -191,8 +198,15 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
 
     @Override
     protected void onResume() {
+        try {
+            Thread.sleep(Long.parseLong("50")); // Moche, mais indispensable pour pouvoir
+                                                // afficher la popup à tout les coups
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         super.onResume();
-
+        if(!hasRetrievedJSON[0])
+            new MsgPopupFactoryCancel().show(errorPopupTitle, errorPopupMsg, this);
     }
 
     public static Intent getResultIntent(IPOI poi) {

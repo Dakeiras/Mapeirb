@@ -25,10 +25,14 @@ public class InternetsDAO implements IPOIsDAO {
         new AsyncTask<String, Integer, POICollectionDTO>() {
             @Override
             protected POICollectionDTO doInBackground(String... params) {
-                POICollectionDTO internetCollectionDTO;
+                POICollectionDTO internetCollectionDTO = null;
                 String jsonInternet = poiCollectionClient.retrievePOICollection(params[0]);
+                if(jsonInternet == null)
+                    listener.onError("Could not retrieve JSON");
+                else {
                 internetCollectionDTO = poiCollectionParser.parse(jsonInternet);
                 listener.onSuccess(internetCollectionDTO);
+                }
                 return internetCollectionDTO;
             }
         }.execute(URL);

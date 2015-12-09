@@ -6,6 +6,10 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -15,18 +19,32 @@ import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.MsgPopupFacto
 import com.example.enseirb.timtim.mapeirb.utils.ConnectivityChecker;
 
 public class SelectionScreenActivity extends AppCompatActivity {
+    final Context activityContext = this;
+    final String helpPopupTitle = "Aide";
+    final String helpPopupMsg = "Cette application permet de localiser des points" +
+            "d'interet dans bordeaux." +
+            "Touchez un des points ci-dessous pour afficher respectivement :\n" +
+            "- Les stations de charge de voitures electriques\n" +
+            "- Les défibrilateurs publics\n" +
+            "- Les accès WiFi gratuits publics\n" +
+            "- Les toilettes publiques\n\n" +
+            "Une fois sur la carte, vous pouvez toucher l'iconde de liste en haut à droite de " +
+            "l'écran pour afficher le liste des points d'intéret de la catégorie selectionnée.";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_selection_screen);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
         if(getResources().getBoolean(R.bool.portrait_only))
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         initializePOIButtons();
         displayPopupIfNotConnectedToInternet();
-        initHelpButton();
     }
 
     private void displayPopupIfNotConnectedToInternet(){
@@ -83,23 +101,22 @@ public class SelectionScreenActivity extends AppCompatActivity {
 
     }
 
-    private void initHelpButton(){
-        Button helpButton = (Button) findViewById(R.id.content_selection_screen_help_button);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.content_selection_screen_menu, menu);
+        return true;
+    }
 
-        final Context activityContext = this;
-        helpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String helpContent = "This app allows you to locate useful points of interest in " +
-                        "Bordeaux.\n" +
-                        "Tap on one of these four button to display respectively :\n" +
-                        "- The electric car charging stations\n" +
-                        "- The public defibrilators\n" +
-                        "- The free WiFi hotspots\n" +
-                        "- The public restrooms";
-                new MsgPopupFactoryCancel().show("Help", helpContent, activityContext);
-            }
-        });
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_help:
+                new MsgPopupFactoryCancel().show(helpPopupTitle, helpPopupMsg, activityContext);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
 
+        }
     }
 }
