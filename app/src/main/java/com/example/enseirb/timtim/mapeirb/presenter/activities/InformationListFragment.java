@@ -19,6 +19,7 @@ import com.example.enseirb.timtim.mapeirb.R;
 import com.example.enseirb.timtim.mapeirb.model.IPOI;
 import com.example.enseirb.timtim.mapeirb.model.POI;
 import com.example.enseirb.timtim.mapeirb.model.POICollection;
+import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.ProgressPopupFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,14 +41,18 @@ public class InformationListFragment extends Fragment {
 
     private POICollection mPOICollection;
     private CustomAdapter dataAdapter;
+    private View falseView;
+    ProgressPopupFactory progressPopupFactory;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        progressPopupFactory = new ProgressPopupFactory(getActivity());
         return inflater.inflate(R.layout.information_list_display, container, false);
     }
 
-    public void createList(String service, POICollection poiCollection,AdapterView.OnItemClickListener listener) {
+    public void createList(String service, POICollection poiCollection, AdapterView.OnItemClickListener listener, View falseView) {
         mPOICollection = poiCollection;
+        this.falseView = falseView;
         title = (TextView) getView().findViewById(R.id.information_list_service_name);
         nameSortButton = (Button) getView().findViewById(R.id.button_sort_name);
         nameSortButton.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +95,7 @@ public class InformationListFragment extends Fragment {
     }
 
     protected void fillListByName(POICollection poiCollection) {
+        progressPopupFactory.show();
         List<POI> poiList = new ArrayList<>();
         for(IPOI poi: poiCollection.getPoiCollection()) {
             poiList.add((POI) poi);
@@ -97,10 +103,13 @@ public class InformationListFragment extends Fragment {
         Collections.sort(poiList);
 
         dataAdapter = new CustomAdapter(getActivity(), R.layout.list_check_box, poiList);
+        dataAdapter.setFalseView(falseView);
         listView.setAdapter(dataAdapter);
+        progressPopupFactory.dismiss();
     }
 
     protected void fillListByDistance(final POICollection poiCollection) {
+        progressPopupFactory.show();
         final LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         final String locationProvider = LocationManager.NETWORK_PROVIDER;
         final LocationListener locationListener = new LocationListener() {
@@ -109,16 +118,17 @@ public class InformationListFragment extends Fragment {
                 if(lastKnownLocation == null) {
 
                 }
-                Map<Float,String> serviceList = new TreeMap<>();
+                Map<Float,POI> serviceList = new TreeMap<>();
                 for(IPOI poi: poiCollection.getPoiCollection()) {
                     //System.out.println(poi.getTitle());
                     Location poiLocation = new Location("poi");
                     poiLocation.setLatitude(poi.getPosition().latitude);
                     poiLocation.setLongitude(poi.getPosition().longitude);
-                    serviceList.put(lastKnownLocation.distanceTo(poiLocation), poi.getTitle());
+                    serviceList.put(lastKnownLocation.distanceTo(poiLocation), (POI) poi);
                 }
-                listView.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1,
-                        new LinkedList<String>(serviceList.values())));
+                CustomAdapter dataAdapter = new CustomAdapter(getActivity(), R.layout.list_check_box, new LinkedList<>(serviceList.values()));
+                dataAdapter.setFalseView(falseView);
+                listView.setAdapter(dataAdapter);
                 removeLocationListener(this,locationManager);
             }
 
@@ -135,6 +145,7 @@ public class InformationListFragment extends Fragment {
 
     private void removeLocationListener(LocationListener locationListener, LocationManager locationManager) {
         locationManager.removeUpdates(locationListener);
+        progressPopupFactory.dismiss();
     }
 
 

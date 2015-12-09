@@ -141,16 +141,16 @@ public class ListPresenterActivity extends Activity {
         final LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-                Map<Float,String> serviceList = new TreeMap<>();
+                Map<Float,POI> serviceList = new TreeMap<>();
                 for(IPOI poi: poiCollection.getPoiCollection()) {
                     //System.out.println(poi.getTitle());
                     Location poiLocation = new Location(POI_NAME);
                     poiLocation.setLatitude(poi.getPosition().latitude);
                     poiLocation.setLongitude(poi.getPosition().longitude);
-                    serviceList.put(lastKnownLocation.distanceTo(poiLocation), poi.getTitle());
+                    serviceList.put(lastKnownLocation.distanceTo(poiLocation),(POI) poi);
                 }
-                listView.setAdapter(new ArrayAdapter<>(activity, android.R.layout.simple_list_item_1, android.R.id.text1,
-                        new LinkedList<>(serviceList.values())));
+                CustomAdapter dataAdapter = new CustomAdapter(activity, R.layout.list_check_box, new LinkedList<>(serviceList.values()));
+                listView.setAdapter(dataAdapter);
                 removeLocationListener(this, locationManager);
             }
 

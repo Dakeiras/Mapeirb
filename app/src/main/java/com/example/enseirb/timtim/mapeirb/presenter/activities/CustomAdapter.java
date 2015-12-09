@@ -22,12 +22,17 @@ public class CustomAdapter extends ArrayAdapter<POI> {
 
     private List<POI> poiList;
     private Context ctx;
+    private View falseView;
 
     public CustomAdapter(Context context, int textViewResourceId, List<POI> serviceList) {
         super(context, textViewResourceId, serviceList);
         this.poiList = new ArrayList<>();
         this.poiList.addAll(serviceList);
         this.ctx = context;
+    }
+
+    public void setFalseView(View falseView) {
+        this.falseView = falseView;
     }
 
     private class ViewHolder {
@@ -54,11 +59,13 @@ public class CustomAdapter extends ArrayAdapter<POI> {
                 public void onClick(View v) {
                     CheckBox cb = (CheckBox) v;
                     IPOI poi = (IPOI) cb.getTag();
-                    Toast.makeText(ctx.getApplicationContext(),
+                    /*Toast.makeText(ctx.getApplicationContext(),
                             "Clicked on Checkbox: " + cb.getText() +
                                     " is " + cb.isChecked(),
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_LONG).show();*/
                     poi.setSelected(cb.isChecked());
+                    if(falseView != null)
+                        falseView.performClick();
                 }
             });
         } else {
