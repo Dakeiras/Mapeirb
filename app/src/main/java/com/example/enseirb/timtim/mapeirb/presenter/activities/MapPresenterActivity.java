@@ -3,6 +3,7 @@ package com.example.enseirb.timtim.mapeirb.presenter.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -78,9 +79,6 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
             mapFragment.getMapAsync(this);
             createList(getIntent().getStringExtra(SERVICE_NAME));
         }
-
-
-
 
     }
     @Override
@@ -164,6 +162,8 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                                     startActivityForResult(intent, SERVICE_CLICK);
                                 }
                             });
+                            Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
+                            listButton.setTypeface(font);
                         }
 
                     }
