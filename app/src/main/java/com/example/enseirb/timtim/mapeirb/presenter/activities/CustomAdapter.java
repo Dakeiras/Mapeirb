@@ -30,10 +30,6 @@ public class CustomAdapter extends ArrayAdapter<POI> {
         this.ctx = context;
     }
 
-    public List<POI> getPoiList() {
-        return poiList;
-    }
-
     private class ViewHolder {
         TextView poiTitle;
         CheckBox checkBox;
@@ -42,7 +38,7 @@ public class CustomAdapter extends ArrayAdapter<POI> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolder holder = null;
+        ViewHolder holder;
         Log.v("ConvertView", String.valueOf(position));
 
         if (convertView == null) {

@@ -62,7 +62,6 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
             fragment.createList(getIntent().getStringExtra(SERVICE_NAME), poiCollection, listener);
         } else {
             Button listButton = (Button) findViewById(R.id.content_information_list_list_button);
-            final Context popupContext = this;
             serviceName = getIntent().getStringExtra(SERVICE_NAME);
             listButton.setOnClickListener(new View.OnClickListener() {
                 @Override

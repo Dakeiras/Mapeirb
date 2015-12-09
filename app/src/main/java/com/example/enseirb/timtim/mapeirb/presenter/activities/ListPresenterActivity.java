@@ -31,13 +31,16 @@ import java.util.TreeMap;
 
 public class ListPresenterActivity extends Activity {
 
+    private static final String DEFIBRILLATOR_NAME = "Défibrillateur";
+    private static final String ELECTRIC_NAME = "Bornes électriques";
+    private static final String TOILET_NAME = "Toilettes";
+    private static final String INTERNET_NAME = "Points Internet";
     private static final String SERVICE_NAME = "com.example.enseirb.timtim.mapeirb.presenter.SERVICE";
+    private static final String POI_NAME = "poi";
     private ListView listView;
-    //private IPOICollectionBusiness poiCollectionBusiness;
     private TextView title;
     ProgressPopupFactory progressPopupFactory = new ProgressPopupFactory(this);
     private POICollection mPOICollection;
-    private CustomAdapter dataAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,52 +88,27 @@ public class ListPresenterActivity extends Activity {
     }
 
     public void createList(String service, AdapterView.OnItemClickListener listener) {
-        //initializeBusiness();
         listView = (ListView) findViewById(R.id.information_layout_list);
         retrieveServiceList(service);
         listView.setOnItemClickListener(listener);
     }
 
     private void retrieveServiceList(String service) {
-//        IPOICollectionBusinessListener listener = new IPOICollectionBusinessListener() {
-//            @Override
-//            public void onSuccess(final POICollection poiCollection) {
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mPOICollection = poiCollection;
-//                        fillListByName(poiCollection);
-//                    }
-//                });
-//
-//            }
-//
-//            @Override
-//            public void onError(String message) {
-//
-//            }
-//        };
-
-        //mPOICollection = (POICollection) getIntent().getSerializableExtra("POI_COLLECTION");
         System.out.println(mPOICollection.getPoiCollection().size());
         fillListByName(mPOICollection);
 
         switch (service) {
             case InformationListFragment.DEFIBRILATOR_NAME:
-                title.setText("Défibrillateur");
-                //poiCollectionBusiness.retrievePOICollection(POIType.DEFIBRILLATOR,listener);
+                title.setText(DEFIBRILLATOR_NAME);
                 break;
             case InformationListFragment.INTERNET_NAME:
-                title.setText("Points WIFI");
-                //poiCollectionBusiness.retrievePOICollection(POIType.INTERNET,listener);
+                title.setText(INTERNET_NAME);
                 break;
             case InformationListFragment.ELECTRIC_CAR_NAME:
-                title.setText("Bornes électriques");
-                //poiCollectionBusiness.retrievePOICollection(POIType.ELECTRIC,listener);
+                title.setText(ELECTRIC_NAME);
                 break;
             case InformationListFragment.TOILET_NAME:
-                title.setText("Toilettes");
-                //poiCollectionBusiness.retrievePOICollection(POIType.TOILET,listener);
+                title.setText(TOILET_NAME);
                 break;
             default:
                 break;
@@ -141,17 +119,6 @@ public class ListPresenterActivity extends Activity {
     }
 
     private void fillListByName(POICollection poiCollection) {
-//        progressPopupFactory.show();
-//        List<String> serviceList = new ArrayList<>();
-//        for(IPOI poi: poiCollection.getPoiCollection()) {
-//            serviceList.add(poi.getTitle());
-//        }
-//        Collections.sort(serviceList, Collator.getInstance());
-//        listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, serviceList));
-//
-//
-//        progressPopupFactory.dismiss();
-
         progressPopupFactory.show();
 
         List<POI> poiList = new ArrayList<>();
@@ -160,7 +127,7 @@ public class ListPresenterActivity extends Activity {
         }
         Collections.sort(poiList);
 
-        dataAdapter = new CustomAdapter(this, R.layout.list_check_box, poiList);
+        CustomAdapter dataAdapter = new CustomAdapter(this, R.layout.list_check_box, poiList);
         listView.setAdapter(dataAdapter);
 
         progressPopupFactory.dismiss();
@@ -177,7 +144,7 @@ public class ListPresenterActivity extends Activity {
                 Map<Float,String> serviceList = new TreeMap<>();
                 for(IPOI poi: poiCollection.getPoiCollection()) {
                     //System.out.println(poi.getTitle());
-                    Location poiLocation = new Location("poi");
+                    Location poiLocation = new Location(POI_NAME);
                     poiLocation.setLatitude(poi.getPosition().latitude);
                     poiLocation.setLongitude(poi.getPosition().longitude);
                     serviceList.put(lastKnownLocation.distanceTo(poiLocation), poi.getTitle());
@@ -201,10 +168,5 @@ public class ListPresenterActivity extends Activity {
         locationManager.removeUpdates(locationListener);
         progressPopupFactory.dismiss();
     }
-
-    //private void initializeBusiness() {
-    //    poiCollectionBusiness = new POICollectionBusiness();
-    //}
-
 
 }
