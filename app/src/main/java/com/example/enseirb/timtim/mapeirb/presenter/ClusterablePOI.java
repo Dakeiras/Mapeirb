@@ -31,4 +31,16 @@ public class ClusterablePOI implements IPOI,ClusterItem {
     public String getName() {
         return poi.getName();
     }
+
+    @Override
+    public void setSelected(boolean b) {
+        poi.setSelected(b);
+    }
+
+    @Override
+    public boolean isSelected() {
+        return poi.isSelected();
+    }
+
+
 }

@@ -64,7 +64,10 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                 @Override
                 public void onClick(View v) {
                     Intent intent = ListPresenterActivity.getIntent(activity, serviceName);
-                    startActivityForResult(intent,SERVICE_CLICK);
+                    System.out.println(poiCollection.getPoiCollection().size());
+                    //intent.putExtra("POI_COLLECTION", poiCollection);
+                    ListPresenterActivity.mPOICollection = poiCollection;
+                    startActivityForResult(intent, SERVICE_CLICK);
                 }
             });
         }
@@ -76,14 +79,6 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
         }
 
 
-        Button displayChoiceButton = null;
-        if((displayChoiceButton = (Button) findViewById(R.id.content_information_list_choice_button)) != null) {
-            //TODO pour la fenêtre téléphone
-        } else if ((displayChoiceButton = (Button) findViewById(R.id.content_information_list_choice_button_large)) != null) {
-            //TODO pour tablette
-        } else {
-            //TODO c'est pas normal
-        }
 
 
     }
@@ -156,9 +151,16 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                 break;
         }
     }
-    public static Intent getResultIntent(String title) {
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    public static Intent getResultIntent(IPOI poi) {
         Intent intent = new Intent();
-        intent.putExtra(RESULT, title);
+        intent.putExtra(RESULT, poi.getTitle());
         return intent;
     }
 }
