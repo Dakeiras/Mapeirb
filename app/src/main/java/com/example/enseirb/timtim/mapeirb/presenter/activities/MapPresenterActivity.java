@@ -2,9 +2,11 @@ package com.example.enseirb.timtim.mapeirb.presenter.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +19,7 @@ import com.example.enseirb.timtim.mapeirb.business.listener.IPOICollectionBusine
 import com.example.enseirb.timtim.mapeirb.model.IPOI;
 import com.example.enseirb.timtim.mapeirb.model.POICollection;
 import com.example.enseirb.timtim.mapeirb.model.POIType;
+import com.example.enseirb.timtim.mapeirb.presenter.MapConfig;
 import com.example.enseirb.timtim.mapeirb.presenter.MapManager;
 import com.example.enseirb.timtim.mapeirb.utils.SingletonPOICollection;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -43,34 +46,8 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
         setContentView(R.layout.content_information_list);
 
 
-
         if (getResources().getBoolean(R.bool.portrait_only))
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        InformationListFragment fragment;
-        if ((fragment = (InformationListFragment) getFragmentManager().findFragmentById(R.id.list_layout_fragment)) != null){
-            AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    for (IPOI ipoi : poiCollection.getPoiCollection()) {
-                        if (ipoi.getTitle().equals(parent.getItemAtPosition(position))) {
-                            centerOnPoi(ipoi);
-                            break;
-                        }
-                    }
-                }
-            };
-            fragment.createList(getIntent().getStringExtra(SERVICE_NAME), poiCollection, listener);
-        } else {
-            Button listButton = (Button) findViewById(R.id.content_information_list_list_button);
-            serviceName = getIntent().getStringExtra(SERVICE_NAME);
-            listButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = ListPresenterActivity.getIntent(activity, serviceName);
-                    startActivityForResult(intent, SERVICE_CLICK);
-                }
-            });
-        }
 
         SupportMapFragment mapFragment;
         if ((mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -80,9 +57,10 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
         }
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             if (requestCode == SERVICE_CLICK) {
                 Iterator<IPOI> it = poiCollection.getPoiCollection().iterator();
                 IPOI ipoi;
@@ -97,25 +75,33 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
         }
         mapManager.clear();
         mapManager.setPOIMarkers(poiCollection);
+        savedMapConfig();
         super.onActivityResult(requestCode, resultCode, data);
 
     }
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mapManager.prepareMap(googleMap);
+        mapManager.prepareMap(googleMap, loadMapConfig());
     }
+
+
     public static Intent getIntent(Context context, String service) {
         Intent intent = new Intent(context, MapPresenterActivity.class);
         intent.putExtra(SERVICE_NAME, service);
         return intent;
     }
+
     public void centerOnPoi(IPOI poi) {
         LatLng poiPos = poi.getPosition();
         mapManager.moveCamera(CameraUpdateFactory.newLatLngZoom(poiPos, 17));
     }
+
     public void createList(String service) {
         retrieveServiceList(service);
     }
+
     private void retrieveServiceList(String service) {
         IPOICollectionBusiness poiCollectionBusiness = new POICollectionBusiness();
         IPOICollectionBusinessListener listener = new IPOICollectionBusinessListener() {
@@ -133,25 +119,31 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                         mapManager.setPOIMarkers(poiCollection);
 
                         InformationListFragment fragment;
-                        if ((fragment = (InformationListFragment) getFragmentManager().findFragmentById(R.id.list_layout_fragment)) != null){
+                        if ((fragment = (InformationListFragment) getFragmentManager().findFragmentById(R.id.list_layout_fragment)) != null) {
                             AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    for (IPOI ipoi : poiCollection.getPoiCollection()) {
-                                        if (ipoi.getTitle().equals(parent.getItemAtPosition(position))) {
-                                            centerOnPoi(ipoi);
-                                            break;
-                                        }
-                                    }
+                                    centerOnPoi((IPOI) parent.getItemAtPosition(position));
+
                                 }
                             };
-                            fragment.createList(serviceName, poiCollection, listener);
+                            View falseView = new View(activity);
+                            falseView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mapManager.clear();
+                                    mapManager.setPOIMarkers(poiCollection);
+                                    savedMapConfig();
+                                }
+                            });
+                            fragment.createList(serviceName, poiCollection, listener, falseView);
                         } else {
                             Button listButton = (Button) findViewById(R.id.content_information_list_list_button);
 
                             listButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                    savedMapConfig();
                                     Intent intent = ListPresenterActivity.getIntent(activity, serviceName);
                                     SingletonPOICollection.getInstance().getPoiCollection().clear();
                                     SingletonPOICollection.getInstance().getPoiCollection().addAll(poiCollection.getPoiCollection());
@@ -166,6 +158,7 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                     }
                 });
             }
+
             @Override
             public void onError(String message) {
 
@@ -189,15 +182,29 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
-
     public static Intent getResultIntent(IPOI poi) {
         Intent intent = new Intent();
         intent.putExtra(RESULT, poi.getTitle());
         return intent;
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        savedMapConfig();
+    }
+
+
+    private MapConfig loadMapConfig() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return new MapConfig(preferences);
+    }
+
+    private void savedMapConfig() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        MapConfig mapConfig = mapManager.getMapConfig();
+        mapConfig.updateMapPreferences(preferences);
+    }
+
+
 }
