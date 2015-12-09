@@ -20,6 +20,7 @@ import com.example.enseirb.timtim.mapeirb.model.IPOI;
 import com.example.enseirb.timtim.mapeirb.model.POI;
 import com.example.enseirb.timtim.mapeirb.model.POICollection;
 import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.ProgressPopupFactory;
+import com.example.enseirb.timtim.mapeirb.utils.SingletonPOICollection;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,7 +36,7 @@ public class ListPresenterActivity extends Activity {
     //private IPOICollectionBusiness poiCollectionBusiness;
     private TextView title;
     ProgressPopupFactory progressPopupFactory = new ProgressPopupFactory(this);
-    public static POICollection mPOICollection;
+    private POICollection mPOICollection;
     private CustomAdapter dataAdapter;
 
     @Override
@@ -46,7 +47,7 @@ public class ListPresenterActivity extends Activity {
         if(getResources().getBoolean(R.bool.portrait_only)){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
-
+        mPOICollection = SingletonPOICollection.getInstance();
         title = (TextView) findViewById(R.id.information_list_service_name);
         listView = (ListView) findViewById(R.id.information_layout_list);
 

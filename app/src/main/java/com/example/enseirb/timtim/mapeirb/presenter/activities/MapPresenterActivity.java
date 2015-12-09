@@ -17,6 +17,7 @@ import com.example.enseirb.timtim.mapeirb.model.IPOI;
 import com.example.enseirb.timtim.mapeirb.model.POICollection;
 import com.example.enseirb.timtim.mapeirb.model.POIType;
 import com.example.enseirb.timtim.mapeirb.presenter.MapManager;
+import com.example.enseirb.timtim.mapeirb.utils.SingletonPOICollection;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -64,9 +65,6 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                 @Override
                 public void onClick(View v) {
                     Intent intent = ListPresenterActivity.getIntent(activity, serviceName);
-                    System.out.println(poiCollection.getPoiCollection().size());
-                    //intent.putExtra("POI_COLLECTION", poiCollection);
-                    ListPresenterActivity.mPOICollection = poiCollection;
                     startActivityForResult(intent, SERVICE_CLICK);
                 }
             });
@@ -97,6 +95,10 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                 }
             }
         }
+        else{
+            System.out.println(">>>>>>>>>>>>>>>>>>>OK");
+            mapManager.setPOIMarkers(poiCollection);
+        }
         super.onActivityResult(requestCode, resultCode, data);
 
     }
@@ -124,7 +126,10 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        MapPresenterActivity.this.poiCollection = poiCollection;
+                        //MapPresenterActivity.this.poiCollection = poiCollection;
+                        SingletonPOICollection.getInstance().getPoiCollection().clear();
+                        SingletonPOICollection.getInstance().getPoiCollection().addAll(poiCollection.getPoiCollection());
+                        MapPresenterActivity.this.poiCollection = SingletonPOICollection.getInstance();
                         mapManager.setPOIMarkers(poiCollection);
                     }
                 });
