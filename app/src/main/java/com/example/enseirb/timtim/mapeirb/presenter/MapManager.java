@@ -29,8 +29,6 @@ public class MapManager {
             throw new BadPOICollectionException("The POICollection is empty");
         }
         else {
-            System.out.println(">>>>>>>>>>>>>>>>>>>OK");
-            System.out.println(poiCollection);
             for (IPOI poi : poiCollection.getPoiCollection()) {
                 if (poi.isSelected()) {
                     clusterManager.addItem(new ClusterablePOI(poi));
