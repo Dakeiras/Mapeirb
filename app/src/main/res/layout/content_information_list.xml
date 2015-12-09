@@ -13,15 +13,14 @@
 
     <Button
         android:id="@+id/content_information_list_list_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="7dp"
         android:alpha="0.8"
-        android:maxHeight="5dp"
-        android:maxWidth="5dp"
-        android:text="@string/icon_list"/>
+        android:text="@string/icon_list"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

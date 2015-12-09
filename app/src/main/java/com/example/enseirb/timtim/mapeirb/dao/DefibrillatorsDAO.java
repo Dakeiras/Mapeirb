@@ -10,7 +10,6 @@ import com.example.enseirb.timtim.mapeirb.parser.IPOICollectionParser;
 import com.example.enseirb.timtim.mapeirb.parser.JSONDefibrillatorParser;
 
 public class DefibrillatorsDAO implements IPOIsDAO {
-
     public static final String URL = "http://odata.bordeaux.fr/v1/databordeaux/defibrillateurs/?format=json";
 
     private IPOICollectionClient poiCollectionClient;
@@ -26,10 +25,14 @@ public class DefibrillatorsDAO implements IPOIsDAO {
         new AsyncTask<String, Integer, POICollectionDTO>() {
             @Override
             protected POICollectionDTO doInBackground(String... params) {
-                POICollectionDTO defibrillatorCollectionDTO;
+                POICollectionDTO defibrillatorCollectionDTO = null;
                 String jsonDefibrillator = poiCollectionClient.retrievePOICollection(params[0]);
+                if(jsonDefibrillator == null)
+                    listener.onError("Could not retrieve JSON");
+                else {
                 defibrillatorCollectionDTO = poiCollectionParser.parse(jsonDefibrillator);
                 listener.onSuccess(defibrillatorCollectionDTO);
+                }
                 return defibrillatorCollectionDTO;
             }
         }.execute(URL);
