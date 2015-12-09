@@ -3,6 +3,7 @@ package com.example.enseirb.timtim.mapeirb.presenter.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -67,22 +68,16 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                     startActivityForResult(intent,SERVICE_CLICK);
                 }
             });
+
+            Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
+
+            listButton.setTypeface(font);
         }
         SupportMapFragment mapFragment;
         if ((mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map)) != null) {
             mapFragment.getMapAsync(this);
             createList(getIntent().getStringExtra(SERVICE_NAME));
-        }
-
-
-        Button displayChoiceButton = null;
-        if((displayChoiceButton = (Button) findViewById(R.id.content_information_list_choice_button)) != null) {
-            //TODO pour la fenêtre téléphone
-        } else if ((displayChoiceButton = (Button) findViewById(R.id.content_information_list_choice_button_large)) != null) {
-            //TODO pour tablette
-        } else {
-            //TODO c'est pas normal
         }
 
 

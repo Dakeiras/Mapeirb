@@ -8,11 +8,15 @@
     <string name="title_activity_information_list">InformationListActivity</string>
     <string name="title_activity_maps">Map</string>
 
+    <string name="selection_screen_title">Services</string>
     <string name="icon_toilets">&#xe900;</string>
     <string name="icon_internet_access">&#xf1eb;</string>
-    <string name="icon_defibrilator">&#xf21e;</string>
+    <string name="icon_defibrillator">&#xf21e;</string>
     <string name="icon_electric_car">&#xf1e6;</string>
-    <string name="sort_name">Trier par nom</string>
-    <string name="sort_distance">Trier par distance</string>
-    <string name="display_choice">Points à afficher</string>
+    <string name="sort_name">Sort by name</string>
+    <string name="sort_distance">Sort by distance</string>
+
+    <string name="icon_list">&#xf03a;</string>
+    <string name="question_mark">\?</string>
+
 </resources>
