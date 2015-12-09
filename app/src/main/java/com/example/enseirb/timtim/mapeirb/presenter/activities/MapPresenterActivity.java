@@ -96,10 +96,8 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                 }
             }
         }
-        else{
-            System.out.println(">>>>>>>>>>>>>>>>>>>OK");
-            mapManager.setPOIMarkers(poiCollection);
-        }
+        mapManager.clear();
+        mapManager.setPOIMarkers(poiCollection);
         super.onActivityResult(requestCode, resultCode, data);
 
     }

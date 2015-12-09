@@ -20,4 +20,12 @@ public class POICollection implements Serializable {
         return poiCollection;
     }
 
+    @Override
+    public String toString() {
+        String s = "POICOLLECTION (" + poiCollection.size() + ")\n";
+        for (IPOI poi: poiCollection){
+            s += poi.getName() + " " + poi.isSelected() + "\n";
+        }
+        return s;
+    }
 }

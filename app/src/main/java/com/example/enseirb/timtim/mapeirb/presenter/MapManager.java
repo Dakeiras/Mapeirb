@@ -22,15 +22,21 @@ public class MapManager {
     }
 
     private void setMarkers(ClusterManager<ClusterablePOI> clusterManager, POICollection poiCollection) throws BadPOICollectionException {
-        if (poiCollection == null)
+        if (poiCollection == null) {
             throw new BadPOICollectionException("The POICollection is not initialized");
-        else if (poiCollection.getPoiCollection().size() <= 0)
+        }
+        else if (poiCollection.getPoiCollection().size() <= 0) {
             throw new BadPOICollectionException("The POICollection is empty");
-        else
-            for (IPOI poi : poiCollection.getPoiCollection())
+        }
+        else {
+            System.out.println(">>>>>>>>>>>>>>>>>>>OK");
+            System.out.println(poiCollection);
+            for (IPOI poi : poiCollection.getPoiCollection()) {
                 if (poi.isSelected()) {
                     clusterManager.addItem(new ClusterablePOI(poi));
                 }
+            }
+        }
     }
 
 
@@ -39,7 +45,6 @@ public class MapManager {
         LatLng bdx = new LatLng(44.840950, -0.574813);
         map.setMyLocationEnabled(true);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(bdx, 12));
-
         return map;
     }
 
@@ -67,5 +72,9 @@ public class MapManager {
             }
         });
         clusterManager.setRenderer(new POIClusterRenderer(context, map, clusterManager));
+    }
+
+    public void clear(){
+        map.clear();
     }
 }
