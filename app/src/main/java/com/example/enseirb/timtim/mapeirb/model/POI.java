@@ -2,14 +2,16 @@ package com.example.enseirb.timtim.mapeirb.model;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public abstract class POI implements IPOI{
+public abstract class POI implements Comparable<IPOI>, IPOI {
 
     private LatLng position;
     private String name;
+    private boolean selected;
 
     public POI(LatLng position, String name) {
         this.position = position;
         this.name = name;
+        this.selected = true;
     }
 
     @Override
@@ -26,6 +28,27 @@ public abstract class POI implements IPOI{
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean isSelected() {
+        return selected;
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    @Override
+    public int compareTo(IPOI comparePoi) {
+        if (getName() == null){
+            return 1;
+        }
+        else if (comparePoi ==  null || comparePoi.getName() == null){
+            return -1;
+        }
+        return getName().compareTo(comparePoi.getName());
     }
 
 }

@@ -34,6 +34,8 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     private POICollection poiCollection;
     private MapPresenterActivity activity = this;
     private String serviceName;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,43 +45,13 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
 
         if (getResources().getBoolean(R.bool.portrait_only))
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        InformationListFragment fragment;
-        if ((fragment = (InformationListFragment) getFragmentManager().findFragmentById(R.id.list_layout_fragment)) != null){
-            AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    for (IPOI ipoi : poiCollection.getPoiCollection()) {
-                        if (ipoi.getTitle().equals(parent.getItemAtPosition(position))) {
-                            centerOnPoi(ipoi);
-                            break;
-                        }
-                    }
-                }
-            };
-            fragment.createList(getIntent().getStringExtra(SERVICE_NAME), listener);
-        } else {
-            Button listButton = (Button) findViewById(R.id.content_information_list_list_button);
-            final Context popupContext = this;
-            serviceName = getIntent().getStringExtra(SERVICE_NAME);
-            listButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = ListPresenterActivity.getIntent(activity, serviceName);
-                    startActivityForResult(intent,SERVICE_CLICK);
-                }
-            });
 
-            Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
-
-            listButton.setTypeface(font);
-        }
         SupportMapFragment mapFragment;
         if ((mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map)) != null) {
             mapFragment.getMapAsync(this);
             createList(getIntent().getStringExtra(SERVICE_NAME));
         }
-
 
     }
     @Override
@@ -121,11 +93,45 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
         IPOICollectionBusinessListener listener = new IPOICollectionBusinessListener() {
             @Override
             public void onSuccess(final POICollection poiCollection) {
+                serviceName = getIntent().getStringExtra(SERVICE_NAME);
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         MapPresenterActivity.this.poiCollection = poiCollection;
                         mapManager.setPOIMarkers(poiCollection);
+
+                        InformationListFragment fragment;
+                        if ((fragment = (InformationListFragment) getFragmentManager().findFragmentById(R.id.list_layout_fragment)) != null){
+                            AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    for (IPOI ipoi : poiCollection.getPoiCollection()) {
+                                        if (ipoi.getTitle().equals(parent.getItemAtPosition(position))) {
+                                            centerOnPoi(ipoi);
+                                            break;
+                                        }
+                                    }
+                                }
+                            };
+                            fragment.createList(serviceName, poiCollection, listener);
+                        } else {
+                            Button listButton = (Button) findViewById(R.id.content_information_list_list_button);
+
+                            listButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = ListPresenterActivity.getIntent(activity, serviceName);
+                                    System.out.println(poiCollection.getPoiCollection().size());
+                                    //intent.putExtra("POI_COLLECTION", poiCollection);
+                                    ListPresenterActivity.mPOICollection = poiCollection;
+                                    startActivityForResult(intent, SERVICE_CLICK);
+                                }
+                            });
+                            Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
+                            listButton.setTypeface(font);
+                        }
+
                     }
                 });
             }
@@ -151,9 +157,16 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                 break;
         }
     }
-    public static Intent getResultIntent(String title) {
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    public static Intent getResultIntent(IPOI poi) {
         Intent intent = new Intent();
-        intent.putExtra(RESULT, title);
+        intent.putExtra(RESULT, poi.getTitle());
         return intent;
     }
 }

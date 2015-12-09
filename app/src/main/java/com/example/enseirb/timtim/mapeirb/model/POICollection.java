@@ -1,9 +1,10 @@
 package com.example.enseirb.timtim.mapeirb.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class POICollection {
+public class POICollection implements Serializable {
 
     private Collection<IPOI> poiCollection;
 

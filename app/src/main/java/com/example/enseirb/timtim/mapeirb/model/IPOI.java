@@ -2,9 +2,11 @@ package com.example.enseirb.timtim.mapeirb.model;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public interface IPOI {
+public interface IPOI{
     String getTitle();
     String getDescription();
     LatLng getPosition();
     String getName();
+    void setSelected(boolean b);
+    boolean isSelected();
 }
