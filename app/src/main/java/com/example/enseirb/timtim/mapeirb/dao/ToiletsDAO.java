@@ -25,14 +25,10 @@ public class ToiletsDAO implements IPOIsDAO {
         new AsyncTask<String, Integer, POICollectionDTO>() {
             @Override
             protected POICollectionDTO doInBackground(String... params) {
-                POICollectionDTO toiletCollectionDTO = null;
+                POICollectionDTO toiletCollectionDTO;
                 String jsonToilet = poiCollectionClient.retrievePOICollection(params[0]);
-                if(jsonToilet == null)
-                    listener.onError("Could not retrieve JSON");
-                else {
-                    toiletCollectionDTO = poiCollectionParser.parse(jsonToilet);
-                    listener.onSuccess(toiletCollectionDTO);
-                }
+                toiletCollectionDTO = poiCollectionParser.parse(jsonToilet);
+                listener.onSuccess(toiletCollectionDTO);
                 return toiletCollectionDTO;
             }
         }.execute(URL);

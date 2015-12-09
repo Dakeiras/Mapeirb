@@ -25,14 +25,10 @@ public class ElectricsDAO implements IPOIsDAO {
         new AsyncTask<String, Integer, POICollectionDTO>() {
             @Override
             protected POICollectionDTO doInBackground(String... params) {
-                POICollectionDTO electricCollectionDTO = null;
+                POICollectionDTO electricCollectionDTO;
                 String jsonElectric = poiCollectionClient.retrievePOICollection(params[0]);
-                if(jsonElectric == null)
-                    listener.onError("Could not retrieve JSON");
-                else {
                 electricCollectionDTO = poiCollectionParser.parse(jsonElectric);
                 listener.onSuccess(electricCollectionDTO);
-                }
                 return electricCollectionDTO;
             }
         }.execute(URL);

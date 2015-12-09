@@ -1,24 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:fitsSystemWindows="true"
-    tools:context="com.example.enseirb.timtim.mapeirb.presenter.activities.ExampleActivity">
-
-
-<android.support.v7.widget.Toolbar
-   android:id="@+id/my_toolbar"
-   android:layout_width="match_parent"
-   android:layout_height="?attr/actionBarSize"
-   android:background="@color/wallet_highlighted_text_holo_dark"
-   android:elevation="4dp"
-   android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-   app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -30,6 +10,13 @@
     tools:context="com.example.enseirb.timtim.mapeirb.presenter.activities.SelectionScreenActivity"
     android:orientation="vertical"
     android:weightSum="100">
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/content_selection_screen_help_button"
+        android:text="@string/question_mark"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -95,4 +82,3 @@
 
 
 </LinearLayout>
-</android.support.design.widget.CoordinatorLayout>
