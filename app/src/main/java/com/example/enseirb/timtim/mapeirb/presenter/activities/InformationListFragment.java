@@ -16,20 +16,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.enseirb.timtim.mapeirb.R;
-import com.example.enseirb.timtim.mapeirb.business.IPOICollectionBusiness;
-import com.example.enseirb.timtim.mapeirb.business.POICollectionBusiness;
-import com.example.enseirb.timtim.mapeirb.business.listener.IPOICollectionBusinessListener;
 import com.example.enseirb.timtim.mapeirb.model.IPOI;
+import com.example.enseirb.timtim.mapeirb.model.POI;
 import com.example.enseirb.timtim.mapeirb.model.POICollection;
-import com.example.enseirb.timtim.mapeirb.model.POIType;
-import com.google.android.gms.location.LocationServices;
 
-import org.w3c.dom.Text;
-
-import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +29,6 @@ import java.util.TreeMap;
 
 public class InformationListFragment extends Fragment {
 
-    private IPOICollectionBusiness poiCollectionBusiness;
     private ListView listView;
     private Button nameSortButton;
     private Button distanceSortButton;
@@ -48,14 +39,15 @@ public class InformationListFragment extends Fragment {
     protected static final String INTERNET_NAME = "com.example.enseirb.timtim.mapeirb.presenter.INTERNET";
 
     private POICollection mPOICollection;
+    private CustomAdapter dataAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.information_list_display, container, false);
     }
 
-    public void createList(String service,AdapterView.OnItemClickListener listener) {
-        initializeBusiness();
+    public void createList(String service, POICollection poiCollection,AdapterView.OnItemClickListener listener) {
+        mPOICollection = poiCollection;
         title = (TextView) getView().findViewById(R.id.information_list_service_name);
         nameSortButton = (Button) getView().findViewById(R.id.button_sort_name);
         nameSortButton.setOnClickListener(new View.OnClickListener() {
@@ -73,45 +65,23 @@ public class InformationListFragment extends Fragment {
         });
         listView = (ListView) getView().findViewById(R.id.information_layout_list);
         retrieveServiceList(service);
+        fillListByName(mPOICollection);
         listView.setOnItemClickListener(listener);
     }
 
     private void retrieveServiceList(String service) {
-        IPOICollectionBusinessListener listener = new IPOICollectionBusinessListener() {
-            @Override
-            public void onSuccess(final POICollection poiCollection) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPOICollection = poiCollection;
-                        fillListByName(poiCollection);
-                    }
-                });
-
-            }
-
-            @Override
-            public void onError(String message) {
-
-            }
-        };
-
         switch (service) {
             case InformationListFragment.DEFIBRILATOR_NAME:
                 title.setText("Défibrillateur");
-                poiCollectionBusiness.retrievePOICollection(POIType.DEFIBRILLATOR, listener);
                 break;
             case InformationListFragment.INTERNET_NAME:
                 title.setText("Points WIFI");
-                poiCollectionBusiness.retrievePOICollection(POIType.INTERNET, listener);
                 break;
             case InformationListFragment.ELECTRIC_CAR_NAME:
                 title.setText("Bornes électriques");
-                poiCollectionBusiness.retrievePOICollection(POIType.ELECTRIC, listener);
                 break;
             case InformationListFragment.TOILET_NAME:
                 title.setText("Toilettes");
-                poiCollectionBusiness.retrievePOICollection(POIType.TOILET, listener);
                 break;
             default:
                 break;
@@ -120,13 +90,14 @@ public class InformationListFragment extends Fragment {
     }
 
     protected void fillListByName(POICollection poiCollection) {
-        List<String> serviceList = new ArrayList<>();
+        List<POI> poiList = new ArrayList<>();
         for(IPOI poi: poiCollection.getPoiCollection()) {
-            //System.out.println(poi.getTitle());
-            serviceList.add(poi.getTitle());
+            poiList.add((POI) poi);
         }
-        Collections.sort(serviceList, Collator.getInstance());
-        listView.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, serviceList));
+        Collections.sort(poiList);
+
+        dataAdapter = new CustomAdapter(getActivity(), R.layout.list_check_box, poiList);
+        listView.setAdapter(dataAdapter);
     }
 
     protected void fillListByDistance(final POICollection poiCollection) {
@@ -166,9 +137,6 @@ public class InformationListFragment extends Fragment {
         locationManager.removeUpdates(locationListener);
     }
 
-    private void initializeBusiness() {
-        poiCollectionBusiness = new POICollectionBusiness();
-    }
 
     public POICollection getPOICollection() {
         return mPOICollection;

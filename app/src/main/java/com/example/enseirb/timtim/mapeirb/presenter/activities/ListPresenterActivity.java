@@ -195,11 +195,11 @@ public class ListPresenterActivity extends Activity {
         };
 
         locationManager.requestLocationUpdates(locationProvider, 0, 0, locationListener);
-        progressPopupFactory.dismiss();
     }
 
     private void removeLocationListener(LocationListener locationListener, LocationManager locationManager) {
         locationManager.removeUpdates(locationListener);
+        progressPopupFactory.dismiss();
     }
 
     //private void initializeBusiness() {

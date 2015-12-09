@@ -52,7 +52,7 @@ public class MapManager {
         map.setOnMarkerClickListener(clusterManager);
 
         try {
-            
+
             setMarkers(clusterManager, poiCollection);
         } catch (BadPOICollectionException e) {
             new MsgPopupFactoryCancel().show("Empty POI list", "No Points Of Interest was found " +

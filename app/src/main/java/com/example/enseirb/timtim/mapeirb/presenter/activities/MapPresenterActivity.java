@@ -34,6 +34,8 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     private POICollection poiCollection;
     private MapPresenterActivity activity = this;
     private String serviceName;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +58,7 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                     }
                 }
             };
-            fragment.createList(getIntent().getStringExtra(SERVICE_NAME), listener);
+            fragment.createList(getIntent().getStringExtra(SERVICE_NAME), poiCollection, listener);
         } else {
             Button listButton = (Button) findViewById(R.id.content_information_list_list_button);
             final Context popupContext = this;
@@ -69,6 +71,7 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                 }
             });
         }
+
         SupportMapFragment mapFragment;
         if ((mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map)) != null) {
@@ -123,6 +126,8 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
         IPOICollectionBusinessListener listener = new IPOICollectionBusinessListener() {
             @Override
             public void onSuccess(final POICollection poiCollection) {
+                serviceName = getIntent().getStringExtra(SERVICE_NAME);
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -131,6 +136,36 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                         SingletonPOICollection.getInstance().getPoiCollection().addAll(poiCollection.getPoiCollection());
                         MapPresenterActivity.this.poiCollection = SingletonPOICollection.getInstance();
                         mapManager.setPOIMarkers(poiCollection);
+
+                        InformationListFragment fragment;
+                        if ((fragment = (InformationListFragment) getFragmentManager().findFragmentById(R.id.list_layout_fragment)) != null){
+                            AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    for (IPOI ipoi : poiCollection.getPoiCollection()) {
+                                        if (ipoi.getTitle().equals(parent.getItemAtPosition(position))) {
+                                            centerOnPoi(ipoi);
+                                            break;
+                                        }
+                                    }
+                                }
+                            };
+                            fragment.createList(serviceName, poiCollection, listener);
+                        } else {
+                            Button listButton = (Button) findViewById(R.id.content_information_list_list_button);
+
+                            listButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = ListPresenterActivity.getIntent(activity, serviceName);
+                                    SingletonPOICollection.getInstance().getPoiCollection().clear();
+                                    SingletonPOICollection.getInstance().getPoiCollection().addAll(poiCollection.getPoiCollection());
+                                    MapPresenterActivity.this.poiCollection = SingletonPOICollection.getInstance();
+                                    startActivityForResult(intent, SERVICE_CLICK);
+                                }
+                            });
+                        }
+
                     }
                 });
             }
