@@ -5,7 +5,7 @@ import com.google.android.gms.maps.model.LatLng;
 public class POIInternet extends POI  {
 
     private static final String ACCESS_TYPE = "- Type d'accès : ";
-    private static final String PAID = "- Type d'accès : ";
+    private static final String PAID = "- Coût : ";
     private static final String SITUATION = "- Situation : ";
     private static final String PUBLIC_TYPE = "- Public : ";
     private static final String FORMATION = "- Formation : ";

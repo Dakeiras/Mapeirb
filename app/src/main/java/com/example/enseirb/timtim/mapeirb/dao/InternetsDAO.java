@@ -11,6 +11,7 @@ import com.example.enseirb.timtim.mapeirb.parser.JSONInternetParser;
 
 public class InternetsDAO implements IPOIsDAO {
     public static final String URL = "http://odata.bordeaux.fr/v1/databordeaux/sigaccesinternet/?format=json";
+    private static final String JSON_ERROR = "Could not retrieve JSON";
 
     private IPOICollectionClient poiCollectionClient;
     private IPOICollectionParser poiCollectionParser;
@@ -28,7 +29,7 @@ public class InternetsDAO implements IPOIsDAO {
                 POICollectionDTO internetCollectionDTO = null;
                 String jsonInternet = poiCollectionClient.retrievePOICollection(params[0]);
                 if(jsonInternet == null)
-                    listener.onError("Could not retrieve JSON");
+                    listener.onError(JSON_ERROR);
                 else {
                 internetCollectionDTO = poiCollectionParser.parse(jsonInternet);
                 listener.onSuccess(internetCollectionDTO);

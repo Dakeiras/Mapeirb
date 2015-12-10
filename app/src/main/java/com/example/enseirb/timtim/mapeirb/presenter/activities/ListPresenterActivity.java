@@ -88,7 +88,6 @@ public class ListPresenterActivity extends Activity {
     }
 
     private void retrieveServiceList(String service) {
-        System.out.println(mPOICollection.getPoiCollection().size());
         fillListByName(mPOICollection);
 
         switch (service) {

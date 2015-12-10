@@ -6,32 +6,32 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/information_list_display_height_null"
         android:layout_weight="10"
         android:textAlignment="center"
         android:gravity="center_vertical"
-        android:textSize="30dp"
-        android:text="TEST"
+        android:textSize="@dimen/information_list_display_textSize"
+        android:text=""
         android:id="@+id/information_list_service_name"/>
 
     <ListView
         android:id="@+id/information_layout_list"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/information_list_display_height_null"
         android:layout_weight="80">
 
     </ListView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/information_list_display_height_null"
         android:layout_weight="10"
         android:orientation="horizontal"
         android:weightSum="100">
 
         <Button
             android:id="@+id/button_sort_name"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/information_list_display_height_null"
             android:layout_height="match_parent"
             android:layout_weight="42"
             android:text="@string/sort_name"/>

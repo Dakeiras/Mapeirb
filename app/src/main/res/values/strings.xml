@@ -20,10 +20,10 @@
     <string name="question_mark">\?</string>
     <string name="title_activity_example">ExampleActivity</string>
     <string name="error_popup_title">Erreur</string>
-    <string name="error_popup_poi_not_retrieved_msg">Impossible de récupérer les informations à propos des points d\'intéret. Peut-etre vous n\'etes pas connectés à internet.</string>
+    <string name="error_popup_poi_not_retrieved_msg">Impossible de récupérer les informations à propos des points d\'intérêt. Peut-être vous n\'etes pas connectés à internet.</string>
     <string name="error_popup_msg_not_connected">Appareil non connecté à internet. Connectez vous et rééssayez.</string>
     <string name="help_popup_title">Aide</string>
-    <string name="help_popup_msg">Cette application permet de localiser des points d\'interet dans bordeaux. Touchez un des points ci-dessous pour afficher respectivement :\n- Les stations de charge de voitures electriques\n- Les défibrilateurs publics\n- Les accès WiFi gratuits publics\n- Les toilettes publiques\n\nUne fois sur la carte, vous pouvez toucher l\'iconde de liste en haut à droite de l\'écran pour afficher le liste des points d\'intéret de la catégorie selectionnée.</string>
+    <string name="help_popup_msg">Cette application permet de localiser des points d\'intérêt dans Bordeaux. Touchez un des points ci-dessous pour afficher respectivement :\n- Les stations de recharge de voitures électriques\n- Les défibrillateurs publics\n- Les points d\'accès à internet\n- Les toilettes publiques\n\nUne fois sur la carte, vous pouvez toucher l\'icône de liste en haut à droite de l\'écran pour afficher la liste des points d\'intérêt de la catégorie sélectionnée.</string>
     <string name="defibrilator_name">Défibrillateur</string>
     <string name="electric_name">Bornes électriques</string>
     <string name="toilettes_name">Toilettes</string>

@@ -1,14 +1,12 @@
 package com.example.enseirb.timtim.mapeirb.presenter.activities;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.enseirb.timtim.mapeirb.R;
 import com.example.enseirb.timtim.mapeirb.model.IPOI;
@@ -44,7 +42,6 @@ public class CustomAdapter extends ArrayAdapter<POI> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder;
-        Log.v("ConvertView", String.valueOf(position));
 
         if (convertView == null) {
             LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -59,10 +56,6 @@ public class CustomAdapter extends ArrayAdapter<POI> {
                 public void onClick(View v) {
                     CheckBox cb = (CheckBox) v;
                     IPOI poi = (IPOI) cb.getTag();
-                    /*Toast.makeText(ctx.getApplicationContext(),
-                            "Clicked on Checkbox: " + cb.getText() +
-                                    " is " + cb.isChecked(),
-                            Toast.LENGTH_LONG).show();*/
                     poi.setSelected(cb.isChecked());
                     if(falseView != null)
                         falseView.performClick();

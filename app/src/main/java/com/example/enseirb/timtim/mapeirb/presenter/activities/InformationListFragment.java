@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,8 +30,6 @@ import java.util.TreeMap;
 public class InformationListFragment extends Fragment {
 
     private ListView listView;
-    private Button nameSortButton;
-    private Button distanceSortButton;
     private TextView title;
     protected static final String DEFIBRILATOR_NAME = "com.example.enseirb.timtim.mapeirb.presenter.DEFIBRILATOR";
     protected static final String ELECTRIC_CAR_NAME = "com.example.enseirb.timtim.mapeirb.presenter.ELECTRICCAR";
@@ -40,7 +37,6 @@ public class InformationListFragment extends Fragment {
     protected static final String INTERNET_NAME = "com.example.enseirb.timtim.mapeirb.presenter.INTERNET";
 
     private POICollection mPOICollection;
-    private CustomAdapter dataAdapter;
     private View falseView;
     ProgressPopupFactory progressPopupFactory;
 
@@ -54,14 +50,14 @@ public class InformationListFragment extends Fragment {
         mPOICollection = poiCollection;
         this.falseView = falseView;
         title = (TextView) getView().findViewById(R.id.information_list_service_name);
-        nameSortButton = (Button) getView().findViewById(R.id.button_sort_name);
+        Button nameSortButton = (Button) getView().findViewById(R.id.button_sort_name);
         nameSortButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fillListByName(mPOICollection);
             }
         });
-        distanceSortButton = (Button) getView().findViewById(R.id.button_sort_distance);
+        Button distanceSortButton = (Button) getView().findViewById(R.id.button_sort_distance);
         distanceSortButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,16 +73,16 @@ public class InformationListFragment extends Fragment {
     private void retrieveServiceList(String service) {
         switch (service) {
             case InformationListFragment.DEFIBRILATOR_NAME:
-                title.setText("Défibrillateur");
+                title.setText(getResources().getString(R.string.defibrilator_name));
                 break;
             case InformationListFragment.INTERNET_NAME:
-                title.setText("Points WIFI");
+                title.setText(getResources().getString(R.string.internet_name));
                 break;
             case InformationListFragment.ELECTRIC_CAR_NAME:
-                title.setText("Bornes électriques");
+                title.setText(getResources().getString(R.string.electric_name));
                 break;
             case InformationListFragment.TOILET_NAME:
-                title.setText("Toilettes");
+                title.setText(getResources().getString(R.string.toilettes_name));
                 break;
             default:
                 break;
@@ -102,7 +98,7 @@ public class InformationListFragment extends Fragment {
         }
         Collections.sort(poiList);
 
-        dataAdapter = new CustomAdapter(getActivity(), R.layout.list_check_box, poiList);
+        CustomAdapter dataAdapter = new CustomAdapter(getActivity(), R.layout.list_check_box, poiList);
         dataAdapter.setFalseView(falseView);
         listView.setAdapter(dataAdapter);
         progressPopupFactory.dismiss();
@@ -115,15 +111,12 @@ public class InformationListFragment extends Fragment {
         final LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-                if(lastKnownLocation == null) {
-
-                }
                 Map<Float,POI> serviceList = new TreeMap<>();
                 for(IPOI poi: poiCollection.getPoiCollection()) {
-                    //System.out.println(poi.getTitle());
-                    Location poiLocation = new Location("poi");
+                    Location poiLocation = new Location(getResources().getString(R.string.poi_name));
                     poiLocation.setLatitude(poi.getPosition().latitude);
                     poiLocation.setLongitude(poi.getPosition().longitude);
+                    assert lastKnownLocation != null;
                     serviceList.put(lastKnownLocation.distanceTo(poiLocation), (POI) poi);
                 }
                 CustomAdapter dataAdapter = new CustomAdapter(getActivity(), R.layout.list_check_box, new LinkedList<>(serviceList.values()));

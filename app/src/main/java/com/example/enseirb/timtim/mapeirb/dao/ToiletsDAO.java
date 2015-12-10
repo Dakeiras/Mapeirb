@@ -11,6 +11,7 @@ import com.example.enseirb.timtim.mapeirb.parser.JSONToiletParser;
 
 public class ToiletsDAO implements IPOIsDAO {
     public static final String URL = "http://odata.bordeaux.fr/v1/databordeaux/sigsanitaire/?format=json";
+    private static final String JSON_ERROR = "Could not retrieve JSON";
 
     private IPOICollectionClient poiCollectionClient;
     private IPOICollectionParser poiCollectionParser;
@@ -28,7 +29,7 @@ public class ToiletsDAO implements IPOIsDAO {
                 POICollectionDTO toiletCollectionDTO = null;
                 String jsonToilet = poiCollectionClient.retrievePOICollection(params[0]);
                 if(jsonToilet == null)
-                    listener.onError("Could not retrieve JSON");
+                    listener.onError(JSON_ERROR);
                 else {
                     toiletCollectionDTO = poiCollectionParser.parse(jsonToilet);
                     listener.onSuccess(toiletCollectionDTO);

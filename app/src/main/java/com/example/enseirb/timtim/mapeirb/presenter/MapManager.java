@@ -14,6 +14,10 @@ import com.google.maps.android.clustering.ClusterManager;
 
 public class MapManager {
 
+    private static final String EMPTY_POILIST = "Empty POI list";
+    private static final String TRY_AGAIN_TEXT = "No Points Of Interest was found right now in this category, try later.";
+    private static final String UNINITIALIZED_POI_COLLECTION = "The POICollection is not initialized";
+    private static final String EMPTY_POI_COLLECTION = "The POICollection is empty";
     private final Context context;
     private GoogleMap map;
 
@@ -23,10 +27,10 @@ public class MapManager {
 
     private void setMarkers(ClusterManager<ClusterablePOI> clusterManager, POICollection poiCollection) throws BadPOICollectionException {
         if (poiCollection == null) {
-            throw new BadPOICollectionException("The POICollection is not initialized");
+            throw new BadPOICollectionException(UNINITIALIZED_POI_COLLECTION);
         }
         else if (poiCollection.getPoiCollection().size() <= 0) {
-            throw new BadPOICollectionException("The POICollection is empty");
+            throw new BadPOICollectionException(EMPTY_POI_COLLECTION);
         }
         else {
             for (IPOI poi : poiCollection.getPoiCollection()) {
@@ -40,10 +44,8 @@ public class MapManager {
 
     public GoogleMap prepareMap(GoogleMap googleMap, MapConfig mapConfig){
         map = googleMap;
-        //LatLng latLong = new LatLng(44.840950, -0.574813);
         LatLng latLong = new LatLng(mapConfig.getLatitude(), mapConfig.getLongitude());
         map.setMyLocationEnabled(true);
-//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLong, 12));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLong, mapConfig.getZoom()));
         return map;
     }
@@ -60,14 +62,12 @@ public class MapManager {
 
             setMarkers(clusterManager, poiCollection);
         } catch (BadPOICollectionException e) {
-            new MsgPopupFactoryCancel().show("Empty POI list", "No Points Of Interest was found " +
-                    "right now in this category, try later :)", context);
+            new MsgPopupFactoryCancel().show(EMPTY_POILIST, TRY_AGAIN_TEXT, context);
             e.printStackTrace();
         }
         clusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<ClusterablePOI>() {
             @Override
             public boolean onClusterItemClick(ClusterablePOI item) {
-                System.out.println(item.getTitle());
                 return false;
             }
         });

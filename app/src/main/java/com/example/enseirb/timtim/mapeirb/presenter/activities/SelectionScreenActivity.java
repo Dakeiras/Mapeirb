@@ -19,6 +19,8 @@ import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.MsgPopupFacto
 import com.example.enseirb.timtim.mapeirb.utils.ConnectivityChecker;
 
 public class SelectionScreenActivity extends AppCompatActivity {
+    private static final String FONT_NAME = "fontawesome-webfont.ttf";
+    private static final String ICO_NAME = "icomoon.ttf";
     final Context activityContext = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,8 @@ public class SelectionScreenActivity extends AppCompatActivity {
     }
 
     private void initializePOIButtons(){
-        Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
-        Typeface fontIcomoon = Typeface.createFromAsset(getAssets(), "icomoon.ttf");
+        Typeface font = Typeface.createFromAsset(getAssets(), FONT_NAME);
+        Typeface fontIcomoon = Typeface.createFromAsset(getAssets(), ICO_NAME);
 
         Button electricCarButton = (Button) findViewById(R.id.selectionscreen_button_electric_car);
         electricCarButton.setTypeface(font);

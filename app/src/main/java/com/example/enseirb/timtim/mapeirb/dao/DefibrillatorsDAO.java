@@ -11,6 +11,7 @@ import com.example.enseirb.timtim.mapeirb.parser.JSONDefibrillatorParser;
 
 public class DefibrillatorsDAO implements IPOIsDAO {
     public static final String URL = "http://odata.bordeaux.fr/v1/databordeaux/defibrillateurs/?format=json";
+    private static final String JSON_ERROR = "Could not retrieve JSON";
 
     private IPOICollectionClient poiCollectionClient;
     private IPOICollectionParser poiCollectionParser;
@@ -28,7 +29,7 @@ public class DefibrillatorsDAO implements IPOIsDAO {
                 POICollectionDTO defibrillatorCollectionDTO = null;
                 String jsonDefibrillator = poiCollectionClient.retrievePOICollection(params[0]);
                 if(jsonDefibrillator == null)
-                    listener.onError("Could not retrieve JSON");
+                    listener.onError(JSON_ERROR);
                 else {
                 defibrillatorCollectionDTO = poiCollectionParser.parse(jsonDefibrillator);
                 listener.onSuccess(defibrillatorCollectionDTO);

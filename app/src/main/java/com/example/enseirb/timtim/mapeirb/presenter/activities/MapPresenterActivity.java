@@ -36,6 +36,9 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     private static final String SERVICE_NAME = "com.example.enseirb.timtim.mapeirb.presenter.SERVICE";
     private static final String RESULT = "com.example.enseirb.timtim.mapeirb.presenter.RESULT";
     private static final int SERVICE_CLICK = 1;
+    private static final float DEFAULT_CENTER_ZOOM = 17;
+    private static final String FONT_NAME = "fontawesome-webfont.ttf";
+    private static final String SLEEP_TIME = "50";
     private MapManager mapManager = new MapManager(this);
     private POICollection poiCollection;
     private MapPresenterActivity activity = this;
@@ -100,7 +103,7 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
 
     public void centerOnPoi(IPOI poi) {
         LatLng poiPos = poi.getPosition();
-        mapManager.moveCamera(CameraUpdateFactory.newLatLngZoom(poiPos, 17));
+        mapManager.moveCamera(CameraUpdateFactory.newLatLngZoom(poiPos, DEFAULT_CENTER_ZOOM));
     }
 
     public void createList(String service) {
@@ -119,7 +122,6 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                     @Override
                     public void run() {
                         progressPopupFactory.dismiss();
-                        //MapPresenterActivity.this.poiCollection = poiCollection;
                         SingletonPOICollection.getInstance().getPoiCollection().clear();
                         SingletonPOICollection.getInstance().getPoiCollection().addAll(poiCollection.getPoiCollection());
                         MapPresenterActivity.this.poiCollection = SingletonPOICollection.getInstance();
@@ -158,7 +160,7 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                                     startActivityForResult(intent, SERVICE_CLICK);
                                 }
                             });
-                            Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
+                            Typeface font = Typeface.createFromAsset(getAssets(), FONT_NAME);
                             listButton.setTypeface(font);
                         }
 
@@ -204,8 +206,7 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     @Override
     protected void onResume() {
         try {
-            Thread.sleep(Long.parseLong("50")); // Moche, mais indispensable pour pouvoir
-            // afficher la popup à tout les coups
+            Thread.sleep(Long.parseLong(SLEEP_TIME));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
