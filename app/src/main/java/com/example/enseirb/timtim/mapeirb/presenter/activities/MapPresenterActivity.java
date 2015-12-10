@@ -116,7 +116,6 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                     @Override
                     public void run() {
                         progressPopupDisplayer.dismiss();
-                        //MapPresenterActivity.this.poiCollection = poiCollection;
                         SingletonPOICollection.getInstance().getPoiCollection().clear();
                         SingletonPOICollection.getInstance().getPoiCollection().addAll(poiCollection.getPoiCollection());
                         MapPresenterActivity.this.poiCollection = SingletonPOICollection.getInstance();
@@ -201,8 +200,7 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     @Override
     protected void onResume() {
         try {
-            Thread.sleep(Long.parseLong("50")); // Moche, mais indispensable pour pouvoir
-            // afficher la popup à tout les coups
+            Thread.sleep(Long.parseLong("50"));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -40,10 +40,8 @@ public class MapManager {
 
     public GoogleMap prepareMap(GoogleMap googleMap, MapConfig mapConfig){
         map = googleMap;
-        //LatLng latLong = new LatLng(44.840950, -0.574813);
         LatLng latLong = new LatLng(mapConfig.getLatitude(), mapConfig.getLongitude());
         map.setMyLocationEnabled(true);
-//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLong, 12));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLong, mapConfig.getZoom()));
         return map;
     }

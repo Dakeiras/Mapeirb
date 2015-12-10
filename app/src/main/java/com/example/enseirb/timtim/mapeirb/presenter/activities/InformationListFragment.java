@@ -30,8 +30,6 @@ import java.util.TreeMap;
 public class InformationListFragment extends Fragment {
 
     private ListView listView;
-    private Button nameSortButton;
-    private Button distanceSortButton;
     private TextView title;
     protected static final String DEFIBRILATOR_NAME = "com.example.enseirb.timtim.mapeirb.presenter.DEFIBRILATOR";
     protected static final String ELECTRIC_CAR_NAME = "com.example.enseirb.timtim.mapeirb.presenter.ELECTRICCAR";
@@ -39,7 +37,6 @@ public class InformationListFragment extends Fragment {
     protected static final String INTERNET_NAME = "com.example.enseirb.timtim.mapeirb.presenter.INTERNET";
 
     private POICollection mPOICollection;
-    private CustomAdapter dataAdapter;
     private View falseView;
     ProgressPopupDisplayer progressPopupDisplayer;
 
@@ -52,22 +49,26 @@ public class InformationListFragment extends Fragment {
     public void createList(String service, POICollection poiCollection, AdapterView.OnItemClickListener listener, View falseView) {
         mPOICollection = poiCollection;
         this.falseView = falseView;
-        title = (TextView) getView().findViewById(R.id.information_list_service_name);
-        nameSortButton = (Button) getView().findViewById(R.id.button_sort_name);
-        nameSortButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fillListByName(mPOICollection);
-            }
-        });
-        distanceSortButton = (Button) getView().findViewById(R.id.button_sort_distance);
-        distanceSortButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fillListByDistance(mPOICollection);
-            }
-        });
-        listView = (ListView) getView().findViewById(R.id.information_layout_list);
+        Button nameSortButton;
+        if (getView() != null) {
+            title = (TextView) getView().findViewById(R.id.information_list_service_name);
+            nameSortButton = (Button) getView().findViewById(R.id.button_sort_name);
+            nameSortButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    fillListByName(mPOICollection);
+                }
+            });
+            Button distanceSortButton = (Button) getView().findViewById(R.id.button_sort_distance);
+            distanceSortButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    fillListByDistance(mPOICollection);
+                }
+            });
+            listView = (ListView) getView().findViewById(R.id.information_layout_list);
+        }
+
         retrieveServiceList(service);
         fillListByName(mPOICollection);
         listView.setOnItemClickListener(listener);
@@ -96,12 +97,12 @@ public class InformationListFragment extends Fragment {
     protected void fillListByName(POICollection poiCollection) {
         progressPopupDisplayer.show();
         List<POI> poiList = new ArrayList<>();
-        for(IPOI poi: poiCollection.getPoiCollection()) {
+        for (IPOI poi : poiCollection.getPoiCollection()) {
             poiList.add((POI) poi);
         }
         Collections.sort(poiList);
 
-        dataAdapter = new CustomAdapter(getActivity(), R.layout.list_check_box, poiList);
+        CustomAdapter dataAdapter = new CustomAdapter(getActivity(), R.layout.list_check_box, poiList);
         dataAdapter.setFalseView(falseView);
         listView.setAdapter(dataAdapter);
         progressPopupDisplayer.dismiss();
@@ -114,11 +115,8 @@ public class InformationListFragment extends Fragment {
         final LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-                if(lastKnownLocation == null) {
-
-                }
-                Map<Float,POI> serviceList = new TreeMap<>();
-                for(IPOI poi: poiCollection.getPoiCollection()) {
+                Map<Float, POI> serviceList = new TreeMap<>();
+                for (IPOI poi : poiCollection.getPoiCollection()) {
                     //System.out.println(poi.getTitle());
                     Location poiLocation = new Location("poi");
                     poiLocation.setLatitude(poi.getPosition().latitude);
@@ -128,14 +126,17 @@ public class InformationListFragment extends Fragment {
                 CustomAdapter dataAdapter = new CustomAdapter(getActivity(), R.layout.list_check_box, new LinkedList<>(serviceList.values()));
                 dataAdapter.setFalseView(falseView);
                 listView.setAdapter(dataAdapter);
-                removeLocationListener(this,locationManager);
+                removeLocationListener(this, locationManager);
             }
 
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
 
-            public void onProviderEnabled(String provider) {}
+            public void onProviderEnabled(String provider) {
+            }
 
-            public void onProviderDisabled(String provider) {}
+            public void onProviderDisabled(String provider) {
+            }
         };
 
         locationManager.requestLocationUpdates(locationProvider, 0, 0, locationListener);
