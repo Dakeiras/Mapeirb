@@ -21,9 +21,9 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/content_selection_screen_activity_horizontal_margin"
+        android:paddingTop="@dimen/content_selection_screen_activity_vertical_margin"
+        android:paddingBottom="@dimen/content_selection_screen_activity_vertical_margin"
         tools:showIn="@layout/activity_selection_screen"
         tools:context="com.example.enseirb.timtim.mapeirb.presenter.activities.SelectionScreenActivity"
         android:orientation="vertical"
@@ -31,33 +31,32 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/content_selection_screen_height_null"
+            android:layout_height="@dimen/content_selection_screen_title_layout_height"
             android:layout_weight="20"
             android:text="@string/selection_screen_title"
             android:gravity="center"
-            android:textSize="40sp"/>
-
+            android:textSize="@dimen/content_selection_screen_title_font_size"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/content_selection_screen_height_null"
+            android:layout_height="@dimen/content_selection_screen_first_line_layout_height"
             android:layout_weight="40"
             android:orientation="horizontal"
             android:weightSum="100">
 
             <Button
                 android:id="@+id/selectionscreen_button_electric_car"
-                android:layout_width="@dimen/content_selection_screen_width_null"
+                android:layout_width="@dimen/content_selection_screen_electrical_button_layout_width"
                 android:layout_height="match_parent"
                 android:layout_weight="50"
-                android:textSize="@dimen/content_selection_screen_button_poi_textSize"
+                android:textSize="@dimen/content_selection_screen_electrical_button_font_size"
                 android:text="@string/icon_electric_car"/>
 
             <Button
                 android:id="@+id/selectionscreen_button_defibrilator"
-                android:layout_width="@dimen/content_selection_screen_width_null"
+                android:layout_width="@dimen/content_selection_screen_defibrilator_button_layout_width"
                 android:layout_height="match_parent"
                 android:layout_weight="50"
-                android:textSize="@dimen/content_selection_screen_button_poi_textSize"
+                android:textSize="@dimen/content_selection_screen_defibrilator_font_size"
                 android:textColor="@color/colorGreen"
                 android:text="@string/icon_defibrillator"/>
 
@@ -65,26 +64,26 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/content_selection_screen_height_null"
+            android:layout_height="@dimen/content_selection_screen_layout_second_line_layout_height"
             android:layout_weight="40"
             android:orientation="horizontal"
             android:weightSum="100">
 
             <Button
                 android:id="@+id/selectionscreen_button_internet_access"
-                android:layout_width="@dimen/content_selection_screen_null_width"
+                android:layout_width="@dimen/content_selection_screen_layout_wifi_layout_width"
                 android:layout_height="match_parent"
                 android:layout_weight="50"
-                android:textSize="@dimen/content_selection_screen_button_poi_textSize"
+                android:textSize="@dimen/content_selection_screen_layout_font_size"
                 android:textColor="@color/colorBlue"
                 android:text="@string/icon_internet_access"/>
 
             <Button
                 android:id="@+id/selectionscreen_button_toilets"
-                android:layout_width="@dimen/content_selection_screen_null_width"
+                android:layout_width="@dimen/content_selection_screen_layout_toilets_layout_width"
                 android:layout_height="match_parent"
                 android:layout_weight="50"
-                android:textSize="@dimen/content_selection_screen_button_poi_textSize"
+                android:textSize="@dimen/content_selection_screen_layout_toilets_font_size"
                 android:text="@string/icon_toilets"/>
 
         </LinearLayout>

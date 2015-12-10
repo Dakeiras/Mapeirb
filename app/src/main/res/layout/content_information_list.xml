@@ -13,12 +13,12 @@
 
     <Button
         android:id="@+id/content_information_list_list_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/content_information_list_list_button_layout_width"
+        android:layout_height="@dimen/content_information_list_list_button_layout_height"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="60dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginRight="@dimen/content_infrmation_list_list_button_margin_right"
+        android:layout_marginTop="@dimen/content_infrmation_list_list_button_margin_top"
         android:alpha="0.8"
         android:text="@string/icon_list"
         android:layout_alignParentEnd="true" />

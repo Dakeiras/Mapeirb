@@ -6,11 +6,11 @@ import android.content.DialogInterface;
 
 import com.example.enseirb.timtim.mapeirb.R;
 
-public class ProgressPopupFactory {
+public class ProgressPopupDisplayer {
     Context context;
     ProgressDialog progressDialog;
 
-    public ProgressPopupFactory(Context context) {
+    public ProgressPopupDisplayer(Context context) {
         this.context = context;
     }
 

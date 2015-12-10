@@ -5,7 +5,7 @@ import android.content.Context;
 import com.example.enseirb.timtim.mapeirb.exceptions.BadPOICollectionException;
 import com.example.enseirb.timtim.mapeirb.model.IPOI;
 import com.example.enseirb.timtim.mapeirb.model.POICollection;
-import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.MsgPopupFactoryCancel;
+import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.MsgPopupDisplayerCancel;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -62,7 +62,7 @@ public class MapManager {
 
             setMarkers(clusterManager, poiCollection);
         } catch (BadPOICollectionException e) {
-            new MsgPopupFactoryCancel().show(EMPTY_POILIST, TRY_AGAIN_TEXT, context);
+            new MsgPopupDisplayerCancel().show(EMPTY_POILIST, TRY_AGAIN_TEXT, context);
             e.printStackTrace();
         }
         clusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<ClusterablePOI>() {
