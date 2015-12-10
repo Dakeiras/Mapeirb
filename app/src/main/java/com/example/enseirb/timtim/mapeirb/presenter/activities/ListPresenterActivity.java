@@ -18,7 +18,7 @@ import com.example.enseirb.timtim.mapeirb.R;
 import com.example.enseirb.timtim.mapeirb.model.IPOI;
 import com.example.enseirb.timtim.mapeirb.model.POI;
 import com.example.enseirb.timtim.mapeirb.model.POICollection;
-import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.ProgressPopupFactory;
+import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.ProgressPopupDisplayer;
 import com.example.enseirb.timtim.mapeirb.utils.SingletonPOICollection;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class ListPresenterActivity extends Activity {
     private static final String SERVICE_NAME = "com.example.enseirb.timtim.mapeirb.presenter.SERVICE";
     private ListView listView;
     private TextView title;
-    ProgressPopupFactory progressPopupFactory = new ProgressPopupFactory(this);
+    ProgressPopupDisplayer progressPopupDisplayer = new ProgressPopupDisplayer(this);
     private POICollection mPOICollection;
 
     @Override
@@ -113,7 +113,7 @@ public class ListPresenterActivity extends Activity {
     }
 
     private void fillListByName(POICollection poiCollection) {
-        progressPopupFactory.show();
+        progressPopupDisplayer.show();
 
         List<POI> poiList = new ArrayList<>();
         for(IPOI poi: poiCollection.getPoiCollection()) {
@@ -124,11 +124,11 @@ public class ListPresenterActivity extends Activity {
         CustomAdapter dataAdapter = new CustomAdapter(this, R.layout.list_check_box, poiList);
         listView.setAdapter(dataAdapter);
 
-        progressPopupFactory.dismiss();
+        progressPopupDisplayer.dismiss();
     }
 
     private void fillListByDistance(final POICollection poiCollection) {
-        progressPopupFactory.show();
+        progressPopupDisplayer.show();
         final LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         final Activity activity = this;
         final String locationProvider = LocationManager.NETWORK_PROVIDER;
@@ -159,7 +159,7 @@ public class ListPresenterActivity extends Activity {
 
     private void removeLocationListener(LocationListener locationListener, LocationManager locationManager) {
         locationManager.removeUpdates(locationListener);
-        progressPopupFactory.dismiss();
+        progressPopupDisplayer.dismiss();
     }
 
 }

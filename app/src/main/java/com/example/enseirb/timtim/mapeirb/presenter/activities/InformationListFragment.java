@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,7 +18,7 @@ import com.example.enseirb.timtim.mapeirb.R;
 import com.example.enseirb.timtim.mapeirb.model.IPOI;
 import com.example.enseirb.timtim.mapeirb.model.POI;
 import com.example.enseirb.timtim.mapeirb.model.POICollection;
-import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.ProgressPopupFactory;
+import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.ProgressPopupDisplayer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,11 +41,11 @@ public class InformationListFragment extends Fragment {
     private POICollection mPOICollection;
     private CustomAdapter dataAdapter;
     private View falseView;
-    ProgressPopupFactory progressPopupFactory;
+    ProgressPopupDisplayer progressPopupDisplayer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        progressPopupFactory = new ProgressPopupFactory(getActivity());
+        progressPopupDisplayer = new ProgressPopupDisplayer(getActivity());
         return inflater.inflate(R.layout.information_list_display, container, false);
     }
 
@@ -95,7 +94,7 @@ public class InformationListFragment extends Fragment {
     }
 
     protected void fillListByName(POICollection poiCollection) {
-        progressPopupFactory.show();
+        progressPopupDisplayer.show();
         List<POI> poiList = new ArrayList<>();
         for(IPOI poi: poiCollection.getPoiCollection()) {
             poiList.add((POI) poi);
@@ -105,11 +104,11 @@ public class InformationListFragment extends Fragment {
         dataAdapter = new CustomAdapter(getActivity(), R.layout.list_check_box, poiList);
         dataAdapter.setFalseView(falseView);
         listView.setAdapter(dataAdapter);
-        progressPopupFactory.dismiss();
+        progressPopupDisplayer.dismiss();
     }
 
     protected void fillListByDistance(final POICollection poiCollection) {
-        progressPopupFactory.show();
+        progressPopupDisplayer.show();
         final LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         final String locationProvider = LocationManager.NETWORK_PROVIDER;
         final LocationListener locationListener = new LocationListener() {
@@ -145,7 +144,7 @@ public class InformationListFragment extends Fragment {
 
     private void removeLocationListener(LocationListener locationListener, LocationManager locationManager) {
         locationManager.removeUpdates(locationListener);
-        progressPopupFactory.dismiss();
+        progressPopupDisplayer.dismiss();
     }
 
 

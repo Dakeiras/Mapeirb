@@ -14,8 +14,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.enseirb.timtim.mapeirb.R;
-import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.MsgPopupFactoryCancel;
-import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.MsgPopupFactoryFinishApp;
+import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.MsgPopupDisplayerCancel;
+import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.MsgPopupDisplayerFinishApp;
 import com.example.enseirb.timtim.mapeirb.utils.ConnectivityChecker;
 
 public class SelectionScreenActivity extends AppCompatActivity {
@@ -39,7 +39,7 @@ public class SelectionScreenActivity extends AppCompatActivity {
         String errorPopupMsg = getResources().getString(R.string.error_popup_msg_not_connected);
         Context context = this;
         if(!ConnectivityChecker.isDeviceConnected(context))
-            new MsgPopupFactoryFinishApp().show(errorPopupTitle, errorPopupMsg, context);
+            new MsgPopupDisplayerFinishApp().show(errorPopupTitle, errorPopupMsg, context);
     }
 
     private void ShowList(String name) {
@@ -104,7 +104,7 @@ public class SelectionScreenActivity extends AppCompatActivity {
         String helpPopupMsg = getResources().getString(R.string.help_popup_msg);
         switch (item.getItemId()) {
             case R.id.action_help:
-                new MsgPopupFactoryCancel().show(helpPopupTitle, helpPopupMsg, activityContext);
+                new MsgPopupDisplayerCancel().show(helpPopupTitle, helpPopupMsg, activityContext);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

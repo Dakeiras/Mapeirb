@@ -3,7 +3,7 @@ package com.example.enseirb.timtim.mapeirb.presenter.popupFactories;
 import android.content.Context;
 import android.content.DialogInterface;
 
-public class MsgPopupFactoryCancel extends MsgPopupFactory{
+public class MsgPopupDisplayerCancel extends MsgPopupDisplayer {
 
     DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog,int id) {dialog.cancel();}
