@@ -22,6 +22,7 @@ import com.example.enseirb.timtim.mapeirb.model.POIType;
 import com.example.enseirb.timtim.mapeirb.presenter.MapConfig;
 import com.example.enseirb.timtim.mapeirb.presenter.MapManager;
 import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.MsgPopupFactoryCancel;
+import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.ProgressPopupFactory;
 import com.example.enseirb.timtim.mapeirb.utils.SingletonPOICollection;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -40,6 +41,7 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     private MapPresenterActivity activity = this;
     private String serviceName;
     final boolean[] hasRetrievedJSON = {true};
+    ProgressPopupFactory progressPopupFactory = new ProgressPopupFactory(this);
 
     final private String errorPopupTitle = "Erreur";
     final private String errorPopupMsg = "Impossible de récupérer les " +
@@ -110,6 +112,7 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     }
 
     private void retrieveServiceList(String service) {
+        progressPopupFactory.show();
         IPOICollectionBusiness poiCollectionBusiness = new POICollectionBusiness();
         IPOICollectionBusinessListener listener = new IPOICollectionBusinessListener() {
             @Override
@@ -119,6 +122,7 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        progressPopupFactory.dismiss();
                         //MapPresenterActivity.this.poiCollection = poiCollection;
                         SingletonPOICollection.getInstance().getPoiCollection().clear();
                         SingletonPOICollection.getInstance().getPoiCollection().addAll(poiCollection.getPoiCollection());
