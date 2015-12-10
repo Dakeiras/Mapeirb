@@ -6,19 +6,17 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dispaly_choice_fragment_title_layout_height"
         android:layout_weight="10"
         android:textAlignment="center"
         android:gravity="center_vertical"
-        android:textSize="30dp"
-        android:text="TEST"
+        android:textSize="@dimen/dispaly_choice_fragment_title_font_size"
         android:id="@+id/display_choice_service_name"/>
 
     <ListView
         android:id="@+id/display_choice_layout_list"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dispaly_choice_fragment_listview_layout_height"
         android:layout_weight="90">
-
     </ListView>
 </LinearLayout>
