@@ -56,6 +56,6 @@ public class MapConfig {
         editor.putFloat(LATITUDE_SHARED, getLatitude());
         editor.putFloat(LONGITUDE_SHARED, getLongitude());
         editor.putFloat(ZOOM_SHARED, getZoom());
-        editor.commit();
+        editor.apply();
     }
 }

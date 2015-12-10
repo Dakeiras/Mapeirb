@@ -21,8 +21,8 @@ import com.example.enseirb.timtim.mapeirb.model.POICollection;
 import com.example.enseirb.timtim.mapeirb.model.POIType;
 import com.example.enseirb.timtim.mapeirb.presenter.MapConfig;
 import com.example.enseirb.timtim.mapeirb.presenter.MapManager;
-import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.MsgPopupFactoryCancel;
-import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.ProgressPopupFactory;
+import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.MsgPopupDisplayerCancel;
+import com.example.enseirb.timtim.mapeirb.presenter.popupFactories.ProgressPopupDisplayer;
 import com.example.enseirb.timtim.mapeirb.utils.SingletonPOICollection;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -41,15 +41,13 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     private MapPresenterActivity activity = this;
     private String serviceName;
     final boolean[] hasRetrievedJSON = {true};
-    ProgressPopupFactory progressPopupFactory = new ProgressPopupFactory(this);
-
+    ProgressPopupDisplayer progressPopupDisplayer = new ProgressPopupDisplayer(this);
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_information_list);
-
 
         if (getResources().getBoolean(R.bool.portrait_only))
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -85,7 +83,6 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
 
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mapManager.prepareMap(googleMap, loadMapConfig());
@@ -108,7 +105,7 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     }
 
     private void retrieveServiceList(String service) {
-        progressPopupFactory.show();
+        progressPopupDisplayer.show();
         IPOICollectionBusiness poiCollectionBusiness = new POICollectionBusiness();
         IPOICollectionBusinessListener listener = new IPOICollectionBusinessListener() {
             @Override
@@ -118,8 +115,7 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        progressPopupFactory.dismiss();
-                        //MapPresenterActivity.this.poiCollection = poiCollection;
+                        progressPopupDisplayer.dismiss();
                         SingletonPOICollection.getInstance().getPoiCollection().clear();
                         SingletonPOICollection.getInstance().getPoiCollection().addAll(poiCollection.getPoiCollection());
                         MapPresenterActivity.this.poiCollection = SingletonPOICollection.getInstance();
@@ -204,16 +200,15 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     @Override
     protected void onResume() {
         try {
-            Thread.sleep(Long.parseLong("50")); // Moche, mais indispensable pour pouvoir
-            // afficher la popup à tout les coups
+            Thread.sleep(Long.parseLong("50"));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         super.onResume();
-        if(!hasRetrievedJSON[0]){
+        if (!hasRetrievedJSON[0]) {
             String errorPopupTitle = getString(R.string.error_popup_title);
             String errorPopupMsg = getString(R.string.error_popup_poi_not_retrieved_msg);
-            new MsgPopupFactoryCancel().show(errorPopupTitle, errorPopupMsg, this);
+            new MsgPopupDisplayerCancel().show(errorPopupTitle, errorPopupMsg, this);
         }
     }
 

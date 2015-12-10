@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 
 import com.example.enseirb.timtim.mapeirb.R;
 
-public class MsgPopupFactory {
+public class MsgPopupDisplayer {
     protected void show(String title, String msg, Context context, DialogInterface.OnClickListener onClickListener){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setTitle(title);
