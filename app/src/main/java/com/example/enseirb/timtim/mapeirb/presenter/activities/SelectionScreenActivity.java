@@ -20,17 +20,6 @@ import com.example.enseirb.timtim.mapeirb.utils.ConnectivityChecker;
 
 public class SelectionScreenActivity extends AppCompatActivity {
     final Context activityContext = this;
-    final String helpPopupTitle = "Aide";
-    final String helpPopupMsg = "Cette application permet de localiser des points" +
-            "d'interet dans bordeaux." +
-            "Touchez un des points ci-dessous pour afficher respectivement :\n" +
-            "- Les stations de charge de voitures electriques\n" +
-            "- Les défibrilateurs publics\n" +
-            "- Les accès WiFi gratuits publics\n" +
-            "- Les toilettes publiques\n\n" +
-            "Une fois sur la carte, vous pouvez toucher l'iconde de liste en haut à droite de " +
-            "l'écran pour afficher le liste des points d'intéret de la catégorie selectionnée.";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +35,11 @@ public class SelectionScreenActivity extends AppCompatActivity {
     }
 
     private void displayPopupIfNotConnectedToInternet(){
+        String errorPopupTitle = getResources().getString(R.string.error_popup_title);
+        String errorPopupMsg = getResources().getString(R.string.error_popup_msg_not_connected);
         Context context = this;
         if(!ConnectivityChecker.isDeviceConnected(context))
-            new MsgPopupFactoryFinishApp().show("Device not connected", "Please connect to the internet and try again.", context);
+            new MsgPopupFactoryFinishApp().show(errorPopupTitle, errorPopupMsg, context);
     }
 
     private void ShowList(String name) {
@@ -109,6 +100,8 @@ public class SelectionScreenActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        String helpPopupTitle = getResources().getString(R.string.help_popup_title);
+        String helpPopupMsg = getResources().getString(R.string.help_popup_msg);
         switch (item.getItemId()) {
             case R.id.action_help:
                 new MsgPopupFactoryCancel().show(helpPopupTitle, helpPopupMsg, activityContext);

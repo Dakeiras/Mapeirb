@@ -1,5 +1,7 @@
 package com.example.enseirb.timtim.mapeirb.model;
 
+import android.support.annotation.NonNull;
+
 import com.google.android.gms.maps.model.LatLng;
 
 public abstract class POI implements Comparable<IPOI>, IPOI {
@@ -41,11 +43,11 @@ public abstract class POI implements Comparable<IPOI>, IPOI {
     }
 
     @Override
-    public int compareTo(IPOI comparePoi) {
+    public int compareTo(@NonNull IPOI comparePoi) {
         if (getName() == null){
             return 1;
         }
-        else if (comparePoi ==  null || comparePoi.getName() == null){
+        else if (comparePoi.getName() == null){
             return -1;
         }
         return getName().compareTo(comparePoi.getName());

@@ -41,10 +41,6 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
     private String serviceName;
     final boolean[] hasRetrievedJSON = {true};
 
-    final private String errorPopupTitle = "Erreur";
-    final private String errorPopupMsg = "Impossible de récupérer les " +
-            "informations à propos des points d'intéret. Peut-etre vous n'etes pas " +
-            "connectés à internet.";
 
 
     @Override
@@ -210,8 +206,11 @@ public class MapPresenterActivity extends FragmentActivity implements OnMapReady
             e.printStackTrace();
         }
         super.onResume();
-        if(!hasRetrievedJSON[0])
+        if(!hasRetrievedJSON[0]){
+            String errorPopupTitle = getString(R.string.error_popup_title);
+            String errorPopupMsg = getString(R.string.error_popup_poi_not_retrieved_msg);
             new MsgPopupFactoryCancel().show(errorPopupTitle, errorPopupMsg, this);
+        }
     }
 
     private MapConfig loadMapConfig() {

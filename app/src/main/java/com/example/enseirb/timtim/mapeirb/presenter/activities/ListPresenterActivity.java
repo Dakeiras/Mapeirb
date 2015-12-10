@@ -10,7 +10,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,12 +30,7 @@ import java.util.TreeMap;
 
 public class ListPresenterActivity extends Activity {
 
-    private static final String DEFIBRILLATOR_NAME = "Défibrillateur";
-    private static final String ELECTRIC_NAME = "Bornes électriques";
-    private static final String TOILET_NAME = "Toilettes";
-    private static final String INTERNET_NAME = "Points Internet";
     private static final String SERVICE_NAME = "com.example.enseirb.timtim.mapeirb.presenter.SERVICE";
-    private static final String POI_NAME = "poi";
     private ListView listView;
     private TextView title;
     ProgressPopupFactory progressPopupFactory = new ProgressPopupFactory(this);
@@ -99,16 +93,16 @@ public class ListPresenterActivity extends Activity {
 
         switch (service) {
             case InformationListFragment.DEFIBRILATOR_NAME:
-                title.setText(DEFIBRILLATOR_NAME);
+                title.setText(getResources().getString(R.string.defibrilator_name));
                 break;
             case InformationListFragment.INTERNET_NAME:
-                title.setText(INTERNET_NAME);
+                title.setText(getResources().getString(R.string.internet_name));
                 break;
             case InformationListFragment.ELECTRIC_CAR_NAME:
-                title.setText(ELECTRIC_NAME);
+                title.setText(getResources().getString(R.string.electric_name));
                 break;
             case InformationListFragment.TOILET_NAME:
-                title.setText(TOILET_NAME);
+                title.setText(getResources().getString(R.string.toilettes_name));
                 break;
             default:
                 break;
@@ -143,8 +137,7 @@ public class ListPresenterActivity extends Activity {
                 Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
                 Map<Float,POI> serviceList = new TreeMap<>();
                 for(IPOI poi: poiCollection.getPoiCollection()) {
-                    //System.out.println(poi.getTitle());
-                    Location poiLocation = new Location(POI_NAME);
+                    Location poiLocation = new Location(getResources().getString(R.string.poi_name));
                     poiLocation.setLatitude(poi.getPosition().latitude);
                     poiLocation.setLongitude(poi.getPosition().longitude);
                     serviceList.put(lastKnownLocation.distanceTo(poiLocation),(POI) poi);
